@@ -7,25 +7,8 @@ export default function PokemonList( {pokemon, setPokeName, setPokeData} ) {
     const history = useHistory();
 
     const handleClick = async (name) => {
-
-        // e.preventDefault();
         setPokeName(name);
-        console.log(name);
-        getData(name);
-    }
-    
-    const getData= async (name) => {
-        
-        try {
-            const res = await fetch (`https://pokeapi.co/api/v2/pokemon/${name}`)
-            const data = await res.json();
-            console.log(data);
-            setPokeData(data);
-            history.push(`/${name}`)
-        }
-        catch(err) {
-            console.log(err);
-        }
+        history.push(`/pokemon/${name}`)
     } 
 
     const capitalizeFirstLetter = (name) => {
