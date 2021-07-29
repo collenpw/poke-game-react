@@ -2,8 +2,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Link, Switch} from 'react-router-dom'
 
-import Pokemon from './components/Pokemon';
-import PokemonList from './components/PokemonList';
+import Pokemon from './components/Pokemon/Pokemon';
+import PokemonList from './components/PokemonList/PokemonList';
 import Type from './components/Type/Type';
 
 function App() {

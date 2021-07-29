@@ -4,10 +4,11 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 
+import Location from '../../Location/Location';
+
 const Pokemon = ({match}) => {
 
     const [pokeData, setPokeData] = useState(null);
-    const [locations, setLocations] = useState([]);
 
     const getPokeData = async() => {
         const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
@@ -22,36 +23,14 @@ const Pokemon = ({match}) => {
         
     }
 
-    const getLocationData = async() => {
-        try {
-            const res = await fetch (`${pokeData.location_area_encounters}`);
-            const data = await res.json();
-            setLocations(data);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
     useEffect(()=> {
 
         getPokeData();
 
     }, []);
 
-    useEffect(() => {
-        getLocationData();
-    },[pokeData]);
-
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
-    const formatLocation = (str) => {
-        let formattedLoc = str.replace(/-/g, ' ');
-        formattedLoc = formattedLoc.replace(/area/g, '')
-
-        return capitalize(formattedLoc);
     }
 
     if(!pokeData) return (
@@ -84,14 +63,8 @@ const Pokemon = ({match}) => {
                         })}
                     </ListGroup>    
                 </Card>
-
-                <ListGroup style={{ width: '40rem' }} className='locations'>
-                    {locations.map((location) => {
-                        return (
-                            <ListGroup.Item>{`Pokemon: ${capitalize(location.version_details[0].version.name)} -- ${capitalize(location.version_details[0].encounter_details[0].method.name)} at ${formatLocation(location.location_area.name)}`}</ListGroup.Item>
-                        )
-                    })}
-                </ListGroup>
+                <Location pokeData={pokeData} capitalize={capitalize} />
+                
             </div>
             ); 
 };

@@ -1,3 +1,8 @@
+body {
+  background-image: url(/src/imgs/attempt2.jpg);
+  background-color: paleturquoise;
+}
+
 button {
   display: block;
   width: 50%;
@@ -9,6 +14,7 @@ button {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 5px;
   justify-items: center;
+  /* background: paleturquoise; */
 }
 .poke-entry {
   height: 100%;
