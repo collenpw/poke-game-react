@@ -1,6 +1,7 @@
 body {
   background-image: url(/src/imgs/attempt2.jpg);
   background-color: paleturquoise;
+  user-select: none;
 }
 
 button {
@@ -61,6 +62,10 @@ button {
 .locations {
   text-align: center;
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
 }
 
 .dmg-relations{
@@ -74,4 +79,9 @@ button {
 
 .type-name{
   text-align: center;
+}
+
+.location{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

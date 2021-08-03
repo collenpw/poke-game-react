@@ -23,7 +23,7 @@ export default function PokemonList( {pokemon, setPokeName, setPokeData} ) {
 
                 return (
                        
-                    <Card onClick={() => {handleClick(pokemon.name)}} style={{ width: '18rem' }}>
+                    <Card border='dark' onClick={() => {handleClick(pokemon.name)}} style={{ width: '18rem' }}>
                         <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`} />
                         <Card.Body>
                             <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
