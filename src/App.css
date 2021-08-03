@@ -85,3 +85,8 @@ button {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.login {
+  width: 40rem;
+  margin: 20px auto;
+}
