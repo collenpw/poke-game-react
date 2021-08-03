@@ -1,10 +1,11 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Link, Switch} from 'react-router-dom'
+import { Route, Switch} from 'react-router-dom'
 
 import Pokemon from './components/Pokemon/Pokemon';
 import PokemonList from './components/PokemonList/PokemonList';
 import Type from './components/Type/Type';
+import Login from './Login/Login';
 
 function App() {
 
@@ -45,6 +46,8 @@ const getAPIdata = async() => {
         <Route path={`/type/:type`} component= { Type } />
         <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
         <Route path='/pokemon' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+        <Route path={`/login`} component= { Login } />
+
       </Switch>
     </div>
     
