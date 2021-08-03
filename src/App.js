@@ -1,9 +1,10 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Route } from 'react-router'
+import { BrowserRouter, Route, Link, Switch} from 'react-router-dom'
 
-import Pokemon from './components/Pokemon';
-import PokemonList from './components/PokemonList';
+import Pokemon from './components/Pokemon/Pokemon';
+import PokemonList from './components/PokemonList/PokemonList';
+import Type from './components/Type/Type';
 
 function App() {
 
@@ -18,7 +19,6 @@ const getAPIdata = async() => {
   try {
     const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898')
     const data = await res.json();
-    // console.log(data);
     setPokemon(data.results)
   }
 
@@ -28,22 +28,23 @@ const getAPIdata = async() => {
 
 }
 
-const getSpecificPokemon = async() => {
-  try {
-    const res = await fetch (`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
-    const data = await res.json();
-    setPokeData(data);
-  }
-  catch (err) {
-    console.log(err);
-  }
-}
+// const getSpecificPokemon = async() => {
+//   try {
+//     const res = await fetch (`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
+//     const data = await res.json();
+//     setPokeData(data);
+//   }
+//   catch (err) {
+//     console.log(err);
+//   }
+// }
 
-  useEffect(() => {
+//   useEffect(() => {
 
-    getSpecificPokemon();
+//     getSpecificPokemon();
+//     console.log(pokeName);
 
-  }, [pokeName]);
+//   }, [pokeName]);
 
   useEffect(() => {
   
@@ -56,8 +57,11 @@ const getSpecificPokemon = async() => {
 
     
     <div>
-      <Route path={`/${pokeName}`} exact render={() => <Pokemon pokeData={pokeData} pokemon={pokeName} /> } />
-      <Route path='/' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+      <Switch>
+        <Route path={`/type/:type`} component= { Type } />
+        <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
+        <Route path='/pokemon' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+      </Switch>
     </div>
     
   );

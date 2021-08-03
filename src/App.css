@@ -1,41 +1,8 @@
-/* .App {
-  text-align: center;
+body {
+  background-image: url(/src/imgs/attempt2.jpg);
+  background-color: paleturquoise;
+  user-select: none;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
 button {
   display: block;
@@ -48,6 +15,7 @@ button {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 5px;
   justify-items: center;
+  /* background: paleturquoise; */
 }
 .poke-entry {
   height: 100%;
@@ -71,18 +39,49 @@ button {
   width: 100%;
 }
 
-.card {
+.poke-list {
   margin-top: 15px;
   margin-bottom: 15px;
 
 }
 
-.card:hover{
+.poke-list:hover{
   transform: scale(1.1);
   margin-top: 10px;
 }
 
-.main-pic {
-  /* width: 50%;
-  height: 50%; */
+.card {
+  margin: 2rem auto;
+}
+
+.spinner {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.locations {
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.dmg-relations{
+  display: flex;
+  flex-direction: row;
+}
+
+.relation {
+  margin: 10px;
+}
+
+.type-name{
+  text-align: center;
+}
+
+.location{
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
