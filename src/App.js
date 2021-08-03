@@ -28,23 +28,6 @@ const getAPIdata = async() => {
 
 }
 
-// const getSpecificPokemon = async() => {
-//   try {
-//     const res = await fetch (`https://pokeapi.co/api/v2/pokemon/${pokeName}`);
-//     const data = await res.json();
-//     setPokeData(data);
-//   }
-//   catch (err) {
-//     console.log(err);
-//   }
-// }
-
-//   useEffect(() => {
-
-//     getSpecificPokemon();
-//     console.log(pokeName);
-
-//   }, [pokeName]);
 
   useEffect(() => {
   
@@ -58,6 +41,7 @@ const getAPIdata = async() => {
     
     <div>
       <Switch>
+        <Route path='/' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
         <Route path={`/type/:type`} component= { Type } />
         <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
         <Route path='/pokemon' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
