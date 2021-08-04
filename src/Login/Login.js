@@ -8,7 +8,7 @@ const Login = () => {
 
     return (
 
-        <Nav.Link onClick={() => loginWithRedirect()}>Log In</Nav.Link>
+        <Nav.Link href="/login" onClick={() => loginWithRedirect()}>Log In</Nav.Link>
     );
 };
 
