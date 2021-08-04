@@ -24,7 +24,7 @@ ReactDOM.render(
   <Auth0Provider
     domain='collenpw.us.auth0.com'
     clientId='eUuBo0JOfHPS6d4K7eGoQOwIxwnbLcCT'
-    redirectUri='/'>
+    redirectUri='https://okie-dokie-dex.netlify.app/'>
     <Router>
       <React.StrictMode>
         <App />
