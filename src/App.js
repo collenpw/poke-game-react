@@ -6,6 +6,7 @@ import Pokemon from './components/Pokemon/Pokemon';
 import PokemonList from './components/PokemonList/PokemonList';
 import Type from './components/Type/Type';
 import Login from './Login/Login';
+import Navigation from './components/Navbar/Nav';
 
 function App() {
 
@@ -15,12 +16,18 @@ function App() {
 
   const [pokeData, setPokeData] = useState(null);
 
+  const [filteredPokemon, setFilteredPokemon]= useState(null)
+
+
 const getAPIdata = async() => {
 
   try {
     const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898')
-    const data = await res.json();
+    const data = await res.json()
     setPokemon(data.results)
+    console.log(pokemon)
+    setFilteredPokemon(data.results)
+    console.log(filteredPokemon);
   }
 
   catch(err) {
@@ -38,19 +45,21 @@ const getAPIdata = async() => {
   }, [])
 
   return (
-
+    // <>
     
     <div>
-      <Switch>
-        <Route path='/' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
-        <Route path={`/type/:type`} component= { Type } />
-        <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
-        <Route path='/pokemon' exact render={()=> <PokemonList pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
-        <Route path={`/login`} component= { Login } />
+        <Navigation /> 
+        <Switch>
+          <Route path='/' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon} pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+          <Route path={`/type/:type`} component= { Type } />
+          <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
+          <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+          <Route path={`/login`} component= { Login } />
 
-      </Switch>
-    </div>
-    
+        </Switch>
+      </div>
+    // </>
+      
   );
 }
 

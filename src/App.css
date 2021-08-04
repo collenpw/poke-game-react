@@ -1,6 +1,6 @@
 body {
   background-image: url(/src/imgs/attempt2.jpg);
-  background-color: paleturquoise;
+  /* background-color: paleturquoise; */
   user-select: none;
 }
 
@@ -89,4 +89,17 @@ button {
 .login {
   width: 40rem;
   margin: 20px auto;
+}
+
+.pokesearch {
+  grid-row: 2;
+  /* max-width: 35%; */
+  text-align: center;
+}
+
+.search {
+  display: grid;
+  grid-template-rows: 1rem, 1rem;
+  margin: 0 auto;
+  max-width: 35%;
 }
