@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 import  { BrowserRouter as Router } from 'react-router-dom'
 
+import { Auth0Provider } from '@auth0/auth0-react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -19,11 +21,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Router>,
+  <Auth0Provider
+    domain='collenpw.us.auth0.com'
+    clientId='eUuBo0JOfHPS6d4K7eGoQOwIxwnbLcCT'
+    redirectUri='/'>
+    <Router>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Router>
+  </Auth0Provider>,
   document.getElementById('root')
 );
 
