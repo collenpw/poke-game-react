@@ -8,7 +8,12 @@ import Type from './components/Type/Type';
 import Login from './Login/Login';
 import Navigation from './components/Navbar/Nav';
 
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 function App() {
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   const [pokemon, setPokemon] = useState([]);
 
@@ -17,6 +22,8 @@ function App() {
   const [pokeData, setPokeData] = useState(null);
 
   const [filteredPokemon, setFilteredPokemon]= useState(null)
+
+  const [currentPokeUser, setCurrentPokeUser] = useState(null);
 
 
 const getAPIdata = async() => {
@@ -36,6 +43,64 @@ const getAPIdata = async() => {
 
 }
 
+class pokeUser{
+
+  constructor(email, username){
+    this.email = email;
+    this.username = username;
+    this.favPoke = [];
+  }
+}
+
+const findCurrentPokeUser = async() => {
+  try{
+      const res = await fetch ('http://localhost:4000');
+      const data = await res.json();
+      data.map((el) => {
+          if(el.email === user.email){
+              setCurrentPokeUser(el)
+          }
+          console.log(currentPokeUser);
+      })
+  }
+
+  catch(err){
+      console.log(err);
+  }
+}
+
+const handleLogin = async() => {
+  if(!isAuthenticated) return;
+  const res = await fetch ('http://localhost:4000');
+  const data = await res.json();
+
+  console.log(data);
+
+  let count = 0;
+  data.map((pokeUser) => {
+    if(pokeUser.email === user.email){count++}
+  })
+  if(count){
+     return
+  } else {
+      try{
+        const res = await fetch ('http://localhost:4000/pokemon',{
+          method: 'POST',
+          body: JSON.stringify(new pokeUser(user.email, user.nickname)),
+          headers: {
+            "Content-Type": "application/json"
+        }
+      })
+      console.log(res);
+      }
+
+      catch(err){
+        console.log(err);
+      }
+  }
+
+}
+
 
   useEffect(() => {
   
@@ -43,6 +108,11 @@ const getAPIdata = async() => {
   
     
   }, [])
+
+  useEffect(()=> {
+    handleLogin();
+    findCurrentPokeUser();
+  },[isAuthenticated])
 
   return (
     // <>
@@ -52,7 +122,7 @@ const getAPIdata = async() => {
         <Switch>
           <Route path='/' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon} pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
           <Route path={`/type/:type`} component= { Type } />
-          <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
+          <Route path={`/pokemon/:pokemon`} render= {() => <Pokemon pokeUser={currentPokeUser} pokeName={pokeName}user={user} />} />
           <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
           <Route path={`/login`} component= { Login } />
 
