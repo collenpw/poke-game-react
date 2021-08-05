@@ -103,7 +103,7 @@ const Location = ( {pokeData, capitalize} ) => {
 
     sendLocToObject();
 
-    console.log(versions);
+    // console.log(versions);
 
     return(
         <div className='locations'>

@@ -22,16 +22,12 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPo
     
     const handleChange = (e) => {
         setFilteredPokemon(defaultPoke)
-        console.log(pokemon);
-        console.log(e.target.value);
         setSearch(e.target.value)
-        console.log(search);
         
         const newArr = pokemon.filter(function (el) {
             return el.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
 
-        console.log(newArr);
         setFilteredPokemon(newArr)
     }
 
