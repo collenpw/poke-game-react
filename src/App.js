@@ -9,6 +9,7 @@ import Login from './components/Login/Login';
 import Navigation from './components/Navbar/Nav';
 import FavPoke from './components/FavPoke/FavPoke';
 import Ability from './components/Ability/Ability';
+import Move from './components/Move/Move';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -122,6 +123,7 @@ const handleLogin = async() => {
           <Switch>
             <Route path='/' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon} pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
             <Route path={`/abilities/:ability`} component= { Ability } />
+            <Route path={`/moves/:move`} component= { Move } />
             <Route path={`/types/:type`} component= { Type } />
             <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
             <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />

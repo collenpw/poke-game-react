@@ -1,7 +1,6 @@
-import { ListGroupItem, ListGroup, Spinner } from 'react-bootstrap';
+import { Card, ListGroupItem, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
-import { div } from 'prelude-ls';
 
 const Location = ( {pokeData, capitalize} ) => {
 
@@ -126,7 +125,7 @@ const Location = ( {pokeData, capitalize} ) => {
                     if(version.locations.length ===0) return;
                     return(
                         <>
-                        <ListGroup style={{ width: '25rem' }} className='location'>
+                        <Card style={{ width: '25rem' }} border='primary' className='location'>
                             <ListGroup.Item variant='primary'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
                             {version.locations.map((detail) => {
                                 
@@ -145,7 +144,7 @@ const Location = ( {pokeData, capitalize} ) => {
                                     <ListGroup.Item>{`${prefix}${capitalize(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
                                     )
                                 })}   
-                        </ListGroup>
+                        </Card>
                         </>
                     )
                 })}

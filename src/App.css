@@ -80,6 +80,7 @@ button {
 .location{
   margin-top: 10px;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .login {
@@ -114,7 +115,7 @@ button {
   text-decoration: underline;
 }
 
-.ability-title, .center-div {
+.ability-title, .center-div, .move-title {
   text-align: center;
 }
 
@@ -123,11 +124,22 @@ button {
   justify-content: space-evenly;
   flex-wrap: wrap;
   margin-bottom: 2rem;
+  /* margin-top: 2rem; */
 
 }
 
 .move-list-on-pokemon{
   width: 18rem;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
+.full-size-move{
+  height: 100%;
+}
+
+.white-text{
+  color: white;
+  text-align: center;
 }

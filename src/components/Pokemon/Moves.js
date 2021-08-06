@@ -1,7 +1,11 @@
 
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+
+import { useHistory } from "react-router";
 
 const Moves = ({pokeData, capitalize}) => {
+
+    const history = useHistory();
 
     class Method{
         constructor(method){
@@ -29,49 +33,40 @@ const Moves = ({pokeData, capitalize}) => {
         }
     })
 
-    // console.log(egg);
-    // console.log(levelUp);
-    // console.log(machine);
-    // console.log(tutor);
-
-    // console.log(levelUp.moves);
-    // console.log(tutor.moves);
-
     levelUp.moves.sort(function(a, b) {
         return a.version_group_details[a.version_group_details.length - 1].level_learned_at - b.version_group_details[b.version_group_details.length - 1].level_learned_at;
     });
 
-    // console.log(pokeData.moves);
     return (
 
        <div>
            <ListGroupItem className='center-div' style={{ width: '24rem' }}>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</ListGroupItem>
                 <div className='poke-moves'>
                     {levelUp.moves.length !== 0 && (
-                        <ListGroup className='move-list-on-pokemon'>
-                        <ListGroupItem variant='secondary'>{capitalize(levelUp.method)}</ListGroupItem>
-                        {levelUp.moves.map((move) => {
-                            return(
-                                <ListGroupItem>{`${capitalize(move.move.name)} (level ${move.version_group_details[move.version_group_details.length -1].level_learned_at})`}</ListGroupItem> 
-                                )
-                            })}
-                    </ListGroup>
+                        <Card border='dark' className='move-list-on-pokemon'>
+                            <ListGroupItem variant='secondary'>{capitalize(levelUp.method)}</ListGroupItem>
+                            {levelUp.moves.map((move) => {
+                                return(
+                                    <ListGroupItem className='full-size-move' onClick={()=>{history.push(`/moves/${move.move.name}`)}}>{`${capitalize(move.move.name)} (level ${move.version_group_details[move.version_group_details.length -1].level_learned_at})`}</ListGroupItem> 
+                                    )
+                                })}
+                            </Card>
                     )}
                     {methods.map((method) => {
 
                     if(method.method === 'level-up' || method.moves.length === 0) return;
 
                     return(
-                        <ListGroup className='move-list-on-pokemon'>
+                        <Card border='dark' className='move-list-on-pokemon'>
                             <ListGroupItem variant='secondary'>{capitalize(method.method)}</ListGroupItem>
                             {method.moves.map((move) => {
                                 return(
                                     
-                                    <ListGroupItem>{`${capitalize(move.move.name)}`}</ListGroupItem> 
+                                    <ListGroupItem className='full-size-move'onClick={()=>{history.push(`/moves/${move.move.name}`)}}>{`${capitalize(move.move.name)}`}</ListGroupItem> 
                                     
                                     )
                                 })}
-                        </ListGroup>
+                        </Card>
 
                         )
                     })}
