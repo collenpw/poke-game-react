@@ -11,17 +11,16 @@ button {
 }
 
 .pokeList {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 5px;
-  justify-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  /* grid-gap: 5px; */
+  /* justify-items: center; */
   /* background: paleturquoise; */
 }
 .poke-entry {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
   border: 1px solid black;
   
 }
@@ -42,7 +41,6 @@ button {
 .poke-list {
   margin-top: 15px;
   margin-bottom: 15px;
-
 }
 
 .poke-list:hover{
@@ -50,7 +48,7 @@ button {
   margin-top: 10px;
 }
 
-.card {
+.card, .center-div {
   margin: 2rem auto;
 }
 
@@ -77,9 +75,7 @@ button {
   margin: 10px;
 }
 
-.type-name{
-  text-align: center;
-}
+
 
 .location{
   margin-top: 10px;
@@ -106,4 +102,29 @@ button {
 
 .fav-poke{
   display: flex;
+  flex-wrap: wrap;
+}
+
+.bold{
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.type, .ability{
+  text-decoration: underline;
+}
+
+.ability-title, .center-div {
+  text-align: center;
+}
+
+.poke-moves{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.move-list-on-pokemon{
+  width: 18rem;
+  text-align: center;
 }

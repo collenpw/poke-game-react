@@ -10,7 +10,7 @@ const FavPokeButton = () => {
 
     const history = useHistory();
     const data = useContext(DataContext)
-    console.log(data.currentPokeUser);
+    // console.log(data.currentPokeUser);
 
     return (
         (data.currentPokeUser &&

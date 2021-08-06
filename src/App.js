@@ -8,6 +8,7 @@ import Type from './components/Type/Type';
 import Login from './components/Login/Login';
 import Navigation from './components/Navbar/Nav';
 import FavPoke from './components/FavPoke/FavPoke';
+import Ability from './components/Ability/Ability';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -30,9 +31,9 @@ const getAPIdata = async() => {
     const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898')
     const data = await res.json()
     setPokemon(data.results)
-    console.log(pokemon)
+    // console.log(pokemon)
     setFilteredPokemon(data.results)
-    console.log(filteredPokemon);
+    // console.log(filteredPokemon);
   }
 
   catch(err) {
@@ -58,7 +59,7 @@ const findCurrentPokeUser = async() => {
           if(el.email === user.email){
               setCurrentPokeUser(el)
               setUserFavPoke(el.favPoke)
-              console.log(el.favPoke);
+              // console.log(el.favPoke);
           }
       })
   }
@@ -90,7 +91,7 @@ const handleLogin = async() => {
             "Content-Type": "application/json"
         }
       })
-      console.log(res);
+      // console.log(res);
       }
 
       catch(err){
@@ -100,12 +101,10 @@ const handleLogin = async() => {
 
 }
 
-
   useEffect(() => {
   
     getAPIdata();
-  
-    
+   
   }, [])
 
   useEffect(()=> {
@@ -122,6 +121,7 @@ const handleLogin = async() => {
           <Navigation currentPokeUser={currentPokeUser} /> 
           <Switch>
             <Route path='/' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon} pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+            <Route path={`/abilities/:ability`} component= { Ability } />
             <Route path={`/types/:type`} component= { Type } />
             <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
             <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
