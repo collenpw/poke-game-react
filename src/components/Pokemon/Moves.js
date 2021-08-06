@@ -34,7 +34,7 @@ const Moves = ({pokeData, capitalize}) => {
     // console.log(machine);
     // console.log(tutor);
 
-    console.log(levelUp.moves);
+    // console.log(levelUp.moves);
     // console.log(tutor.moves);
 
     levelUp.moves.sort(function(a, b) {
@@ -43,32 +43,40 @@ const Moves = ({pokeData, capitalize}) => {
 
     // console.log(pokeData.moves);
     return (
-        <div className='poke-moves'>
-            <ListGroup className='move-list-on-pokemon'>
-                <ListGroupItem variant='secondary'>{capitalize(levelUp.method)}</ListGroupItem>
-                {levelUp.moves.map((move) => {
+
+       <div>
+           <ListGroupItem className='center-div' style={{ width: '24rem' }}>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</ListGroupItem>
+                <div className='poke-moves'>
+                    {levelUp.moves.length !== 0 && (
+                        <ListGroup className='move-list-on-pokemon'>
+                        <ListGroupItem variant='secondary'>{capitalize(levelUp.method)}</ListGroupItem>
+                        {levelUp.moves.map((move) => {
+                            return(
+                                <ListGroupItem>{`${capitalize(move.move.name)} (level ${move.version_group_details[move.version_group_details.length -1].level_learned_at})`}</ListGroupItem> 
+                                )
+                            })}
+                    </ListGroup>
+                    )}
+                    {methods.map((method) => {
+
+                    if(method.method === 'level-up' || method.moves.length === 0) return;
+
                     return(
-                        <ListGroupItem>{`${capitalize(move.move.name)} (level ${move.version_group_details[move.version_group_details.length -1].level_learned_at})`}</ListGroupItem> 
-                    )
-                })}
-            </ListGroup>
-        {methods.map((method) => {
-            if(method.method === 'level-up') return;
-            return(
-                <ListGroup className='move-list-on-pokemon'>
-                    <ListGroupItem variant='secondary'>{capitalize(method.method)}</ListGroupItem>
-                    {method.moves.map((move) => {
-                        return(
+                        <ListGroup className='move-list-on-pokemon'>
+                            <ListGroupItem variant='secondary'>{capitalize(method.method)}</ListGroupItem>
+                            {method.moves.map((move) => {
+                                return(
+                                    
+                                    <ListGroupItem>{`${capitalize(move.move.name)}`}</ListGroupItem> 
+                                    
+                                    )
+                                })}
+                        </ListGroup>
 
-                                <ListGroupItem>{`${capitalize(move.move.name)}`}</ListGroupItem> 
-                            
-                            )
-                        })}
-                </ListGroup>
-
-                )
-            })}
-        </div>
+                        )
+                    })}
+                </div>
+        </div> 
     );
 };
 

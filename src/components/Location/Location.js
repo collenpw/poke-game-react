@@ -1,5 +1,4 @@
-import ListGroup from 'react-bootstrap/ListGroup';
-import Spinner from 'react-bootstrap/Spinner';
+import { ListGroupItem, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
 import { div } from 'prelude-ls';
@@ -45,13 +44,13 @@ const Location = ( {pokeData, capitalize} ) => {
         catch (err) {
             console.log(err);
         }
+        
     }
 
     const getVersionData = async() => {
         try{
             const res = await fetch ('https://pokeapi.co/api/v2/version/?limit=40')
             const data = await res.json()
-            // console.log(data);
             const versionsTemp = data.results.map((version) => {
                 return(
                     new VersionLocation(version.name)       
@@ -79,7 +78,6 @@ const Location = ( {pokeData, capitalize} ) => {
         return capitalize(formattedLoc);
     }
     
-    // console.log(versions);
     if(!locations|| !versions) return (
         <Spinner className='spinner'animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -103,39 +101,57 @@ const Location = ( {pokeData, capitalize} ) => {
 
     sendLocToObject();
 
-    // console.log(versions);
+    const filterLocationsForHeadbutt= () => {
 
+        versions.map((version) => {
+            if(version.locations.length === 0) return;
+            for(let i=0; i< version.locations.length; i++){
+                if(version.locations[i].method.includes('headbut')){
+                    version.locations.splice(i, 1);
+                }
+            }
+            
+        })
+    }
+
+    filterLocationsForHeadbutt();
     return(
-        <div className='locations'>
-        {versions.map((version) => {
-            if(version.locations.length ===0) return;
-            return(
-                <>
-                {/* <h1>Locations</h1> */}
-                <ListGroup style={{ width: '25rem' }} className='location'>
-                    <ListGroup.Item variant='primary'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
-                    {version.locations.map((detail) => {
+        locations.length > 0 && (
+        <div>
+            {filterLocationsForHeadbutt()}
+            <ListGroupItem className='center-div' style={{ width: '24rem' }}>{`${capitalize(pokeData.name)} can be found in these games, at their respective location:`}</ListGroupItem>
+            <div className='locations'>
 
-                        if (detail.method.includes('headbutt')) return
-
-                        let prefix = '';
-                        if (detail.method.includes('rod')){
-                            prefix = 'Use the '
-                        }
-
-                        let prep = 'at'
-                        if (detail.method === 'walk') {
-                            prep = 'around'
-                        }
-                        return(
-                            <ListGroup.Item>{`${prefix}${capitalize(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
-                            )
-                        })}   
-                 </ListGroup>
-                </>
-            )
-                    })}
+                {versions.map((version) => {
+                    if(version.locations.length ===0) return;
+                    return(
+                        <>
+                        <ListGroup style={{ width: '25rem' }} className='location'>
+                            <ListGroup.Item variant='primary'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
+                            {version.locations.map((detail) => {
+                                
+                                if (detail.method.includes('headbutt')) return
+                                
+                                let prefix = '';
+                                if (detail.method.includes('rod')){
+                                    prefix = 'Use the '
+                                }
+                                
+                                let prep = 'at'
+                                if (detail.method === 'walk') {
+                                    prep = 'around'
+                                }
+                                return(
+                                    <ListGroup.Item>{`${prefix}${capitalize(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
+                                    )
+                                })}   
+                        </ListGroup>
+                        </>
+                    )
+                })}
+                </div>
         </div>
+        )
     )
 };
 

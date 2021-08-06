@@ -13,7 +13,7 @@ const Ability = ({match}) => {
         try{
             const res = await fetch (`https://pokeapi.co/api/v2/ability/${match.params.ability}`)
             const data = await res.json()
-            console.log(data);
+            // console.log(data);
             setAbilityData(data)
         }
 
@@ -28,7 +28,7 @@ const Ability = ({match}) => {
 
     const grabID = (url) => {
         const urlArr = url.split('/');
-        console.log(urlArr);
+        // console.log(urlArr);
         return(urlArr[6])
     }
 
@@ -45,7 +45,7 @@ const Ability = ({match}) => {
         <h3>Loading...</h3>
     )
 
-    console.log(abilityData);
+    // console.log(abilityData);
 
     return (
         <div>
