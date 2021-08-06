@@ -25,10 +25,12 @@ const Pokemon = ({match}) => {
     const [favorited, setFavorited] = useState(false);
 
     class Pokemon{
-        constructor(name, id, img){
+        constructor(name, id, img, types, abilities){
             this.name=name;
             this.id=id;
             this.img=img;
+            this.types=types;
+            this.abilities=abilities;
             this.fav = true;
         }
     }
@@ -50,17 +52,17 @@ const Pokemon = ({match}) => {
 
     const handleLoggedIn = () => {
 
-        if(data.pokeUser){
-            setFavPoke(data.pokeUser.favPoke);
+        if(data.currentPokeUser){
+            setFavPoke(data.currentPokeUser.favPoke);
         }
     }
 
     const handleFavorite = async (e) => {
         e.preventDefault();
         setFavorited(!favorited);
-        favPoke.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`))
+        favPoke.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`, pokeData.types, pokeData.abilities))
 
-        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: favPoke}),
             headers: {
@@ -80,7 +82,7 @@ const Pokemon = ({match}) => {
 
         console.log(tempArr);
 
-        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: tempArr}),
             headers: {
@@ -88,7 +90,7 @@ const Pokemon = ({match}) => {
             }
         })
         setFavPoke(tempArr);
-        setFavorited(!favorited);
+        setFavorited(false);
     }
 
     useEffect(()=> {
@@ -158,7 +160,7 @@ const Pokemon = ({match}) => {
                         <ListGroup.Item>Types:</ListGroup.Item>
                         {pokeData.types.map((type) => {
                             return (
-                                <ListGroup.Item> <a href={`/type/${type.type.name}`}>{capitalize(type.type.name)}</a></ListGroup.Item>
+                                <ListGroup.Item> <a href={`/types/${type.type.name}`}>{capitalize(type.type.name)}</a></ListGroup.Item>
                             )
                         })}
                     </ListGroup>    
