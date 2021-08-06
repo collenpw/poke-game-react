@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 
-import Login from "../../Login/Login";
+import Login from "../Login/Login";
 import Logout from "../Logout/Logout";
 import FavPoke from "../FavPoke/FavPoke";
 
@@ -8,9 +8,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import logo from '../../imgs/logo.png'
 
+
 const Navigation = () => {
 
-    const { user, isAuthenticated, isLoading } = useAuth0();
+
+    const { isAuthenticated } = useAuth0();
 
   
     return (

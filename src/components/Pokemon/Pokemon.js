@@ -1,18 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { withRouter } from 'react-router';
 
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 
-import Location from '../../Location/Location';
+import Location from '../Location/Location';
 
 import heart from '../../imgs/heart.svg'
 import filledHeart from '../../imgs/heart-fill.svg'
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+import { DataContext } from '../../App';
 
-const Pokemon = ({pokeName, pokeUser}) => {
+const Pokemon = ({match}) => {
+
+    const data = useContext(DataContext);
 
     const { isAuthenticated } = useAuth0();
 
@@ -29,8 +33,10 @@ const Pokemon = ({pokeName, pokeUser}) => {
         }
     }
 
+    console.log(data.userFavPoke);
+
     const getPokeData = async() => {
-        const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
+        const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
         try {
             const res = await fetch (API_ENDPOINT);
             const data = await res.json();
@@ -44,15 +50,9 @@ const Pokemon = ({pokeName, pokeUser}) => {
 
     const handleLoggedIn = () => {
 
-        if(pokeUser){
-            setFavPoke(pokeUser.favPoke);
+        if(data.pokeUser){
+            setFavPoke(data.pokeUser.favPoke);
         }
-
-        favPoke.map((pokemon) => {
-            if(pokemon.name===pokeData.name){
-                setFavorited(true)
-            }
-        })
     }
 
     const handleFavorite = async (e) => {
@@ -60,7 +60,7 @@ const Pokemon = ({pokeName, pokeUser}) => {
         setFavorited(!favorited);
         favPoke.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`))
 
-        const res = await fetch (`http://localhost:4000/pokemon/${pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: favPoke}),
             headers: {
@@ -80,14 +80,14 @@ const Pokemon = ({pokeName, pokeUser}) => {
 
         console.log(tempArr);
 
-        const res = await fetch (`http://localhost:4000/pokemon/${pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: tempArr}),
             headers: {
                 "Content-Type": "application/json"
             }
         })
-
+        setFavPoke(tempArr);
         setFavorited(!favorited);
     }
 
@@ -101,9 +101,32 @@ const Pokemon = ({pokeName, pokeUser}) => {
         handleLoggedIn();
     }, [])
 
+    useEffect(()=>{
+        if(!pokeData || !favPoke) return;
+        favPoke.map((pokemon) => {
+            if(pokemon.name===pokeData.name){
+                setFavorited(true)
+            }
+            
+        })
+    },[favPoke])
+
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
+
+    // console.log(pokeData);
+
+    const checkForFav = () => {
+        if(!data.userFavPoke) return;
+        data.userFavPoke.map((pokemon)=> {
+            if(pokemon.name===match.params.pokemon && !favorited){
+                setFavorited(true)
+            }
+        })
+    }
+
+    checkForFav();
 
     if(!pokeData) return (
         <Spinner className='spinner'animation="border" role="status">
@@ -116,8 +139,8 @@ const Pokemon = ({pokeName, pokeUser}) => {
                 <Card border='dark'style={{ width: '18rem' }}>
                     
                          
-                        {isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
-                        {isAuthenticated &&favorited && ( <Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
+                        {data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
+                        {data.isAuthenticated &&favorited && ( <Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
                         
                     <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
                     <Card.Body>
