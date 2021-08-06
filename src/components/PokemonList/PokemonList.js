@@ -4,13 +4,12 @@ import logo from '../../imgs/logo.png'
 
 import Card from 'react-bootstrap/Card';
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPokemon, setFilteredPokemon} ) => {
 
     const history = useHistory();
 
-    // const [filteredPokemon, setFilteredPokemon] = useState(pokemon)
     const [search, setSearch] = useState('')
 
     const defaultPoke = [...pokemon]
@@ -36,8 +35,6 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPo
     }
 
     console.log(filteredPokemon);
-
-    // console.log(pokemon[68].url.split('/')[6]);
 
     if(!filteredPokemon) return(
         <div>Loading</div>
