@@ -20,17 +20,24 @@ const FavPoke = () => {
         history.push(`/pokemon/${name}`)
     }
 
+    data.userFavPoke.sort(function(a, b) {
+        return a.id - b.id;
+    });
+
     return (
         <div className='fav-poke'>
 
             {data.userFavPoke && (
                 data.userFavPoke.map((pokemon) => {
-                    // console.log(pokemon);
+                    console.log(pokemon);
                     return(
                         <Card onClick={() => {handleClick(pokemon.name)}} border='dark'style={{ width: '18rem' }}>   
                             <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`} />
                             <Card.Body>
                                 <Card.Title>{capitalize(pokemon.name)}</Card.Title>
+                                <Card.Text className='poke-num'>
+                                #{pokemon.id}
+                            </Card.Text>
                             </Card.Body>
                         </Card>
                     )

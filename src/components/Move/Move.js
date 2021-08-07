@@ -63,7 +63,7 @@ const Move = ({match}) => {
                 
             </Card>
 
-            <ListGroupItem className='center-div' style={{ width: '24rem' }}>The following Pokemon can have this ability:</ListGroupItem>
+            <ListGroupItem className='center-div' style={{ width: '24rem' }}>The following Pokemon can learn this move:</ListGroupItem>
 
             <div className='fav-poke'>
                 {moveData.learned_by_pokemon.map((pokemon) => {

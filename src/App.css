@@ -1,6 +1,14 @@
+html{
+  background: lightgray;
+}
+
+.app-div{
+  background: lightgray;
+}
+
 body {
-  background-image: url(/src/imgs/attempt2.jpg);
-  /* background-color: paleturquoise; */
+  /* background-image: url(/src/imgs/attempt2.jpg); */
+  background: lightgray;
   user-select: none;
 }
 

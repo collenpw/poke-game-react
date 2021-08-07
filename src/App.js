@@ -117,7 +117,7 @@ const handleLogin = async() => {
   return (
     // <>
     
-    <div>
+    <div className='app-div'>
       <DataContext.Provider value={{userFavPoke, currentPokeUser, pokeName, user, isAuthenticated}}>
           <Navigation currentPokeUser={currentPokeUser} /> 
           <Switch>
