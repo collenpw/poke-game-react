@@ -5,14 +5,15 @@ import { Route, Switch} from 'react-router-dom'
 import Pokemon from './components/Pokemon/Pokemon';
 import PokemonList from './components/PokemonList/PokemonList';
 import Type from './components/Type/Type';
-import Login from './components/Login/Login';
-import Navigation from './components/Navbar/Nav';
-import FavPoke from './components/FavPoke/FavPoke';
+import TypeList from './components/TypeList/TypeList'
 import Ability from './components/Ability/Ability';
+import AbilityList from './components/AbilityList/AbilityList'
 import Move from './components/Move/Move';
-import Abilities from './components/Abilities/Abilities';
-import Moves from './components/Moves/Moves';
-import Types from './components/Types/Types';
+import MoveList from './components/MoveList/MoveList'
+
+import Nav from './components/Nav/Nav';
+import Login from './components/Nav/Login'
+import FavPoke from './components/FavPoke/FavPoke';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -87,9 +88,9 @@ const handleLogin = async() => {
   return ( 
     <div className='app-div'>
       <DataContext.Provider value={{userFavPoke, currentPokeUser, user, isAuthenticated}}>
-          <Navigation currentPokeUser={currentPokeUser} /> 
+          <Nav currentPokeUser={currentPokeUser} /> 
           <Switch>
-            <Route path={'/'} component={PokemonList} />
+            <Route path={'/'} exact component={PokemonList} />
             <Route path={`/abilities/:ability`} component= { Ability } />
             <Route path={`/moves/:move`} component= { Move } />
             <Route path={`/types/:type`} component= { Type } />
@@ -97,9 +98,9 @@ const handleLogin = async() => {
             <Route path={'/pokemon'} component={PokemonList} />
             <Route path={`/login`} component= { Login } />
             <Route path={`/:user/favorite-pokemon`} component= {FavPoke} />
-            <Route path={'/abilities' } component= { Abilities } />
-            <Route path={'/moves' } component= { Moves } />
-            <Route path={'/types' } component= { Types } />
+            <Route path={'/abilities' } component= { AbilityList } />
+            <Route path={'/moves' } component= { MoveList } />
+            <Route path={'/types' } component= { TypeList } />
 
 
 

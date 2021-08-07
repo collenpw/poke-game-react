@@ -26,7 +26,6 @@ const PokemonList = ( {setPokeName} ) => {
     }
 
     const handleClick = async (name) => {
-        setPokeName(name);
         history.push(`/pokemon/${name}`)
     }
     
