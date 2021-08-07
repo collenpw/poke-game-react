@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import { withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 
 import Location from '../Location/Location';
+import Moves from './Moves';
 
 import heart from '../../imgs/heart.svg'
 import filledHeart from '../../imgs/heart-fill.svg'
@@ -17,7 +18,7 @@ import { DataContext } from '../../App';
 const Pokemon = ({match}) => {
 
     const data = useContext(DataContext);
-
+    const history = useHistory();
     const { isAuthenticated } = useAuth0();
 
     const [favPoke, setFavPoke] = useState([]);
@@ -25,15 +26,17 @@ const Pokemon = ({match}) => {
     const [favorited, setFavorited] = useState(false);
 
     class Pokemon{
-        constructor(name, id, img){
+        constructor(name, id, img, types, abilities){
             this.name=name;
             this.id=id;
             this.img=img;
+            this.types=types;
+            this.abilities=abilities;
             this.fav = true;
         }
     }
 
-    console.log(data.userFavPoke);
+    // console.log(data.userFavPoke);
 
     const getPokeData = async() => {
         const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
@@ -45,24 +48,35 @@ const Pokemon = ({match}) => {
         catch (err) {
             console.log(err);
         }
-        
+        getFavPoke()
     }
 
-    const handleLoggedIn = () => {
-
-        if(data.pokeUser){
-            setFavPoke(data.pokeUser.favPoke);
+    const getFavPoke = async() => {
+        if(!isAuthenticated) return;
+        console.log('hi');
+        try{
+            const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
+            const resData = await res.json()
+            setFavPoke(resData.favPoke);
+            console.log(resData);
+        }
+        catch(err){
+            console.log(err);
         }
     }
 
     const handleFavorite = async (e) => {
         e.preventDefault();
         setFavorited(!favorited);
-        favPoke.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`))
+        const tempArr = [...favPoke]
+        tempArr.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`, pokeData.types, pokeData.abilities))
+        console.log(tempArr);
+        setFavPoke(tempArr);
+        console.log(favPoke);
 
-        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
-            body: JSON.stringify({favPoke: favPoke}),
+            body: JSON.stringify({favPoke: tempArr}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -72,23 +86,22 @@ const Pokemon = ({match}) => {
 
     const handleUnfavorite = async (e) => {
         e.preventDefault();
-        console.log(favPoke);
-
         const tempArr = favPoke.filter(function (el) {
-            return el.name != pokeData.name;
+            return el.name !== pokeData.name;
         })
-
         console.log(tempArr);
-
-        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.pokeUser._id}`,{
+        const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: tempArr}),
             headers: {
                 "Content-Type": "application/json"
             }
         })
+        data.userFavPoke = [...tempArr];
+        console.log(data.userFavPoke);
+        console.log(res);
         setFavPoke(tempArr);
-        setFavorited(!favorited);
+        setFavorited(false);
     }
 
     useEffect(()=> {
@@ -98,9 +111,9 @@ const Pokemon = ({match}) => {
     }, []);
 
     useEffect(()=> {
-        handleLoggedIn();
+        getFavPoke();
     }, [])
-
+    
     useEffect(()=>{
         if(!pokeData || !favPoke) return;
         favPoke.map((pokemon) => {
@@ -110,6 +123,7 @@ const Pokemon = ({match}) => {
             
         })
     },[favPoke])
+    
 
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -147,23 +161,24 @@ const Pokemon = ({match}) => {
                         <Card.Title>{capitalize(pokeData.name)}</Card.Title>
                     </Card.Body>
                     <ListGroup className="abilities">
-                        <ListGroup.Item>Abilities:</ListGroup.Item>
+                        <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
                         {pokeData.abilities.map((ability) => {
                             return (
-                                <ListGroup.Item>{capitalize(ability.ability.name)}</ListGroup.Item>
+                                <ListGroup.Item><span className='ability' onClick={() => {history.push(`/abilities/${ability.ability.name}`)}}>{capitalize(ability.ability.name)}</span></ListGroup.Item>
                             )
                         })}
                     </ListGroup>
-                    <ListGroup className="type">
-                        <ListGroup.Item>Types:</ListGroup.Item>
+                    <ListGroup>
+                        <ListGroup.Item className='bold'>Types:</ListGroup.Item>
                         {pokeData.types.map((type) => {
                             return (
-                                <ListGroup.Item> <a href={`/type/${type.type.name}`}>{capitalize(type.type.name)}</a></ListGroup.Item>
+                                <ListGroup.Item className='type' onClick={() => {history.push(`/types/${type.type.name}`)}}><span className='type'>{capitalize(type.type.name)}</span></ListGroup.Item>
                             )
                         })}
                     </ListGroup>    
                 </Card>
                 <Location pokeData={pokeData} capitalize={capitalize} />
+                <Moves pokeData={pokeData} capitalize={capitalize}/>
                 
             </div>
             ); 

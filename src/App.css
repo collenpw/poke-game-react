@@ -1,6 +1,14 @@
+html{
+  background: lightgray;
+}
+
+.app-div{
+  background: lightgray;
+}
+
 body {
-  background-image: url(/src/imgs/attempt2.jpg);
-  /* background-color: paleturquoise; */
+  /* background-image: url(/src/imgs/attempt2.jpg); */
+  background: lightgray;
   user-select: none;
 }
 
@@ -11,17 +19,16 @@ button {
 }
 
 .pokeList {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 5px;
-  justify-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  /* grid-gap: 5px; */
+  /* justify-items: center; */
   /* background: paleturquoise; */
 }
 .poke-entry {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
   border: 1px solid black;
   
 }
@@ -42,7 +49,6 @@ button {
 .poke-list {
   margin-top: 15px;
   margin-bottom: 15px;
-
 }
 
 .poke-list:hover{
@@ -50,7 +56,7 @@ button {
   margin-top: 10px;
 }
 
-.card {
+.card, .center-div {
   margin: 2rem auto;
 }
 
@@ -77,13 +83,12 @@ button {
   margin: 10px;
 }
 
-.type-name{
-  text-align: center;
-}
+
 
 .location{
   margin-top: 10px;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .login {
@@ -102,4 +107,94 @@ button {
   grid-template-rows: 1rem, 1rem;
   margin: 0 auto;
   max-width: 35%;
+}
+
+.fav-poke{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bold{
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.type, .ability{
+  text-decoration: underline;
+}
+
+.ability-title, .center-div, .move-title {
+  text-align: center;
+}
+
+.poke-moves{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  /* margin-top: 2rem; */
+
+}
+
+.move-list-on-pokemon{
+  width: 18rem;
+  text-align: center;
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
+.full-size-move{
+  height: 100%;
+}
+
+.white-text{
+  color: white;
+  text-align: center;
+}
+
+.all-abilities{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.single-ability{
+  width: 12rem;
+  height: 4rem;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.single-move{
+  width: 12rem;
+  text-align: center;
+  height: 4rem;
+  justify-content: space-evenly;
+}
+
+.ability-descriptor{
+  height: 3rem;
+  text-align: center;
+  padding: .7rem 0;
+  color: white;
+}
+
+.big-descriptor{
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.single-type{
+  margin: 1rem; 
+  width: 12rem;
+  height: 4rem;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.all-types{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
