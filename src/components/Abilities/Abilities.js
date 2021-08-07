@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Card, Form, ListGroupItem } from "react-bootstrap";
+import { Card, Form, Spinner } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
@@ -9,13 +9,14 @@ const Abilities = () => {
     const history = useHistory();
     const [abilityData, setAbilityData] = useState(null);
     const [search, setSearch] = useState(null)
-    const [searchRes, setSearchRes] = useState(null)
+    const [searchRes, setSearchRes] = useState(abilityData)
 
     const getAbilityData = async() => {
         try{
             const res = await fetch ('https://pokeapi.co/api/v2/ability/?limit=327')
             const data = await res.json();
             setAbilityData(data.results)
+            setSearchRes(data.results)
         }
         catch(err){
             console.log(err);
@@ -52,7 +53,11 @@ const Abilities = () => {
     }
 
 
-    if(!abilityData) return <h1>Loading...</h1>
+    if(!abilityData || !searchRes) return (
+        <Spinner className='spinner'animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    ) 
 
     abilityData.sort(function(a, b){
         if(a.name < b.name) { return -1; }
@@ -62,8 +67,8 @@ const Abilities = () => {
 
     return (
         <div>
-            <Form.Control onChange={handleChange} className='ability-search'type="text" placeholder="Normal text" />
-            {searchRes && ( 
+            <Form.Control onChange={handleChange} className='ability-search'type="text" placeholder="Search for an ability" />
+            {searchRes && searchRes.length !== abilityData.length && ( 
                 <div className='all-abilities'>
                     {searchRes.map((ability) => {
                         return(
@@ -75,7 +80,7 @@ const Abilities = () => {
                 </div> 
 
             )}
-            {!searchRes && ( 
+            {searchRes.length===abilityData.length && ( 
 
             <>
             <Card bg='dark'className='ability-descriptor'style={{ width: '24rem' }}>

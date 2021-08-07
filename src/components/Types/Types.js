@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Card, ListGroupItem } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
@@ -33,8 +33,11 @@ const Types = () => {
     console.log(typeData);
 
 
-    if(!typeData) return <h1>Loading...</h1>
-
+    if(!typeData) return (
+        <Spinner className='spinner'animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    ) 
     typeData.sort(function(a, b){
         if(a.name < b.name) { return -1; }
         if(a.name > b.name) { return 1; }

@@ -34,9 +34,9 @@ const Navigation = ({currentPokeUser}) => {
                     />
                 </Navbar.Brand>
                 <Nav className="me-auto">
-                    {!data.isAuthenticated && (
+                    {/* {!data.isAuthenticated && (
                         <Login />
-                    )}
+                    )} */}
                     <Nav.Link onClick={()=> {history.push('/pokemon')}}>Pokemon</Nav.Link>
                     <Nav.Link onClick={()=> {history.push('/moves')}}>Moves</Nav.Link>
                     <Nav.Link onClick={()=> {history.push('/abilities')}}>Abilities</Nav.Link>                       
@@ -48,12 +48,13 @@ const Navigation = ({currentPokeUser}) => {
                     )}
                 </Nav >
                 <Nav>
-                {data.isAuthenticated && currentPokeUser &&(
-                    <>
-                    <Navbar.Text>Logged in as {currentPokeUser.username}:</Navbar.Text>
-                    <Logout currentPokeUser={currentPokeUser} />
-                    </>
-                )}
+                    {!data.isAuthenticated && (<Login/>)}
+                    {data.isAuthenticated && currentPokeUser &&(
+                        <>
+                        <Navbar.Text>Logged in as {currentPokeUser.username}:</Navbar.Text>
+                        <Logout currentPokeUser={currentPokeUser} />
+                        </>
+                    )}
                 </Nav>
             </Container>
          </Navbar>

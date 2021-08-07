@@ -2,16 +2,28 @@ import { useHistory } from "react-router-dom";
 
 import logo from '../../imgs/logo.png'
 
-import Card from 'react-bootstrap/Card';
+import { Form, Card, Spinner } from "react-bootstrap";
 
 import { useState } from 'react'
+import { useEffect } from "react";
 
-const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
+const PokemonList = ( {setPokeName} ) => {
 
     const history = useHistory();
 
-    const [search, setSearch] = useState(null);
+    const [pokeData, setPokeData] = useState(null);
     const [searchRes, setSearchRes] = useState(null);
+
+    const getPokeData = async() => {
+        try{
+            const res = await fetch ('https://pokeapi.co/api/v2/pokemon/?limit=898')
+            const data = await res.json()
+            setPokeData(data.results);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
 
     const handleClick = async (name) => {
         setPokeName(name);
@@ -19,10 +31,7 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
     }
     
     const handleChange = (e) => {
-        setSearch(e.target.value)
-        console.log(search);
-        
-        const newArr = pokemon.filter(function (el) {
+        const newArr = pokeData.filter(function (el) {
             return el.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
 
@@ -34,9 +43,17 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
 
-    if(!pokemon) return(
-        <div>Loading</div>
-    )
+    useEffect(() => {
+        getPokeData();
+    },[])
+
+    if(!pokeData) return (
+        <Spinner className='spinner'animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    ) 
+
+        console.log(pokeData);
 
     return (
         
@@ -44,7 +61,7 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
 
         <div className='search'>
             <img className='home-logo' src={logo} alt="Okie-Dokie-Dex logo" />
-            <input onChange={handleChange} className='pokesearch' placeholder='Search for a Pokemon' type="text" />
+            <Form.Control onChange={handleChange} className='ability-search'type="text" placeholder="Search for a Pokemon" />
         </div>
 
         {searchRes && (
@@ -77,7 +94,7 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
 
         <div className='pokeList'>
 
-            {pokemon.map((pokemon) => {
+            {pokeData.map((pokemon) => {
 
                 return (
                        
