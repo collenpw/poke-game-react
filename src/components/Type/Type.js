@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 
 import { Card, ListGroup, Spinner } from "react-bootstrap";
 
+import { useHistory } from "react-router";
+
 const Type = ({match}) => {
+
+    const history = useHistory();
 
     const [type, setType] = useState(null);
     const [dmgRelations, setDmgRelations] = useState(null);
@@ -61,35 +65,19 @@ const Type = ({match}) => {
                     if (type.damage_relations[key].length === 0) {
                         return
                     }
-                    // console.log(key);
-                    // console.log(type.damage_relations[key]);
                     return(
                         <ListGroup className='relation' style={{ width: '30rem' }}>
 
                         <ListGroup.Item variant='primary'>{`${formatRelation(key)}:`}</ListGroup.Item>
                         {type.damage_relations[key].map((relation) => {
-                            console.log(relation);
                             return(
-                                <ListGroup.Item>{capitalize(relation.name)}</ListGroup.Item>
+                                <ListGroup.Item >{capitalize(relation.name)}</ListGroup.Item>
                             )
                         })}
                         </ListGroup>
                     )
                 })}
-                {/* {for (const relation in type.damage_relations) {
-                    return(
-                        <div>
-                            <h1>{relation}</h1>
-                            <ListGroup style={{ width: '40rem' }} className={relation}>
-                                {relation.map((dmgMod) => {
-                                    return (
-                                        <ListGroup.Item>{dmgMod.name}</ListGroup.Item>
-                                    )
-                                })}
-                            </ListGroup>
-                        </div>
-                    )
-                })} */}
+                
             </div>
         </div>
     );

@@ -46,10 +46,12 @@ const Types = () => {
             <Card bg='dark'className='ability-descriptor'style={{ width: '24rem' }}>
                 <Card.Text>All of the types in the games (click for effectiveness):</Card.Text>
             </Card>
-            <div className='all-abilities'>
+            <div className='all-types'>
                 {typeData.map((type) => {
+                    console.log(parseInt((type.url.split('/')[6].length)));
+                    if(parseInt(type.url.split('/')[6]) > 20) return;
                     return(
-                        <Card onClick={() => {history.push(`/types/${type.name}`)}} border='dark' className='single-ability'>
+                        <Card className='single-type'onClick={() => {history.push(`/types/${type.name}`)}} border='dark' >
                             <Card.Title>{capitalize(type.name)}</Card.Title>
                         </Card>
                     )

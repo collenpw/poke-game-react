@@ -155,6 +155,7 @@ button {
 .all-abilities{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .single-ability{
@@ -182,4 +183,18 @@ button {
   color: white;
   text-align: center;
   padding: 1rem 0;
+}
+
+.single-type{
+  margin: 1rem; 
+  width: 12rem;
+  height: 4rem;
+  text-align: center;
+  justify-content: space-around;
+}
+
+.all-types{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

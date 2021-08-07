@@ -41,14 +41,29 @@ const Move = ({match}) => {
 
     console.log(moveData);
 
+    const formatMove = (str) => {
+        if(str[0]=== '1'){
+            let arr = str.split('-');
+            let numArr = arr.slice(0, 3).join(',');
+            let wordArr = arr.slice(3).join(' ');
+            console.log(wordArr);
+            console.log(numArr);
+            return `${numArr} ${wordArr}` 
+        }
+        let formattedMove = str.replace(/-/g, ' ');        
+        return capitalize(formattedMove);
+    }
+
     if(!moveData) return <h1>Loading...</h1>
+
+    console.log(moveData);
 
     return (
         <div>
             <Card bg='dark' style={{ width: '36rem' }}>
                 <Card.Body>
-                    <Card.Title text='white' className='move-title, white-text'>{capitalize(moveData.name)}</Card.Title>
-                    <ListGroupItem>{`Move type: ${moveData.damage_class.name}`}</ListGroupItem>
+                    <Card.Title text='white' className='move-title, white-text'>{capitalize(formatMove(moveData.name))}</Card.Title>
+                    <ListGroupItem>{`Move type: ${capitalize(moveData.damage_class.name)}`}</ListGroupItem>
                     {moveData.power && (
                         <ListGroupItem>{`Power: ${moveData.power}`}</ListGroupItem>
                     )}
@@ -63,12 +78,13 @@ const Move = ({match}) => {
                 
             </Card>
 
+            {moveData.learned_by_pokemon.length > 0 && ( 
+            <>
             <ListGroupItem className='center-div' style={{ width: '24rem' }}>The following Pokemon can learn this move:</ListGroupItem>
 
             <div className='fav-poke'>
                 {moveData.learned_by_pokemon.map((pokemon) => {
                     if(parseInt(pokemon.url.split('/')[6]) > 898) return;
-                        console.log(grabID(pokemon.url));
                     return(
                         <Card onClick={() => {handleClick(pokemon.name)}} border='dark'style={{ width: '18rem' }}>   
                             <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.url)}.png`} />
@@ -81,6 +97,8 @@ const Move = ({match}) => {
                     
                 })}
             </div>
+            </>
+            )}
 
             
         </div>
