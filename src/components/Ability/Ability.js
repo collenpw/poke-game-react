@@ -45,7 +45,7 @@ const Ability = ({match}) => {
         <h3>Loading...</h3>
     )
 
-    // console.log(abilityData);
+    console.log(abilityData);
 
     return (
         <div>
@@ -53,7 +53,8 @@ const Ability = ({match}) => {
                 <Card.Body>
                     <Card.Title className='ability-title'>{capitalize(abilityData.name)}</Card.Title>
                     <Card.Text>
-                        {abilityData.effect_entries[1].effect}
+                        {abilityData.effect_entries.length === 0 && (<Card.Text>There is no information on the effect of this ability yet. Check back later!</Card.Text>)}
+                        {abilityData.effect_entries.length > 0 && (<Card.Text> {abilityData.effect_entries[abilityData.effect_entries.length-1].effect}</Card.Text>)}
                     </Card.Text>
                 </Card.Body>
                 

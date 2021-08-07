@@ -163,6 +163,7 @@ button {
   height: 4rem;
   text-align: center;
   justify-content: space-evenly;
+  margin: 1rem 1rem;
 }
 
 .single-move{
@@ -170,6 +171,8 @@ button {
   text-align: center;
   height: 4rem;
   justify-content: space-evenly;
+  margin: 1rem 1rem;
+
 }
 
 .ability-descriptor{
@@ -197,4 +200,9 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.ability-search{
+  max-width: 30rem;
+  margin: 2rem auto;
 }

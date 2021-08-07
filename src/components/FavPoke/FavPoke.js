@@ -3,7 +3,7 @@ import { DataContext } from '../../App';
 
 import { useHistory } from 'react-router';
 
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, Spinner } from 'react-bootstrap';
 
 const FavPoke = () => {
 
@@ -47,9 +47,11 @@ const FavPoke = () => {
         });
     }
 
-    if(!favPoke) return(
-        <h1>Loading...</h1>
-    )
+    if(!favPoke) return (
+        <Spinner className='spinner'animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    ) 
 
     return (
         <div className='fav-poke'>
