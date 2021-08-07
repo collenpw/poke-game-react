@@ -7,6 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import Location from './Location';
 import Moves from './Moves';
+import EvolutionChain from '../EvolutionChain/EvolutionChain';
 
 import heart from '../../imgs/heart.svg'
 import filledHeart from '../../imgs/heart-fill.svg'
@@ -51,12 +52,10 @@ const Pokemon = ({match}) => {
 
     const getFavPoke = async() => {
         if(!isAuthenticated) return;
-        console.log('hi');
         try{
             const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
             const resData = await res.json()
             setFavPoke(resData.favPoke);
-            console.log(resData);
         }
         catch(err){
             console.log(err);
@@ -122,7 +121,6 @@ const Pokemon = ({match}) => {
         })
     },[favPoke])
     
-
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
@@ -143,6 +141,9 @@ const Pokemon = ({match}) => {
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     ) 
+
+    console.log(pokeData);
+
 
         return (
             <div>
@@ -175,6 +176,8 @@ const Pokemon = ({match}) => {
                 </Card>
                 <Location pokeData={pokeData} capitalize={capitalize} />
                 <Moves pokeData={pokeData} capitalize={capitalize}/>
+                {/* WORK IN PROGRESS */}
+                {/* <EvolutionChain pokeData={pokeData}/> */}
                 
             </div>
             ); 
