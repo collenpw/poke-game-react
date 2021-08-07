@@ -65,6 +65,7 @@ const Ability = ({match}) => {
 
             <div className='fav-poke'>
                 {abilityData.pokemon.map((pokemon) => {
+                    if(parseInt(pokemon.pokemon.url.split('/')[6]) > 898) return;
                     return(
                         <Card onClick={() => {handleClick(pokemon.pokemon.name)}} border='dark'style={{ width: '18rem' }}>   
                             <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.pokemon.url)}.png`} />

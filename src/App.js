@@ -12,6 +12,7 @@ import Ability from './components/Ability/Ability';
 import Move from './components/Move/Move';
 import Abilities from './components/Abilities/Abilities';
 import Moves from './components/Moves/Moves';
+import Types from './components/Types/Types';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -133,6 +134,8 @@ const handleLogin = async() => {
             <Route path={`/:user/favorite-pokemon`} component= {FavPoke} />
             <Route path={'/abilities' } component= { Abilities } />
             <Route path={'/moves' } component= { Moves } />
+            <Route path={'/types' } component= { Types } />
+
 
 
           </Switch>
