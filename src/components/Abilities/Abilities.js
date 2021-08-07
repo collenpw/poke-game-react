@@ -35,6 +35,12 @@ const Abilities = () => {
 
     if(!abilityData) return <h1>Loading...</h1>
 
+    abilityData.sort(function(a, b){
+        if(a.name < b.name) { return -1; }
+        if(a.name > b.name) { return 1; }
+        return 0;
+    })
+
     return (
         <div>
             <Card bg='dark'className='ability-descriptor'style={{ width: '24rem' }}>
