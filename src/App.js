@@ -21,30 +21,8 @@ export const DataContext = createContext();
 function App() {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const [pokemon, setPokemon] = useState([]);
-  const [pokeName, setPokeName] = useState(null);
-  const [pokeData, setPokeData] = useState(null);
-  const [filteredPokemon, setFilteredPokemon]= useState(null)
   const [currentPokeUser, setCurrentPokeUser] = useState(null);
   const [userFavPoke, setUserFavPoke] = useState(null)
-
-
-const getAPIdata = async() => {
-
-  try {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898')
-    const data = await res.json()
-    setPokemon(data.results)
-    // console.log(pokemon)
-    setFilteredPokemon(data.results)
-    // console.log(filteredPokemon);
-  }
-
-  catch(err) {
-    console.error(err);
-  }
-
-}
 
 class pokeUser{
 
@@ -63,7 +41,6 @@ const findCurrentPokeUser = async() => {
           if(el.email === user.email){
               setCurrentPokeUser(el)
               setUserFavPoke(el.favPoke)
-              // console.log(el.favPoke);
           }
       })
   }
@@ -77,9 +54,6 @@ const handleLogin = async() => {
   if(!isAuthenticated) return;
   const res = await fetch ('https://pokedex-api-collenpw.herokuapp.com/pokemon');
   const data = await res.json();
-
-  // console.log(data);
-
   let count = 0;
   data.map((pokeUser) => {
     if(pokeUser.email === user.email){count++}
@@ -95,7 +69,6 @@ const handleLogin = async() => {
             "Content-Type": "application/json"
         }
       })
-      // console.log(res);
       }
 
       catch(err){
@@ -105,31 +78,23 @@ const handleLogin = async() => {
 
 }
 
-  useEffect(() => {
-  
-    getAPIdata();
-   
-  }, [])
-
   useEffect(()=> {
     handleLogin();
     findCurrentPokeUser();
   },[isAuthenticated])
 
 
-  return (
-    // <>
-    
+  return ( 
     <div className='app-div'>
-      <DataContext.Provider value={{userFavPoke, currentPokeUser, pokeName, user, isAuthenticated}}>
+      <DataContext.Provider value={{userFavPoke, currentPokeUser, user, isAuthenticated}}>
           <Navigation currentPokeUser={currentPokeUser} /> 
           <Switch>
-            <Route path='/' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon} pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+            <Route path={'/'} component={PokemonList} />
             <Route path={`/abilities/:ability`} component= { Ability } />
             <Route path={`/moves/:move`} component= { Move } />
             <Route path={`/types/:type`} component= { Type } />
             <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
-            <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
+            <Route path={'/pokemon'} component={PokemonList} />
             <Route path={`/login`} component= { Login } />
             <Route path={`/:user/favorite-pokemon`} component= {FavPoke} />
             <Route path={'/abilities' } component= { Abilities } />
@@ -141,9 +106,7 @@ const handleLogin = async() => {
           </Switch>
       </DataContext.Provider>
 
-      </div>
-    // </>
-      
+      </div>      
   );
 }
 
