@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Card, ListGroupItem } from "react-bootstrap";
+import { Card, Form, ListGroupItem } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
@@ -8,6 +8,8 @@ const Abilities = () => {
 
     const history = useHistory();
     const [abilityData, setAbilityData] = useState(null);
+    const [search, setSearch] = useState(null)
+    const [searchRes, setSearchRes] = useState(null)
 
     const getAbilityData = async() => {
         try{
@@ -18,6 +20,17 @@ const Abilities = () => {
         catch(err){
             console.log(err);
         }
+    }
+
+    const handleChange = (e) => {
+        setSearch(e.target.value);
+
+        const newArr = abilityData.filter(function (el) {
+            return el.name.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+
+        setSearchRes(newArr)
+        console.log(searchRes);
     }
 
     const capitalize = (str) => {
@@ -32,6 +45,12 @@ const Abilities = () => {
 
     console.log(abilityData);
 
+    const formatAbility = (str) => {
+        let formattedAbility = str.replace(/-/g, ' ');
+        
+        return capitalize(formattedAbility);
+    }
+
 
     if(!abilityData) return <h1>Loading...</h1>
 
@@ -43,6 +62,22 @@ const Abilities = () => {
 
     return (
         <div>
+            <Form.Control onChange={handleChange} className='ability-search'type="text" placeholder="Normal text" />
+            {searchRes && ( 
+                <div className='all-abilities'>
+                    {searchRes.map((ability) => {
+                        return(
+                            <Card onClick={() => {history.push(`/abilities/${ability.name}`)}} border='dark' className='single-ability'>
+                                <Card.Title>{formatAbility(ability.name)}</Card.Title>
+                            </Card>
+                        )
+                    })}
+                </div> 
+
+            )}
+            {!searchRes && ( 
+
+            <>
             <Card bg='dark'className='ability-descriptor'style={{ width: '24rem' }}>
                 <Card.Text>All of the abilities in the games (click for details):</Card.Text>
             </Card>
@@ -50,11 +85,13 @@ const Abilities = () => {
                 {abilityData.map((ability) => {
                     return(
                         <Card onClick={() => {history.push(`/abilities/${ability.name}`)}} border='dark' className='single-ability'>
-                            <Card.Title>{capitalize(ability.name)}</Card.Title>
+                            <Card.Title>{formatAbility(ability.name)}</Card.Title>
                         </Card>
                     )
                 })}
             </div>
+            </>
+            )}
         </div>
     );
 };

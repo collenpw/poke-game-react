@@ -6,13 +6,12 @@ import Card from 'react-bootstrap/Card';
 
 import { useState } from 'react'
 
-const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPokemon, setFilteredPokemon} ) => {
+const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon} ) => {
 
     const history = useHistory();
 
-    const [search, setSearch] = useState('')
-
-    const defaultPoke = [...pokemon]
+    const [search, setSearch] = useState(null);
+    const [searchRes, setSearchRes] = useState(null);
 
     const handleClick = async (name) => {
         setPokeName(name);
@@ -20,23 +19,22 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPo
     }
     
     const handleChange = (e) => {
-        setFilteredPokemon(defaultPoke)
         setSearch(e.target.value)
+        console.log(search);
         
         const newArr = pokemon.filter(function (el) {
             return el.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
 
-        setFilteredPokemon(newArr)
+        setSearchRes(newArr);
+        console.log(searchRes);
     }
 
     const capitalizeFirstLetter = (name) => {
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
 
-    console.log(filteredPokemon);
-
-    if(!filteredPokemon) return(
+    if(!pokemon) return(
         <div>Loading</div>
     )
 
@@ -49,11 +47,10 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPo
             <input onChange={handleChange} className='pokesearch' placeholder='Search for a Pokemon' type="text" />
         </div>
 
-        
+        {searchRes && (
+            <div className='pokeList'>
 
-        <div className='pokeList'>
-
-            {filteredPokemon.map((pokemon) => {
+            {searchRes.map((pokemon) => {
 
                 return (
                        
@@ -73,6 +70,33 @@ const PokemonList = ( {pokemon, setPokeName, setPokeData, setPokemon, filteredPo
 
 
         </div>
+
+        )}
+
+        {!searchRes && (
+
+        <div className='pokeList'>
+
+            {pokemon.map((pokemon) => {
+
+                return (
+                       
+                    <Card border='dark' onClick={() => {handleClick(pokemon.name)}} style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
+                        <Card.Body>
+                            <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
+                            <Card.Text className='poke-num'>
+                                #{pokemon.url.split('/')[6]}
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                       
+                   
+                )
+            })}
+
+        </div>
+        )}
         </>
     )
 
