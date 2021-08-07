@@ -1,10 +1,8 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 
-import Login from "../Login/Login";
-import Logout from "../Logout/Logout";
-import FavPokeButton from "../FavPoke/FavPokeButton";
-
-import { useAuth0 } from "@auth0/auth0-react";
+import Login from './Login';
+import Logout from './Logout';
+import FavPokeButton from "./FavPokeButton";
 
 import logo from '../../imgs/logo.png'
 
@@ -17,7 +15,6 @@ import { useHistory } from "react-router";
 const Navigation = ({currentPokeUser}) => {
 
     const data = useContext(DataContext);
-    // const { isAuthenticated } = useAuth0();
     const history = useHistory();
   
     return (
@@ -34,9 +31,6 @@ const Navigation = ({currentPokeUser}) => {
                     />
                 </Navbar.Brand>
                 <Nav className="me-auto">
-                    {/* {!data.isAuthenticated && (
-                        <Login />
-                    )} */}
                     <Nav.Link onClick={()=> {history.push('/pokemon')}}>Pokemon</Nav.Link>
                     <Nav.Link onClick={()=> {history.push('/moves')}}>Moves</Nav.Link>
                     <Nav.Link onClick={()=> {history.push('/abilities')}}>Abilities</Nav.Link>                       

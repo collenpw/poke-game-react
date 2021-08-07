@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 
-import Location from '../Location/Location';
+import Location from './Location';
 import Moves from './Moves';
 
 import heart from '../../imgs/heart.svg'
@@ -35,8 +35,6 @@ const Pokemon = ({match}) => {
             this.fav = true;
         }
     }
-
-    // console.log(data.userFavPoke);
 
     const getPokeData = async() => {
         const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
@@ -128,8 +126,6 @@ const Pokemon = ({match}) => {
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
-
-    // console.log(pokeData);
 
     const checkForFav = () => {
         if(!data.userFavPoke) return;
