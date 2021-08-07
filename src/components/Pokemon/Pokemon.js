@@ -48,24 +48,36 @@ const Pokemon = ({match}) => {
         catch (err) {
             console.log(err);
         }
-        
+        getFavPoke()
     }
 
-    const handleLoggedIn = () => {
-
-        if(data.currentPokeUser){
-            setFavPoke(data.currentPokeUser.favPoke);
+    const getFavPoke = async() => {
+        if(!isAuthenticated) return;
+        // if(!data) return;
+        console.log('hi');
+        try{
+            const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
+            const resData = await res.json()
+            setFavPoke(resData.favPoke);
+            console.log(resData);
+        }
+        catch(err){
+            console.log(err);
         }
     }
 
     const handleFavorite = async (e) => {
         e.preventDefault();
         setFavorited(!favorited);
-        favPoke.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`, pokeData.types, pokeData.abilities))
+        const tempArr = [...favPoke]
+        tempArr.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`, pokeData.types, pokeData.abilities))
+        console.log(tempArr);
+        setFavPoke(tempArr);
+        console.log(favPoke);
 
         const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
-            body: JSON.stringify({favPoke: favPoke}),
+            body: JSON.stringify({favPoke: tempArr}),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -75,14 +87,10 @@ const Pokemon = ({match}) => {
 
     const handleUnfavorite = async (e) => {
         e.preventDefault();
-        // console.log(favPoke);
-
         const tempArr = favPoke.filter(function (el) {
             return el.name !== pokeData.name;
         })
-
-        // console.log(tempArr);
-
+        console.log(tempArr);
         const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`,{
             method: 'PATCH',
             body: JSON.stringify({favPoke: tempArr}),
@@ -104,9 +112,9 @@ const Pokemon = ({match}) => {
     }, []);
 
     useEffect(()=> {
-        handleLoggedIn();
+        getFavPoke();
     }, [])
-
+    
     useEffect(()=>{
         if(!pokeData || !favPoke) return;
         favPoke.map((pokemon) => {
@@ -116,6 +124,7 @@ const Pokemon = ({match}) => {
             
         })
     },[favPoke])
+    
 
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)

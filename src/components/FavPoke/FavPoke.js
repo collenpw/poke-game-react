@@ -12,8 +12,13 @@ const FavPoke = () => {
     const data = useContext(DataContext);
 
     const getFavPoke = async() => {
+        console.log('hi');
         try{
-
+            const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
+            console.log(res);
+            const resData = await res.json();
+            setFavPoke(resData.favPoke)
+            console.log(resData);
         }
         catch(err){
             console.log(err);
@@ -34,15 +39,23 @@ const FavPoke = () => {
         history.push(`/pokemon/${name}`)
     }
 
-    data.userFavPoke.sort(function(a, b) {
-        return a.id - b.id;
-    });
+
+    if(favPoke){
+        favPoke.sort(function(a, b) {
+            if(!favPoke) return;
+            return a.id - b.id;
+        });
+    }
+
+    if(!favPoke) return(
+        <h1>Loading...</h1>
+    )
 
     return (
         <div className='fav-poke'>
 
             {data.userFavPoke && (
-                data.userFavPoke.map((pokemon) => {
+                favPoke.map((pokemon) => {
                     return(
                         <Card onClick={() => {handleClick(pokemon.name)}} border='dark'style={{ width: '18rem' }}>   
                             <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`} />
