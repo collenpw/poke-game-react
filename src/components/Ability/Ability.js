@@ -49,7 +49,7 @@ const Ability = ({match}) => {
 
     return (
         <div>
-            <Card style={{ width: '36rem' }}>
+            <Card className='white-text'bg='dark'style={{ width: '36rem' }}>
                 <Card.Body>
                     <Card.Title className='ability-title'>{capitalize(abilityData.name)}</Card.Title>
                     <Card.Text>
@@ -59,7 +59,9 @@ const Ability = ({match}) => {
                 
             </Card>
 
-            <ListGroupItem className='center-div' style={{ width: '24rem' }}>The following Pokemon can have this ability:</ListGroupItem>
+            <Card bg='dark' className='center-div, white-text, ability-descriptor' style={{ width: '24rem' }}>
+                <Card.Text>The following Pokemon can have this ability:</Card.Text>
+            </Card>
 
             <div className='fav-poke'>
                 {abilityData.pokemon.map((pokemon) => {

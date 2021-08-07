@@ -10,6 +10,7 @@ import Navigation from './components/Navbar/Nav';
 import FavPoke from './components/FavPoke/FavPoke';
 import Ability from './components/Ability/Ability';
 import Move from './components/Move/Move';
+import Abilities from './components/Abilities/Abilities';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -129,6 +130,7 @@ const handleLogin = async() => {
             <Route path='/pokemon' exact render={()=> <PokemonList filteredPokemon={filteredPokemon} setFilteredPokemon={setFilteredPokemon} setPokemon={setPokemon}pokemon={pokemon} setPokeName={setPokeName} setPokeData={setPokeData}/> } />
             <Route path={`/login`} component= { Login } />
             <Route path={`/:user/favorite-pokemon`} component= {FavPoke} />
+            <Route path={'/abilities' } component= { Abilities } />
 
           </Switch>
       </DataContext.Provider>

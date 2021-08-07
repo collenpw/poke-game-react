@@ -40,7 +40,9 @@ const Moves = ({pokeData, capitalize}) => {
     return (
 
        <div>
-           <ListGroupItem className='center-div' style={{ width: '24rem' }}>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</ListGroupItem>
+           <Card bg='dark' className='center-div, big-descriptor' style={{ width: '24rem' }}>
+               <Card.Text>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</Card.Text>
+            </Card>
                 <div className='poke-moves'>
                     {levelUp.moves.length !== 0 && (
                         <Card border='dark' className='move-list-on-pokemon'>

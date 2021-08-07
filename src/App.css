@@ -151,3 +151,28 @@ button {
   color: white;
   text-align: center;
 }
+
+.all-abilities{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.single-ability{
+  width: 12rem;
+  height: 4rem;
+  text-align: center;
+  padding: 1.2rem 0;
+}
+
+.ability-descriptor{
+  height: 3rem;
+  text-align: center;
+  padding: .7rem 0;
+  color: white;
+}
+
+.big-descriptor{
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}

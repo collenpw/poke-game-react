@@ -118,15 +118,17 @@ const Location = ( {pokeData, capitalize} ) => {
         locations.length > 0 && (
         <div>
             {filterLocationsForHeadbutt()}
-            <ListGroupItem className='center-div' style={{ width: '24rem' }}>{`${capitalize(pokeData.name)} can be found in these games, at their respective location:`}</ListGroupItem>
+            <Card bg='dark' className='center-div, white-text, big-descriptor' style={{ width: '24rem' }}>
+                <Card.Text>{`${capitalize(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
+            </Card>
             <div className='locations'>
 
                 {versions.map((version) => {
                     if(version.locations.length ===0) return;
                     return(
                         <>
-                        <Card style={{ width: '25rem' }} border='primary' className='location'>
-                            <ListGroup.Item variant='primary'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
+                        <Card style={{ width: '25rem' }} border='dark' className='location'>
+                            <ListGroup.Item variant='dark'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
                             {version.locations.map((detail) => {
                                 
                                 if (detail.method.includes('headbutt')) return
