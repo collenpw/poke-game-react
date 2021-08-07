@@ -20,6 +20,10 @@ const Abilities = () => {
         }
     }
 
+    const capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+
     useEffect(()=> {
         getAbilityData()
     }, [])
@@ -40,7 +44,7 @@ const Abilities = () => {
                 {abilityData.map((ability) => {
                     return(
                         <Card onClick={() => {history.push(`/abilities/${ability.name}`)}} border='dark' className='single-ability'>
-                            <Card.Title>{ability.name}</Card.Title>
+                            <Card.Title>{capitalize(ability.name)}</Card.Title>
                         </Card>
                     )
                 })}

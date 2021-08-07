@@ -70,6 +70,7 @@ const Ability = ({match}) => {
                             <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.pokemon.url)}.png`} />
                             <Card.Body>
                                 <Card.Title>{capitalize(pokemon.pokemon.name)}</Card.Title>
+                                <Card.Text>#{grabID(pokemon.pokemon.url)}</Card.Text>
                             </Card.Body>
                         </Card>
                     )

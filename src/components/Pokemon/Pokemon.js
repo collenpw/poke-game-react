@@ -53,7 +53,6 @@ const Pokemon = ({match}) => {
 
     const getFavPoke = async() => {
         if(!isAuthenticated) return;
-        // if(!data) return;
         console.log('hi');
         try{
             const res = await fetch (`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
