@@ -22,7 +22,6 @@ html, body{
 }
 
 body {
-  /* background-image: url(/src/imgs/attempt2.jpg); */
   background: lightgray;
   user-select: none;
   width: 100%;
@@ -37,10 +36,6 @@ button {
 .pokeList {
   display: flex;
   flex-wrap: wrap;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
-  /* grid-gap: 5px; */
-  /* justify-items: center; */
-  /* background: paleturquoise; */
 }
 .poke-entry {
   height: 100%;
@@ -225,15 +220,28 @@ button {
 
 
 /* /////////////// MOBILE RESPONSIVENESS ///////////////// */
-/* 
+ 
 @media only screen and (max-width: 600px) {
   html {
     background-color: lightblue;
     
   }
 
-  .app-div{
-    width:
-  }
-}
- */
+ .nav-img{
+   display: none;
+ }
+
+ .ability-search{
+   margin: 0 ;
+   max-width: 14rem;
+   
+ }
+
+ .search{
+   margin: 1rem 0;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+ }
+} 
+

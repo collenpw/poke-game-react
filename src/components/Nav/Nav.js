@@ -28,7 +28,7 @@ const Navigation = ({currentPokeUser}) => {
                         src={logo}
                         width="160"
                         height="30"
-                        className="d-inline-block align-top"
+                        className="d-inline-block align-top nav-img"
                         alt="okie-dokie-dex logo" 
                     />
                 </Navbar.Brand>
