@@ -75,6 +75,8 @@ const handleLogin = async() => {
       catch(err){
         console.log(err);
       }
+
+      findCurrentPokeUser();
   }
 
 }

@@ -16,6 +16,8 @@ const Navigation = ({currentPokeUser}) => {
 
     const data = useContext(DataContext);
     const history = useHistory();
+
+    console.log(data);
   
     return (
         
