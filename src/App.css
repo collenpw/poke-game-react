@@ -1,17 +1,31 @@
 html{
   background: lightgray;
+  padding: 0;
+  margin: 0;
 }
 
 .app-div{
   background: lightgray;
-  width: 100vh;
+  ;
+  height: 100%;
   
+}
+
+
+
+html, body{
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
 }
 
 body {
   /* background-image: url(/src/imgs/attempt2.jpg); */
   background: lightgray;
   user-select: none;
+  width: 100%;
 }
 
 button {
@@ -211,7 +225,7 @@ button {
 
 
 /* /////////////// MOBILE RESPONSIVENESS ///////////////// */
-
+/* 
 @media only screen and (max-width: 600px) {
   html {
     background-color: lightblue;
@@ -222,4 +236,4 @@ button {
     width:
   }
 }
-
+ */
