@@ -4,6 +4,8 @@ html{
 
 .app-div{
   background: lightgray;
+  width: 100vh;
+  
 }
 
 body {
@@ -206,3 +208,18 @@ button {
   max-width: 30rem;
   margin: 2rem auto;
 }
+
+
+/* /////////////// MOBILE RESPONSIVENESS ///////////////// */
+
+@media only screen and (max-width: 600px) {
+  html {
+    background-color: lightblue;
+    
+  }
+
+  .app-div{
+    width:
+  }
+}
+
