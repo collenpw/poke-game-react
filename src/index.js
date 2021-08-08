@@ -24,7 +24,7 @@ ReactDOM.render(
   <Auth0Provider
     domain='collenpw.us.auth0.com'
     clientId='eUuBo0JOfHPS6d4K7eGoQOwIxwnbLcCT'
-    redirectUri='http://localhost:3000'
+    redirectUri='https://okie-dokie-dex.netlify.app/'
     audience="https://collenpw.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata">
     <Router>
