@@ -2,16 +2,6 @@ import { Dropdown } from "react-bootstrap";
 
 const TypeDropdown = ({ setType, setTypeData, typeData }) => {
 
-    // const trimPokemonArr = () => {
-    //     const tempArr = [...typeData];
-    //     for (let i = 0; i < tempArr.length; i++) {
-    //         if (tempArr[i].pokemon.url.split('/')[6] > 898) {
-    //             tempArr.slice(i, 1);
-    //             console.log(tempArr);
-    //         }
-    //     }
-    // }
-
     const getTypeData = async (type) => {
         try {
             const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
@@ -26,7 +16,6 @@ const TypeDropdown = ({ setType, setTypeData, typeData }) => {
     }
 
     const handleTypeChoice = (type) => {
-        // setType(type);
         if (type !== 'none') {
             getTypeData(type);
         } else {
