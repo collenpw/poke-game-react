@@ -253,7 +253,7 @@ button {
 /* /////////////// MOBILE RESPONSIVENESS ///////////////// */
  
 @media only screen and (max-width: 600px) {
-  html {
+  body {
     background-color: lightblue;
     
   }
@@ -263,9 +263,13 @@ button {
  }
 
  .ability-search{
-   margin: 0 ;
+   margin: 2rem auto ;
    max-width: 14rem;
    
+ }
+
+ .all-abilities{
+   display: inline;
  }
 
  .search{
@@ -273,6 +277,20 @@ button {
    display: flex;
    flex-wrap: wrap;
    justify-content: space-evenly;
+ }
+
+ .single-move, .single-ability{
+   margin: 1rem auto;
+ }
+
+ .nav-img{
+   display: none;
+   width: 0;
+   height: 0;
+ }
+
+ .no-padding{
+   padding: 0 !important;
  }
 } 
 
