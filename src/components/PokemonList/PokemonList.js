@@ -69,11 +69,6 @@ const PokemonList = ({ setPokeName }) => {
 
     }
 
-    const determineArrToSearch = (e) => {
-        if (typeData) handleChange(e, typeData);
-        else handleChange(e, pokeData);
-    }
-
     const capitalizeFirstLetter = (name) => {
         return name.charAt(0).toUpperCase() + name.slice(1);
     }
@@ -114,6 +109,7 @@ const PokemonList = ({ setPokeName }) => {
                 )}
             </div>
 
+            {/* displays search results from home */}
             {searchRes && !typeData && (
                 <div className='pokeList'>
 
@@ -121,7 +117,7 @@ const PokemonList = ({ setPokeName }) => {
 
                         return (
 
-                            <Card border='dark' onClick={(e) => { handleClick(e, pokemon.name) }} style={{ width: '18rem' }}>
+                            <Card border='dark' onClick={(e) => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
                                 <Card.Body>
                                     <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
@@ -140,6 +136,7 @@ const PokemonList = ({ setPokeName }) => {
 
             )}
 
+            {/* displays search results from filtered by type */}
             {typeSearch && typeData && (
                 <div className='pokeList'>
 
@@ -167,6 +164,7 @@ const PokemonList = ({ setPokeName }) => {
 
             )}
 
+            {/* displays filtered by type */}
             {typeData && !typeSearch && (
                 console.log(typeData[0].name),
                 <div className='pokeList'>
@@ -195,7 +193,7 @@ const PokemonList = ({ setPokeName }) => {
             )}
 
 
-
+            {/* displays all pokemon */}
             {!searchRes && !typeData && (
 
                 <div className='pokeList'>

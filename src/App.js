@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect, createContext } from 'react';
-import { Route, Switch} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Pokemon from './components/Pokemon/Pokemon';
 import PokemonList from './components/PokemonList/PokemonList';
@@ -25,91 +25,91 @@ function App() {
   const [currentPokeUser, setCurrentPokeUser] = useState(null);
   const [userFavPoke, setUserFavPoke] = useState(null)
 
-class pokeUser{
+  class pokeUser {
 
-  constructor(email, username){
-    this.email = email;
-    this.username = username;
-    this.favPoke = [];
+    constructor(email, username) {
+      this.email = email;
+      this.username = username;
+      this.favPoke = [];
+    }
   }
-}
 
-const findCurrentPokeUser = async() => {
-  try{
-      const res = await fetch ('https://pokedex-api-collenpw.herokuapp.com/pokemon');
+  const findCurrentPokeUser = async () => {
+    try {
+      const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
       const data = await res.json();
       data.map((el) => {
-          if(el.email === user.email){
-              setCurrentPokeUser(el)
-              setUserFavPoke(el.favPoke)
-          }
+        if (el.email === user.email) {
+          setCurrentPokeUser(el)
+          setUserFavPoke(el.favPoke)
+        }
       })
-  }
+    }
 
-  catch(err){
+    catch (err) {
       console.log(err);
+    }
   }
-}
 
-const handleLogin = async() => {
-  if(!isAuthenticated) return;
-  const res = await fetch ('https://pokedex-api-collenpw.herokuapp.com/pokemon');
-  const data = await res.json();
-  let count = 0;
-  data.map((pokeUser) => {
-    if(pokeUser.email === user.email){count++}
-  })
-  if(count){
-     return
-  } else {
-      try{
-        const res = await fetch ('https://pokedex-api-collenpw.herokuapp.com/pokemon',{
+  const handleLogin = async () => {
+    if (!isAuthenticated) return;
+    const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
+    const data = await res.json();
+    let count = 0;
+    data.map((pokeUser) => {
+      if (pokeUser.email === user.email) { count++ }
+    })
+    if (count) {
+      return
+    } else {
+      try {
+        const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon', {
           method: 'POST',
           body: JSON.stringify(new pokeUser(user.email, user.nickname)),
           headers: {
             "Content-Type": "application/json"
-        }
-      })
+          }
+        })
       }
 
-      catch(err){
+      catch (err) {
         console.log(err);
       }
 
       findCurrentPokeUser();
+    }
+
   }
 
-}
-
-  useEffect(()=> {
+  useEffect(() => {
     handleLogin();
     findCurrentPokeUser();
-  },[isAuthenticated])
+  }, [isAuthenticated])
 
-
-  return ( 
+  return (
     <div className='app-div'>
-      <DataContext.Provider value={{userFavPoke, currentPokeUser, user, isAuthenticated}}>
-          <Nav currentPokeUser={currentPokeUser} /> 
-          <Switch>
-            <Route path={'/'} exact component={PokemonList} />
-            <Route path={`/abilities/:ability`} component= { Ability } />
-            <Route path={`/moves/:move`} component= { Move } />
-            <Route path={`/types/:type`} component= { Type } />
-            <Route path={`/pokemon/:pokemon`} component= { Pokemon } />
-            <Route path={'/pokemon'} component={PokemonList} />
-            <Route path={`/login`} component= { Login } />
-            <Route path={`/:user/favorite-pokemon`} component= {FavPoke} />
-            <Route path={'/abilities' } component= { AbilityList } />
-            <Route path={'/moves' } component= { MoveList } />
-            <Route path={'/types' } component= { TypeList } />
+
+      <DataContext.Provider value={{ userFavPoke, currentPokeUser, user, isAuthenticated }}>
+        <Nav currentPokeUser={currentPokeUser} />
+        <Switch>
+          <Route path={'/'} exact component={PokemonList} />
+          <Route path={`/abilities/:ability`} component={Ability} />
+          <Route path={`/moves/:move`} component={Move} />
+          <Route path={`/types/:type`} component={Type} />
+          <Route path={`/pokemon/:pokemon`} component={Pokemon} />
+          <Route path={'/pokemon'} component={PokemonList} />
+          <Route path={`/login`} component={Login} />
+          <Route path={`/:user/favorite-pokemon`} component={FavPoke} />
+          <Route path={'/abilities'} component={AbilityList} />
+          <Route path={'/moves'} component={MoveList} />
+          <Route path={'/types'} component={TypeList} />
 
 
 
-          </Switch>
+        </Switch>
       </DataContext.Provider>
 
-      </div>      
+    </div>
   );
 }
 

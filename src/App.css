@@ -5,10 +5,8 @@ html{
 }
 
 .app-div{
-  background: fixed url(/src/imgs/attempt2.jpg)
-  ;
-  height: 100%;
-  
+  background: fixed url(/src/imgs/attempt2.jpg);
+  height: 100vh;
 }
 
 html, body{
@@ -20,7 +18,7 @@ html, body{
 }
 
 body {
-  background: lightgray;
+  background: fixed url(/src/imgs/attempt2.jpg);
   user-select: none;
   width: 100%;
 }
@@ -34,6 +32,8 @@ button {
 .pokeList {
   display: flex;
   flex-wrap: wrap;
+  background: fixed url(/src/imgs/attempt2.jpg);
+
 }
 .poke-entry {
   height: 100%;
@@ -51,6 +51,17 @@ button {
   text-decoration: none;
 }
 
+.shiny-div{
+  display: flex;
+  max-width: 40%;
+  margin: 0 auto;
+}
+
+.shiny-card{
+  margin: 0 1rem;
+  text-align: center;
+}
+
 .btn {
   width: 100%;
 }
@@ -58,11 +69,6 @@ button {
 .poke-list {
   margin-top: 15px;
   margin-bottom: 15px;
-}
-
-.poke-list:hover{
-  transform: scale(1.1);
-  margin-top: 10px;
 }
 
 .card, .center-div {

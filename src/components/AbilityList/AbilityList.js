@@ -11,23 +11,29 @@ const Abilities = () => {
     const [search, setSearch] = useState(null)
     const [searchRes, setSearchRes] = useState(abilityData)
 
-    const getAbilityData = async() => {
-        try{
-            const res = await fetch ('https://pokeapi.co/api/v2/ability/?limit=327')
+    const getAbilityData = async () => {
+        try {
+            const res = await fetch('https://pokeapi.co/api/v2/ability/?limit=327')
             const data = await res.json();
             setAbilityData(data.results)
             setSearchRes(data.results)
         }
-        catch(err){
+        catch (err) {
             console.log(err);
         }
+    }
+
+    const formatSearch = (str) => {
+        let formattedSearch = str.replace(/ /g, '-');
+
+        return formattedSearch;
     }
 
     const handleChange = (e) => {
         setSearch(e.target.value);
 
         const newArr = abilityData.filter(function (el) {
-            return el.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
         })
 
         setSearchRes(newArr)
@@ -38,7 +44,7 @@ const Abilities = () => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         getAbilityData()
     }, [])
 
@@ -48,54 +54,54 @@ const Abilities = () => {
 
     const formatAbility = (str) => {
         let formattedAbility = str.replace(/-/g, ' ');
-        
+
         return capitalize(formattedAbility);
     }
 
 
-    if(!abilityData || !searchRes) return (
-        <Spinner className='spinner'animation="border" role="status">
+    if (!abilityData || !searchRes) return (
+        <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
-    ) 
+    )
 
-    abilityData.sort(function(a, b){
-        if(a.name < b.name) { return -1; }
-        if(a.name > b.name) { return 1; }
+    abilityData.sort(function (a, b) {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
         return 0;
     })
 
     return (
         <div>
-            <Form.Control onChange={handleChange} className='ability-search'type="text" placeholder="Search for an ability" />
-            {searchRes && searchRes.length !== abilityData.length && ( 
+            <Form.Control onChange={handleChange} className='ability-search' type="text" placeholder="Search for an ability" />
+            {searchRes && searchRes.length !== abilityData.length && (
                 <div className='all-abilities'>
                     {searchRes.map((ability) => {
-                        return(
-                            <Card onClick={() => {history.push(`/abilities/${ability.name}`)}} border='dark' className='single-ability'>
+                        return (
+                            <Card onClick={() => { history.push(`/abilities/${ability.name}`) }} border='dark' className='single-ability'>
                                 <Card.Title>{formatAbility(ability.name)}</Card.Title>
                             </Card>
                         )
                     })}
-                </div> 
+                </div>
 
             )}
-            {searchRes.length===abilityData.length && ( 
+            {searchRes.length === abilityData.length && (
 
-            <>
-            <Card bg='dark'className='ability-descriptor'style={{ width: '24rem' }}>
-                <Card.Text>All of the abilities in the games (click for details):</Card.Text>
-            </Card>
-            <div className='all-abilities'>
-                {abilityData.map((ability) => {
-                    return(
-                        <Card onClick={() => {history.push(`/abilities/${ability.name}`)}} border='dark' className='single-ability'>
-                            <Card.Title>{formatAbility(ability.name)}</Card.Title>
-                        </Card>
-                    )
-                })}
-            </div>
-            </>
+                <>
+                    <Card bg='dark' className='ability-descriptor' style={{ width: '24rem' }}>
+                        <Card.Text>All of the abilities in the games (click for details):</Card.Text>
+                    </Card>
+                    <div className='all-abilities'>
+                        {abilityData.map((ability) => {
+                            return (
+                                <Card onClick={() => { history.push(`/abilities/${ability.name}`) }} border='dark' className='single-ability'>
+                                    <Card.Title>{formatAbility(ability.name)}</Card.Title>
+                                </Card>
+                            )
+                        })}
+                    </div>
+                </>
             )}
         </div>
     );
