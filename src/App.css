@@ -5,13 +5,11 @@ html{
 }
 
 .app-div{
-  background: lightgray;
+  background: fixed url(/src/imgs/attempt2.jpg)
   ;
   height: 100%;
   
 }
-
-
 
 html, body{
   width: 100%;
@@ -116,8 +114,8 @@ button {
 .search {
   display: grid;
   grid-template-rows: 1rem, 1rem;
-  margin: 0 auto;
-  max-width: 35%;
+  margin: 2rem auto;
+  max-width: 75%;
 }
 
 .fav-poke{
@@ -147,6 +145,10 @@ button {
 
 }
 
+.home-logo{
+  margin: 0 auto;
+
+}
 .move-list-on-pokemon{
   width: 18rem;
   text-align: center;
@@ -216,6 +218,29 @@ button {
 .ability-search{
   max-width: 30rem;
   margin: 2rem auto;
+}
+
+.pokemon-search{
+  max-width: 30rem;
+  margin: 2rem auto;
+  display: inline;
+  margin-right: 1rem;
+}
+
+.search-and-filter{
+  display: flex;
+  vertical-align: middle;
+}
+
+.type-drop{
+  max-width: 8rem;
+  display: inline;
+  margin: auto;
+}
+
+.dropdown{
+  margin: auto;
+  margin-left: 0;
 }
 
 
