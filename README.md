@@ -4,7 +4,7 @@
 Link to the website: okie-dokie-dex.netlify.app
 
 ### About
-As a child I always enjoyed the Pokemon series. This is a tribute to my childhood that has very detailed Pokemon information and allows you to favorite Pokemonfor easy access.
+As a child I always enjoyed the Pokemon series. This is a tribute to my childhood that has very detailed Pokemon information and allows you to favorite Pokemon for easy access.
 
 ### Technologies Used
 * JavaScript React  
