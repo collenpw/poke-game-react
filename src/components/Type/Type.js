@@ -4,24 +4,24 @@ import { Card, ListGroup, Spinner } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
-const Type = ({match}) => {
+const Type = ({ match }) => {
 
     const history = useHistory();
 
     const [type, setType] = useState(null);
     const [dmgRelations, setDmgRelations] = useState(null);
 
-    const getType = async() => {
+    const getType = async () => {
         const API_ENDPOINT = `https://pokeapi.co/api/v2/type/${match.params.type}`
         console.log(API_ENDPOINT);
-        try{
-            const res = await fetch (API_ENDPOINT);
+        try {
+            const res = await fetch(API_ENDPOINT);
             const data = await res.json();
             setType(data)
             console.log(type);
             setDmgRelations(type["damage_relations"])
         }
-        catch (err){
+        catch (err) {
             console.log(err);
         }
     }
@@ -43,13 +43,13 @@ const Type = ({match}) => {
         return capitalize(formattedRel);
     }
 
-    if(!type) return (
-        <Spinner className='spinner'animation="border" role="status">
+    if (!type) return (
+        <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
 
-    
+
 
     return (
         <div>
@@ -65,19 +65,19 @@ const Type = ({match}) => {
                     if (type.damage_relations[key].length === 0) {
                         return
                     }
-                    return(
-                        <ListGroup className='relation' style={{ width: '30rem' }}>
+                    return (
+                        <ListGroup className='relation' style={{ width: '12rem' }}>
 
-                        <ListGroup.Item variant='primary'>{`${formatRelation(key)}:`}</ListGroup.Item>
-                        {type.damage_relations[key].map((relation) => {
-                            return(
-                                <ListGroup.Item >{capitalize(relation.name)}</ListGroup.Item>
-                            )
-                        })}
+                            <ListGroup.Item variant='primary'>{`${formatRelation(key)}:`}</ListGroup.Item>
+                            {type.damage_relations[key].map((relation) => {
+                                return (
+                                    <ListGroup.Item >{capitalize(relation.name)}</ListGroup.Item>
+                                )
+                            })}
                         </ListGroup>
                     )
                 })}
-                
+
             </div>
         </div>
     );

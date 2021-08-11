@@ -60,7 +60,7 @@ const Move = ({ match }) => {
 
     return (
         <div>
-            <Card bg='dark' style={{ width: '36rem' }}>
+            <Card className='move-detail' bg='dark' style={{ width: '36rem' }}>
                 <Card.Body>
                     <Card.Title text='white' className='move-title, white-text'>{capitalize(formatMove(moveData.name))}</Card.Title>
                     <ListGroupItem>{`Move type: ${capitalize(moveData.damage_class.name)}`}</ListGroupItem>

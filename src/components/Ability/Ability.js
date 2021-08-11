@@ -55,12 +55,21 @@ const Ability = ({ match }) => {
 
     return (
         <div>
-            <Card className='white-text' bg='dark' style={{ width: '36rem' }}>
+            <Card className='white-text ability-detail' bg='dark' style={{ width: '36rem' }}>
                 <Card.Body>
                     <Card.Title className='ability-title'>{formatAbility(abilityData.name)}</Card.Title>
                     <Card.Text>
                         {abilityData.effect_entries.length === 0 && (<Card.Text>There is no information on the effect of this ability yet. Check back later!</Card.Text>)}
-                        {abilityData.effect_entries.length > 0 && (<Card.Text> {abilityData.effect_entries[abilityData.effect_entries.length - 1].effect}</Card.Text>)}
+                        {abilityData.effect_entries.length > 0 && (
+                            abilityData.effect_entries.map((entry) => {
+                                if (entry.language.name === 'en') {
+                                    return (
+                                        <Card.Text> {entry.effect}</Card.Text>
+                                    )
+                                }
+
+                            })
+                        )}
                     </Card.Text>
                 </Card.Body>
 

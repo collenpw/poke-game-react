@@ -92,6 +92,12 @@ button {
 .dmg-relations{
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.relation{
+  text-align: center;
 }
 
 .relation {
@@ -218,7 +224,7 @@ button {
 .all-types{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .ability-search{
@@ -309,6 +315,14 @@ button {
 
  .type-drop{
    margin: 0 auto;
+ }
+
+ .shiny-div{
+   min-width: 80%;
+ }
+
+ .move-detail, .ability-detail{
+   max-width: 90%;
  }
 
 } 
