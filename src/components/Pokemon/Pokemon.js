@@ -159,16 +159,7 @@ const Pokemon = ({ match }) => {
                 {/* <Card.Header><Button onClick={() => { setShiny(!shiny) }}>Shiny</Button></Card.Header> */}
                 {data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
                 {data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
-
-                {shiny && (
-                    <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokeData.id}.png`} />
-                )}
-
-                {!shiny && (
-                    <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
-                    // <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
-
-                )}
+                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
                 <Card.Body>
                     <Card.Title>{capitalize(pokeData.name)}</Card.Title>
                 </Card.Body>
@@ -190,8 +181,9 @@ const Pokemon = ({ match }) => {
                 </ListGroup>
             </Card>
 
-            <div class="shiny-div">
-                <Card className='shiny-card' border='dark' style={{ width: '12rem' }} >
+            <EvolutionChain capitalize={capitalize} pokeData={pokeData} />
+            <div className="shiny-div">
+                <Card className='shiny-card' border='dark' style={{ width: '18rem' }} >
                     <Card.Title>
                         Normal:
                     </Card.Title>
@@ -200,7 +192,7 @@ const Pokemon = ({ match }) => {
                     </Card.Body>
                 </Card>
 
-                <Card className='shiny-card' border='dark' style={{ width: '12rem' }} >
+                <Card className='shiny-card' border='dark' style={{ width: '18rem' }} >
                     <Card.Title>
                         Shiny:
                     </Card.Title>
@@ -212,7 +204,6 @@ const Pokemon = ({ match }) => {
             <Location pokeData={pokeData} capitalize={capitalize} />
             <Moves pokeData={pokeData} capitalize={capitalize} />
             {/* WORK IN PROGRESS */}
-            {/* <EvolutionChain pokeData={pokeData}/> */}
 
         </div>
     );

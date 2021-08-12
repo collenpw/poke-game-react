@@ -1,26 +1,32 @@
-html{
-  background: lightgray;
-  padding: 0;
-  margin: 0;
-}
-
 .app-div{
-  background: fixed url(/src/imgs/attempt2.jpg);
+  background: tan;
+  /* background: fixed url(/src/imgs/attempt2.jpg); */
   height: 100vh;
 }
 
 html, body{
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  /* height: 100%; */
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+}
+
+.my-nav{
+  top: 0 !important;
+}
+
+.sticky-top{
+  top: 0;
+  position: fixed;
+  width: 100%;
 }
 
 body {
-  background: fixed url(/src/imgs/attempt2.jpg);
+  /* background: fixed url(/src/imgs/attempt2.jpg); */
+  background: cadetblue !important;
   user-select: none;
-  width: 100%;
+  /* width: 100%; */
 }
 
 button {
@@ -32,7 +38,8 @@ button {
 .pokeList {
   display: flex;
   flex-wrap: wrap;
-  background: fixed url(/src/imgs/attempt2.jpg);
+  /* background: fixed url(/src/imgs/attempt2.jpg); */
+  /* background: tan; */
 
 }
 .poke-entry {
@@ -51,10 +58,23 @@ button {
   text-decoration: none;
 }
 
+.evolution-chain{
+  display: flex;
+}
+
+.first-tier-evolution{
+  height: fit-content;
+}
+.second-tier-evolution{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .shiny-div{
   display: flex;
-  max-width: 40%;
+  max-width: 55% ;
   margin: 0 auto;
+  justify-content: space-between;
 }
 
 .shiny-card{

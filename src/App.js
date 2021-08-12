@@ -87,7 +87,7 @@ function App() {
   }, [isAuthenticated])
 
   return (
-    <div className='app-div'>
+    <body>
 
       <DataContext.Provider value={{ userFavPoke, currentPokeUser, user, isAuthenticated }}>
         <Nav currentPokeUser={currentPokeUser} />
@@ -109,7 +109,7 @@ function App() {
         </Switch>
       </DataContext.Provider>
 
-    </div>
+    </body>
   );
 }
 
