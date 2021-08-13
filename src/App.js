@@ -93,10 +93,10 @@ function App() {
         <Nav currentPokeUser={currentPokeUser} />
         <Switch>
           <Route path={'/'} exact component={PokemonList} />
+          <Route path={`/pokemon/:pokemon`} exact component={Pokemon} />
           <Route path={`/abilities/:ability`} component={Ability} />
           <Route path={`/moves/:move`} component={Move} />
           <Route path={`/types/:type`} component={Type} />
-          <Route path={`/pokemon/:pokemon`} component={Pokemon} />
           <Route path={'/pokemon'} component={PokemonList} />
           <Route path={`/login`} component={Login} />
           <Route path={`/:user/favorite-pokemon`} component={FavPoke} />

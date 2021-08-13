@@ -92,7 +92,7 @@ const Moves = () => {
             {searchRes.length === moveData.length && (
 
                 <>
-                    <Card bg='dark' className='ability-descriptor' style={{ width: '24rem' }}>
+                    <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '24rem' }}>
                         <Card.Text>All of the moves in the games (click for details):</Card.Text>
                     </Card>
                     <div className='all-abilities'>

@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 
-import { ListGroupItem, Card } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Card } from 'react-bootstrap';
+
+import { useHistory } from 'react-router';
+
+import arrow from '../../imgs/arrow-right.svg';
 
 const EvolutionChain = ({ pokeData, capitalize }) => {
+
+    const history = useHistory();
 
     const [evolutionData, setEvolutionData] = useState(null)
     const [pokeObj, setPokeObj] = useState(null);
@@ -55,6 +61,11 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
         return (urlArr[6])
     }
 
+    const weirdRedirect = async (name) => {
+        await history.push('/')
+        history.push(`/pokemon/${name}`)
+    }
+
     if (!evolutionData) return (
         <h1>Loading</h1>
     )
@@ -75,47 +86,54 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
     }
 
     console.log(pokeObj);
-    // console.log(`${evolutionData.chain.species.name} level ${evolutionData.chain.evolves_to[0].evolution_details[0].min_level} --> ${evolutionData.chain.evolves_to[0].species.name} level ${evolutionData.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level} --> ${evolutionData.chain.evolves_to[0].evolves_to[0].species.name} `);
 
     return (
         evolutionData.chain.evolves_to.length > 0 && (
             <div className="evolution-chain">
-                <div className='first-tier-evolution'>
-                    <Card border='dark' style={{ width: '12rem' }}>
-                        <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolutionData.chain.species.url)}.png`} />
-                        <Card.Body>
-                            <Card.Title>{capitalize(evolutionData.chain.species.name)}</Card.Title>
-                            <Card.Text>{`#${grabID(evolutionData.chain.species.url)}`}</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </div>
+                <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+                    <ListGroup>
+                        <ListGroup.Item onClick={() => { weirdRedirect(evolutionData.chain.species.name) }} className='flex' style={{ maxHeight: '12rem' }}>
+                            <img className='too-big-img' style={{ maxHeight: '80% !important' }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolutionData.chain.species.url)}.png`} />
+                            {capitalize(evolutionData.chain.species.name)}
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Card>
+                <img className='arrow' src={arrow} />
 
-                <div className='second-tier-evolution'>
-                    {evolutionData.chain.evolves_to.map((evolution) => {
-                        return (
-                            <>
-                                <Card border='dark' style={{ width: '12rem' }}>
-                                    <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolution.species.url)}.png`} />
-                                    <Card.Body>
-                                        <Card.Title>{capitalize(evolution.species.name)}</Card.Title>
-                                        <Card.Text>{`#${grabID(evolution.species.url)}`}</Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </>
+                <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+                    <ListGroup>
 
-                        )
-                    })}
-                </div>
-                {evolutionData.chain.evolves_to[0].evolves_to.length > 0 && (
-                    <Card border='dark' style={{ width: '12rem' }}>
-                        <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolutionData.chain.evolves_to[0].evolves_to[0].species.url)}.png`} />
-                        <Card.Body>
-                            <Card.Title>{capitalize(evolutionData.chain.evolves_to[0].evolves_to[0].species.name)}</Card.Title>
-                            <Card.Text>{`#${grabID(evolutionData.chain.evolves_to[0].evolves_to[0].species.url)}`}</Card.Text>
-                        </Card.Body>
-                    </Card>
-                )}
-            </div>
+                        {evolutionData.chain.evolves_to.map((evolution) => {
+                            return (
+                                <ListGroupItem onClick={() => { weirdRedirect(evolution.species.name) }}>
+                                    <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolution.species.url)}.png`} />
+                                    {capitalize(evolution.species.name)}
+                                </ListGroupItem>
+                            )
+                        })}
+                    </ListGroup>
+                </Card>
+                {
+                    evolutionData.chain.evolves_to[0].evolves_to.length > 0 && (
+                        <>
+                            <img className='arrow' src={arrow} />
+                            <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+
+                                <ListGroup style={{ width: '12rem' }}>
+                                    {evolutionData.chain.evolves_to[0].evolves_to.map((evolution) => {
+                                        return (
+                                            <ListGroup.Item onClick={() => { weirdRedirect(evolution.species.name) }}>
+                                                <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolution.species.url)}.png`} />
+                                                {capitalize(evolution.species.name)}
+                                            </ListGroup.Item>
+                                        )
+                                    })}
+                                </ListGroup>
+                            </Card>
+                        </>
+                    )
+                }
+            </div >
         )
         // <ListGroupItem>{`${pokeObj.from} ${pokeObj.minLevel} --> ${pokeObj.to}`}</ListGroupItem>
     );

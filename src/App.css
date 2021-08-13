@@ -12,6 +12,11 @@ html, body{
   /* overflow-x: hidden; */
 }
 
+.border-dark{
+  border: 1px solid #212529!important;
+
+}
+
 .my-nav{
   top: 0 !important;
 }
@@ -22,9 +27,13 @@ html, body{
   width: 100%;
 }
 
+.shadow-box{
+  box-shadow: 20px 20px 50px grey !important;
+}
+
 body {
-  /* background: fixed url(/src/imgs/attempt2.jpg); */
-  background: cadetblue !important;
+  background: fixed url(/src/imgs/attempt2.jpg);
+  /* background: white !important; */
   user-select: none;
   /* width: 100%; */
 }
@@ -58,16 +67,40 @@ button {
   text-decoration: none;
 }
 
-.evolution-chain{
-  display: flex;
+.poke-card{
+  margin: 1rem auto 1rem auto;
 }
 
-.first-tier-evolution{
+.evolution-chain{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem;
+}
+
+.too-big-img{
+  max-height: 3rem !important;
+  display: inline;
+}
+
+.arrow{
+  width: 6rem;
+}
+
+.flex{
+  display: flex;
+  display: inline;
+}
+
+.first-tier-evolution, .second-tier-evolution, .third-tier-evolution{
   height: fit-content;
+  /* max-height: 20rem; */
+  /* justify-content: space-around; */
+  margin: auto 1rem;
 }
 .second-tier-evolution{
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
 }
 
 .shiny-div{
@@ -87,12 +120,28 @@ button {
 }
 
 .poke-list {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
-.card, .center-div {
-  margin: 2rem auto;
+.center-div {
+  margin: 2rem auto !important;
+}
+
+.one-line-desc{
+  margin: 1rem auto;
+  min-height: 3rem !important;
+  justify-content: space-around;
+  color: white;
+  text-align: center;
+}
+
+.center-div-small-top-margin{
+  margin: .25rem auto;
+}
+
+.fit-content{
+  height: fit-content;
+  max-width: fit-content;
 }
 
 .spinner {
@@ -161,7 +210,8 @@ button {
 }
 
 .type, .ability{
-  text-decoration: underline;
+  text-decoration: underline !important;
+  text-align: center !important;
 }
 
 .ability-title, .center-div, .move-title {
@@ -223,8 +273,9 @@ button {
 .ability-descriptor{
   height: 3rem;
   text-align: center;
-  padding: .7rem 0;
+  justify-content: space-around;
   color: white;
+  /* margin: 0 auto; */
 }
 
 .big-descriptor{
@@ -343,6 +394,10 @@ button {
 
  .move-detail, .ability-detail{
    max-width: 90%;
+ }
+
+ .arrow{
+   width: 3rem;
  }
 
 } 

@@ -89,7 +89,7 @@ const PokemonList = ({ setPokeName }) => {
 
     return (
 
-        <>
+        <div className='poke-list'>
 
             <div className='search'>
                 <img className='home-logo' src={logo} alt="Okie-Dokie-Dex logo" />
@@ -117,7 +117,7 @@ const PokemonList = ({ setPokeName }) => {
 
                         return (
 
-                            <Card border='dark' onClick={(e) => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
+                            <Card className='poke-card' border='dark' onClick={(e) => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
                                 <Card.Body>
                                     <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
@@ -145,7 +145,7 @@ const PokemonList = ({ setPokeName }) => {
 
                         return (
 
-                            <Card border='dark' onClick={(e) => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
+                            <Card className='poke-card' border='dark' onClick={(e) => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`} />
                                 <Card.Body>
                                     <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.pokemon.name)}</Card.Title>
@@ -173,7 +173,7 @@ const PokemonList = ({ setPokeName }) => {
                         if (parseInt(pokemon.pokemon.url.split('/')[6]) > 898) return
 
                         return (
-                            <Card border='dark' onClick={() => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
+                            <Card className='poke-card' border='dark' onClick={() => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`} />
                                 <Card.Body>
                                     <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.pokemon.name)}</Card.Title>
@@ -202,7 +202,7 @@ const PokemonList = ({ setPokeName }) => {
 
                         return (
 
-                            <Card border='dark' onClick={() => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
+                            <Card className='poke-card' border='dark' onClick={() => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
                                 <Card.Body>
                                     <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
@@ -218,7 +218,7 @@ const PokemonList = ({ setPokeName }) => {
 
                 </div>
             )}
-        </>
+        </div>
     )
 
 }

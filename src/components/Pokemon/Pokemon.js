@@ -154,32 +154,35 @@ const Pokemon = ({ match }) => {
 
     return (
         <div className='poke-div' >
-            <Card border='dark' style={{ width: '18rem' }}>
+            <Card className='center-div-small-top-margin shadow-box' border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
 
                 {/* <Card.Header><Button onClick={() => { setShiny(!shiny) }}>Shiny</Button></Card.Header> */}
                 {data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
                 {data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
                 <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
                 <Card.Body>
-                    <Card.Title>{capitalize(pokeData.name)}</Card.Title>
+                    <Card.Title style={{ textAlign: 'center' }}>{capitalize(pokeData.name)}</Card.Title>
                 </Card.Body>
-                <ListGroup className="abilities">
-                    <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
-                    {pokeData.abilities.map((ability) => {
-                        return (
-                            <ListGroup.Item><span className='ability' onClick={() => { history.push(`/abilities/${ability.ability.name}`) }}>{formatAbility(ability.ability.name)}</span></ListGroup.Item>
-                        )
-                    })}
-                </ListGroup>
-                <ListGroup>
-                    <ListGroup.Item className='bold'>Types:</ListGroup.Item>
-                    {pokeData.types.map((type) => {
-                        return (
-                            <ListGroup.Item className='type' onClick={() => { history.push(`/types/${type.type.name}`) }}><span className='type'>{capitalize(type.type.name)}</span></ListGroup.Item>
-                        )
-                    })}
-                </ListGroup>
             </Card>
+
+            <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ width: '18rem' }}>
+                <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
+                {pokeData.abilities.map((ability) => {
+                    return (
+                        <ListGroup.Item className='type' onClick={() => { history.push(`/abilities/${ability.ability.name}`) }}>{formatAbility(ability.ability.name)}</ListGroup.Item>
+                    )
+                })}
+            </Card>
+
+            <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ width: '18rem' }}>
+                <ListGroup.Item className='bold'>Types:</ListGroup.Item>
+                {pokeData.types.map((type) => {
+                    return (
+                        <ListGroup.Item className='type' onClick={() => { history.push(`/types/${type.type.name}`) }}><span className='type'>{capitalize(type.type.name)}</span></ListGroup.Item>
+                    )
+                })}
+            </Card>
+
 
             <EvolutionChain capitalize={capitalize} pokeData={pokeData} />
             <div className="shiny-div">

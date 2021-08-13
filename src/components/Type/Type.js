@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Card, ListGroup, Spinner } from "react-bootstrap";
+import { Card, ListGroup, Spinner, ListGroupItem } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
@@ -43,6 +43,11 @@ const Type = ({ match }) => {
         return capitalize(formattedRel);
     }
 
+    const weirdRedirect = async (name) => {
+        await history.push('/');
+        history.push(`/types/${name}`)
+    }
+
     if (!type) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -54,7 +59,7 @@ const Type = ({ match }) => {
     return (
         <div>
 
-            <Card bg='dark' className='center-div, white-text, ability-descriptor' style={{ width: '10rem' }}>
+            <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '10rem' }}>
                 <Card.Text>{`${capitalize(match.params.type)}:`}</Card.Text>
             </Card>
 
@@ -68,10 +73,10 @@ const Type = ({ match }) => {
                     return (
                         <ListGroup className='relation' style={{ width: '12rem' }}>
 
-                            <ListGroup.Item variant='primary'>{`${formatRelation(key)}:`}</ListGroup.Item>
+                            <ListGroup.Item variant='dark'>{`${formatRelation(key)}:`}</ListGroup.Item>
                             {type.damage_relations[key].map((relation) => {
                                 return (
-                                    <ListGroup.Item >{capitalize(relation.name)}</ListGroup.Item>
+                                    <ListGroupItem onClick={() => { weirdRedirect(relation.name) }} >{capitalize(relation.name)}</ListGroupItem>
                                 )
                             })}
                         </ListGroup>

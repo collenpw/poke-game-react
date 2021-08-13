@@ -45,7 +45,7 @@ const Moves = ({ pokeData, capitalize }) => {
     return (
 
         <div>
-            <Card bg='dark' className='center-div, big-descriptor' style={{ width: '24rem' }}>
+            <Card bg='dark' className='center-div big-descriptor' style={{ width: '24rem' }}>
                 <Card.Text>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</Card.Text>
             </Card>
             <div className='poke-moves'>
