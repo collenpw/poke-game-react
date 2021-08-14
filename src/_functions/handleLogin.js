@@ -1,4 +1,22 @@
-const handleLogin = async (user, isAuthenticated, findCurrentPokeUser) => {
+
+const findCurrentPokeUser = async (setCurrentPokeUser, setUserFavPoke, user) => {
+    try {
+        const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
+        const data = await res.json();
+        data.map((el) => {
+            if (el.email === user.email) {
+                setCurrentPokeUser(el)
+                setUserFavPoke(el.favPoke)
+            }
+        })
+    }
+
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const handleLogin = async (user, isAuthenticated, setCurrentPokeUser, setUserFavPoke) => {
 
     class pokeUser {
 
@@ -9,6 +27,7 @@ const handleLogin = async (user, isAuthenticated, findCurrentPokeUser) => {
         }
     }
     if (!isAuthenticated) return;
+
     const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
     const data = await res.json();
     let count = 0;
@@ -32,7 +51,7 @@ const handleLogin = async (user, isAuthenticated, findCurrentPokeUser) => {
             console.log(err);
         }
 
-        findCurrentPokeUser();
+        findCurrentPokeUser(setCurrentPokeUser, setUserFavPoke, user);
     }
 
 }

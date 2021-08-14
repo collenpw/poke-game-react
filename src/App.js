@@ -33,37 +33,32 @@ function App() {
   const [allMoves, setAllMoves] = useState(null);
   const [allAbilities, setAllAbilities] = useState(null);
 
-  const findCurrentPokeUser = async () => {
-    try {
-      const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
-      const data = await res.json();
-      data.map((el) => {
-        if (el.email === user.email) {
-          setCurrentPokeUser(el)
-          setUserFavPoke(el.favPoke)
-        }
-      })
-    }
+  // const findCurrentPokeUser = async () => {
+  //   try {
+  //     const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
+  //     const data = await res.json();
+  //     data.map((el) => {
+  //       if (el.email === user.email) {
+  //         setCurrentPokeUser(el)
+  //         setUserFavPoke(el.favPoke)
+  //       }
+  //     })
+  //   }
 
-    catch (err) {
-      console.log(err);
-    }
-  }
+  //   catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   useEffect(() => {
-    // getAllPokemon(setAllPokemon);
     getAllMoves(setAllMoves);
     getAllAbilities(setAllAbilities);
-    handleLogin(user, isAuthenticated, findCurrentPokeUser);
-    findCurrentPokeUser();
+    handleLogin(user, isAuthenticated, setCurrentPokeUser, setUserFavPoke);
   }, [])
 
   useEffect(() => {
-    handleLogin(user, isAuthenticated, findCurrentPokeUser);
-    findCurrentPokeUser();
+    handleLogin(user, isAuthenticated, setCurrentPokeUser, setUserFavPoke);
   }, [isAuthenticated])
-
-  console.log(allMoves);
 
   return (
     <body>

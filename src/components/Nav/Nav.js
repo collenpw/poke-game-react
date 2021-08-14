@@ -19,6 +19,8 @@ const Navigation = ({ currentPokeUser }) => {
     const history = useHistory();
     const { user, isAuthenticated } = useAuth0();
 
+    console.log(data;
+
     return (
 
         <Navbar className='my-nav' fixed='top' sticky='top' bg="dark" variant="dark">

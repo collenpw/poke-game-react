@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Card, Form, Spinner } from "react-bootstrap";
 
@@ -7,7 +7,6 @@ import { useHistory } from "react-router";
 const Abilities = ({ allAbilities }) => {
 
     const history = useHistory();
-    const [search, setSearch] = useState(null);
     const [searchRes, setSearchRes] = useState(allAbilities);
 
     const formatSearch = (str) => {
@@ -16,7 +15,6 @@ const Abilities = ({ allAbilities }) => {
     }
 
     const handleChange = (e) => {
-        setSearch(e.target.value);
         const newArr = allAbilities.filter(function (el) {
             return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
         })

@@ -26,12 +26,7 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
         constructor(name, img, id) {
             this.name = name;
             this.img = img;
-            // this.url = url;
             this.id = id;
-            // this.img = img;
-            // this.types = types;
-            // this.abilities = abilities;
-            // this.fav = true;
         }
     }
 
@@ -117,14 +112,14 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
             }
         })
     }
+    if (needsFavorite) { checkForFav() };
 
-    checkForFav();
     return (
-        <Card onClick={() => { history.push(`/pokemon/${name}`) }} className='center-div shadow-box' border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
+        <Card className='center-div shadow-box' border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
             {needsFavorite && data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
             {needsFavorite && data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
-            <Card.Img variant="top" src={img} />
-            <Card.Body>
+            <Card.Img onClick={() => { history.push(`/pokemon/${name}`) }} variant="top" src={img} />
+            <Card.Body onClick={() => { history.push(`/pokemon/${name}`) }}>
                 <Card.Title>{capitalize(name)}</Card.Title>
                 <Card.Text>#{id}</Card.Text>
             </Card.Body>

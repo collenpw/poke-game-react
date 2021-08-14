@@ -1,6 +1,6 @@
 import logo from '../../imgs/logo.png'
 
-import { Form, Card, Spinner } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 
 import { useState, useEffect, useContext } from 'react';
 
@@ -15,12 +15,10 @@ const PokemonList = () => {
     const data = useContext(DataContext);
 
     const [type, setType] = useState('type');
-    const [pokeData, setPokeData] = useState(null);
     const [searchRes, setSearchRes] = useState(null);
     const [typeData, setTypeData] = useState(null);
     const [typeSearch, setTypeSearch] = useState(null);
     const [allPokemon, setAllPokemon] = useState(null);
-
 
     const handleChange = (e, arr) => {
         const newArr = arr.filter(function (el) {
@@ -28,17 +26,12 @@ const PokemonList = () => {
         })
 
         const newArr2 = arr.filter(function (el) {
-            console.log(el.url);
             return el.url.split('/')[6].includes(e.target.value);
         })
-
-        // console.log(newArr2);
 
         if (newArr.length > 0) setSearchRes(newArr);
         if (newArr2.length > 0) setSearchRes(newArr2);
 
-        // setSearchRes(newArr);
-        // console.log(searchRes);
     }
 
     const typeFilterSearch = (e, arr) => {
@@ -71,10 +64,6 @@ const PokemonList = () => {
         </Spinner>
     )
 
-    console.log(pokeData);
-
-    console.log(typeData);
-
     return (
 
         <div className='poke-list'>
@@ -83,7 +72,7 @@ const PokemonList = () => {
                 <img className='home-logo' src={logo} alt="Okie-Dokie-Dex logo" />
                 {!typeData && (
                     <div className='search-and-filter'>
-                        <Form.Control onChange={(e) => { handleChange(e, pokeData) }} className='pokemon-search' type="text" placeholder="Search for a Pokemon" />
+                        <Form.Control onChange={(e) => { handleChange(e, allPokemon) }} className='pokemon-search' type="text" placeholder="Search for a Pokemon" />
                         <TypeDropdown className='type-drop' typeData={typeData} setTypeData={setTypeData} type={type} setType={setType} />
                     </div>
 

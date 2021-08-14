@@ -14,7 +14,6 @@ const FavPoke = () => {
     const data = useContext(DataContext);
 
     const getFavPoke = async () => {
-        console.log('hi');
         try {
             const res = await fetch(`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
             console.log(res);
