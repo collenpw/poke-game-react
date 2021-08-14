@@ -2,7 +2,7 @@ import { Card, ListGroupItem, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
 
-const Location = ({ pokeData, capitalize }) => {
+const Location = ({ pokeData, cap }) => {
 
     class VersionLocation {
         constructor(name, locations = []) {
@@ -74,7 +74,7 @@ const Location = ({ pokeData, capitalize }) => {
         let formattedLoc = str.replace(/-/g, ' ');
         formattedLoc = formattedLoc.replace(/area/g, '')
 
-        return capitalize(formattedLoc);
+        return cap(formattedLoc);
     }
 
     if (!locations || !versions) return (
@@ -119,7 +119,7 @@ const Location = ({ pokeData, capitalize }) => {
             <div>
                 {filterLocationsForHeadbutt()}
                 <Card bg='dark' className='center-div white-text big-descriptor' style={{ width: '24rem' }}>
-                    <Card.Text>{`${capitalize(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
+                    <Card.Text>{`${cap(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
                 </Card>
                 <div className='locations'>
 
@@ -128,7 +128,7 @@ const Location = ({ pokeData, capitalize }) => {
                         return (
                             <>
                                 <Card style={{ width: '25rem' }} border='dark' className='location'>
-                                    <ListGroup.Item variant='dark'>{`Pokemon ${capitalize(version.name)}:`}</ListGroup.Item>
+                                    <ListGroup.Item variant='dark'>{`Pokemon ${cap(version.name)}:`}</ListGroup.Item>
                                     {version.locations.map((detail) => {
 
                                         if (detail.method.includes('headbutt')) return
@@ -143,7 +143,7 @@ const Location = ({ pokeData, capitalize }) => {
                                             prep = 'around'
                                         }
                                         return (
-                                            <ListGroup.Item>{`${prefix}${capitalize(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
+                                            <ListGroup.Item>{`${prefix}${cap(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
                                         )
                                     })}
                                 </Card>

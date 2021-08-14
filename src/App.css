@@ -124,7 +124,7 @@ button {
 }
 
 .center-div {
-  margin: 2rem auto !important;
+  margin: 1rem auto;
 }
 
 .one-line-desc{
@@ -214,7 +214,7 @@ button {
   text-align: center !important;
 }
 
-.ability-title, .center-div, .move-title {
+.ability-title, .move-title {
   text-align: center;
 }
 

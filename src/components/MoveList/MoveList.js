@@ -2,24 +2,24 @@ import { useState, useEffect } from "react";
 import { Card, Form, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router";
 
-const Moves = () => {
+const Moves = ({ allMoves }) => {
 
     const history = useHistory();
-    const [moveData, setMoveData] = useState(null);
-    const [searchRes, setSearchRes] = useState(moveData);
+    // const [moveData, setMoveData] = useState(null);
+    const [searchRes, setSearchRes] = useState(allMoves);
 
-    const getMoveData = async () => {
-        try {
-            const res = await fetch('https://pokeapi.co/api/v2/move/?limit=1000');
-            const data = await res.json();
-            setMoveData(data.results);
-            setSearchRes(data.results);
-        }
-        catch (err) {
-            console.log(err);
-        }
+    // const getMoveData = async () => {
+    //     try {
+    //         const res = await fetch('https://pokeapi.co/api/v2/move/?limit=1000');
+    //         const data = await res.json();
+    //         setMoveData(data.results);
+    //         setSearchRes(data.results);
+    //     }
+    //     catch (err) {
+    //         console.log(err);
+    //     }
 
-    }
+    // }
 
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -32,7 +32,7 @@ const Moves = () => {
     }
 
     const handleChange = (e) => {
-        const newArr = moveData.filter(function (el) {
+        const newArr = allMoves.filter(function (el) {
             return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
         })
 
@@ -40,11 +40,11 @@ const Moves = () => {
         console.log(searchRes);
     }
 
-    useEffect(() => {
-        getMoveData()
-    }, []);
+    // useEffect(() => {
+    //     getMoveData()
+    // }, []);
 
-    if (!moveData || !searchRes) return (
+    if (!allMoves || !searchRes) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
@@ -52,7 +52,7 @@ const Moves = () => {
 
 
 
-    moveData.sort(function (a, b) {
+    allMoves.sort(function (a, b) {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
@@ -77,7 +77,7 @@ const Moves = () => {
     return (
         <div>
             <Form.Control onChange={handleChange} className='ability-search' type="text" placeholder="Search for a move" />
-            {searchRes && searchRes.length !== moveData.length && (
+            {searchRes && searchRes.length !== allMoves.length && (
                 <div className='all-abilities'>
                     {searchRes.map((move) => {
                         return (
@@ -89,14 +89,14 @@ const Moves = () => {
                 </div>
             )}
 
-            {searchRes.length === moveData.length && (
+            {searchRes.length === allMoves.length && (
 
                 <>
                     <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '24rem' }}>
                         <Card.Text>All of the moves in the games (click for details):</Card.Text>
                     </Card>
                     <div className='all-abilities'>
-                        {moveData.map((move) => {
+                        {allMoves.map((move) => {
                             return (
                                 <Card onClick={() => { history.push(`/moves/${move.name}`) }} border='dark' className='single-move'>
                                     <Card.Title className='move-title'>{capitalize(formatMove(move.name))}</Card.Title>
