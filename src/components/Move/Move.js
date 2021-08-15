@@ -4,6 +4,8 @@ import { Card, ListGroupItem } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
+import PokeCard from "../Poke-Card/PokeCard";
+
 const Move = ({ match }) => {
 
     const history = useHistory();
@@ -88,15 +90,12 @@ const Move = ({ match }) => {
                         {moveData.learned_by_pokemon.map((pokemon) => {
                             if (parseInt(pokemon.url.split('/')[6]) > 898) return;
                             return (
-                                <Card className='poke-card' onClick={() => { handleClick(pokemon.name) }} border='dark' style={{ width: '18rem' }}>
-                                    <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.url)}.png`} />
-                                    <Card.Body>
-                                        <Card.Title>{capitalize(pokemon.name)}</Card.Title>
-                                        <Card.Text>#{grabID(pokemon.url)}</Card.Text>
-                                    </Card.Body>
-                                </Card>
+                                <PokeCard
+                                    name={pokemon.name}
+                                    img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
+                                    id={grabID(pokemon.url)}
+                                />
                             )
-
                         })}
                     </div>
                 </>

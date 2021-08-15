@@ -1,43 +1,20 @@
 import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router';
 
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Spinner from 'react-bootstrap/Spinner';
+import { Card, ListGroup, Spinner } from 'react-bootstrap';
 
 import Location from './Location';
 import Moves from './Moves';
 import EvolutionChain from '../EvolutionChain/EvolutionChain';
-
-import heart from '../../imgs/heart.svg'
-import filledHeart from '../../imgs/heart-fill.svg'
-
-import { useAuth0 } from "@auth0/auth0-react";
+import PokeCard from '../Poke-Card/PokeCard';
 
 import { DataContext } from '../../App';
-import { Button } from 'react-bootstrap';
 
 const Pokemon = ({ match }) => {
-
     const data = useContext(DataContext);
     const history = useHistory();
-    const { isAuthenticated } = useAuth0();
 
-    const [favPoke, setFavPoke] = useState([]);
     const [pokeData, setPokeData] = useState(null);
-    const [favorited, setFavorited] = useState(false);
-    const [shiny, setShiny] = useState(false);
-
-    class Pokemon {
-        constructor(name, id, img, types, abilities) {
-            this.name = name;
-            this.id = id;
-            this.img = img;
-            this.types = types;
-            this.abilities = abilities;
-            this.fav = true;
-        }
-    }
 
     const getPokeData = async () => {
         const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
@@ -49,58 +26,7 @@ const Pokemon = ({ match }) => {
         catch (err) {
             console.log(err);
         }
-        getFavPoke()
-    }
-
-    const getFavPoke = async () => {
-        if (!isAuthenticated) return;
-        try {
-            const res = await fetch(`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`);
-            const resData = await res.json()
-            setFavPoke(resData.favPoke);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    const handleFavorite = async (e) => {
-        e.preventDefault();
-        setFavorited(!favorited);
-        const tempArr = [...favPoke]
-        tempArr.push(new Pokemon(pokeData.name, pokeData.id, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`, pokeData.types, pokeData.abilities))
-        console.log(tempArr);
-        setFavPoke(tempArr);
-        console.log(favPoke);
-
-        const res = await fetch(`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`, {
-            method: 'PATCH',
-            body: JSON.stringify({ favPoke: tempArr }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-    }
-
-    const handleUnfavorite = async (e) => {
-        e.preventDefault();
-        const tempArr = favPoke.filter(function (el) {
-            return el.name !== pokeData.name;
-        })
-        console.log(tempArr);
-        const res = await fetch(`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`, {
-            method: 'PATCH',
-            body: JSON.stringify({ favPoke: tempArr }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        data.userFavPoke = [...tempArr];
-        console.log(data.userFavPoke);
-        console.log(res);
-        setFavPoke(tempArr);
-        setFavorited(false);
+        // getFavPoke()
     }
 
     useEffect(() => {
@@ -108,20 +34,6 @@ const Pokemon = ({ match }) => {
         getPokeData();
 
     }, []);
-
-    useEffect(() => {
-        getFavPoke();
-    }, [])
-
-    useEffect(() => {
-        if (!pokeData || !favPoke) return;
-        favPoke.map((pokemon) => {
-            if (pokemon.name === pokeData.name) {
-                setFavorited(true)
-            }
-
-        })
-    }, [favPoke])
 
     const capitalize = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -131,17 +43,6 @@ const Pokemon = ({ match }) => {
         let formattedAbility = str.replace(/-/g, ' ');
         return capitalize(formattedAbility);
     }
-
-    const checkForFav = () => {
-        if (!data.userFavPoke) return;
-        data.userFavPoke.map((pokemon) => {
-            if (pokemon.name === match.params.pokemon && !favorited) {
-                setFavorited(true)
-            }
-        })
-    }
-
-    checkForFav();
 
     if (!pokeData) return (
         <Spinner className='spinner' animation="border" role="status">
@@ -154,16 +55,7 @@ const Pokemon = ({ match }) => {
 
     return (
         <div className='poke-div' >
-            <Card className='center-div-small-top-margin shadow-box' border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
-
-                {/* <Card.Header><Button onClick={() => { setShiny(!shiny) }}>Shiny</Button></Card.Header> */}
-                {data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
-                {data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
-                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} />
-                <Card.Body>
-                    <Card.Title style={{ textAlign: 'center' }}>{capitalize(pokeData.name)}</Card.Title>
-                </Card.Body>
-            </Card>
+            <PokeCard name={pokeData.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} id={pokeData.id} needsFavorite={true}></PokeCard>
 
             <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ width: '18rem' }}>
                 <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
@@ -204,7 +96,7 @@ const Pokemon = ({ match }) => {
                     </Card.Body>
                 </Card>
             </div>
-            <Location pokeData={pokeData} capitalize={capitalize} />
+            <Location pokeData={pokeData} cap={capitalize} />
             <Moves pokeData={pokeData} capitalize={capitalize} />
             {/* WORK IN PROGRESS */}
 

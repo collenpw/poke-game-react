@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Card, Form, Spinner } from "react-bootstrap";
 
@@ -40,13 +40,14 @@ const Abilities = () => {
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
-
+  
     HELPER.alphabeticalSort(allAbilities)
 
     return (
         <div>
             <Form.Control onChange={(e) => {HELPER.handleSearch(e, setSearchRes, allAbilities)}} className='ability-search' type="text" placeholder="Search for an ability" />
             {searchRes && (
+
                 <div className='all-abilities'>
                     {searchRes.map((ability) => {
                         return (

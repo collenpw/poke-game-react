@@ -7,8 +7,6 @@ import HELPER from "../../HELPER";
 
 const Moves = () => {
 
-    console.log(P);
-
     const history = useHistory();
     const [allMoves, setAllMoves] = useState(null);
     const [searchRes, setSearchRes] = useState(allMoves);
@@ -33,6 +31,7 @@ const Moves = () => {
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
+
         
     HELPER.alphabeticalSort(allMoves);
 
@@ -54,6 +53,7 @@ const Moves = () => {
 
     return (
         <div>
+
             <Form.Control onChange={(e) => {HELPER.handleSearch(e, setSearchRes, allMoves)}} className='ability-search' type="text" placeholder="Search for a move" />
             {searchRes  && (
                 <div className='all-abilities'>
@@ -67,7 +67,7 @@ const Moves = () => {
                 </div>
             )}
 
-                <>
+    <>
                     <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '24rem' }}>
                         <Card.Text>All of the moves in the games (click for details):</Card.Text>
                     </Card>
