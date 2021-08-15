@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Card, ListGroupItem } from "react-bootstrap";
 
 import { useHistory } from "react-router";
+import HELPER from "../../HELPER";
 
 import PokeCard from "../Poke-Card/PokeCard";
 
@@ -65,7 +66,8 @@ const Move = ({ match }) => {
             <Card className='poke-card move-detail' bg='dark' style={{ width: '36rem' }}>
                 <Card.Body>
                     <Card.Title text='white' className='move-title white-text'>{capitalize(formatMove(moveData.name))}</Card.Title>
-                    <ListGroupItem>{`Move type: ${capitalize(moveData.damage_class.name)}`}</ListGroupItem>
+                    <ListGroupItem>{`Type: ${HELPER.capitalize(moveData.type.name)}`}</ListGroupItem>
+                    <ListGroupItem>{`Damage type: ${HELPER.capitalize(moveData.damage_class.name)}`}</ListGroupItem>
                     {moveData.power && (
                         <ListGroupItem>{`Power: ${moveData.power}`}</ListGroupItem>
                     )}
@@ -88,14 +90,16 @@ const Move = ({ match }) => {
 
                     <div className='fav-poke'>
                         {moveData.learned_by_pokemon.map((pokemon) => {
-                            if (parseInt(pokemon.url.split('/')[6]) > 898) return;
-                            return (
-                                <PokeCard
-                                    name={pokemon.name}
-                                    img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
-                                    id={grabID(pokemon.url)}
-                                />
-                            )
+                            console.log(pokemon);
+                            // if (parseInt(pokemon.url.split('/')[6]) > 898) return;
+                            if(grabID(pokemon.url) < 899){
+                                return (
+                                    <PokeCard
+                                        name={pokemon.name}
+                                        img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
+                                        id={grabID(pokemon.url)}
+                                    />
+                                )}
                         })}
                     </div>
                 </>

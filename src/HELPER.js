@@ -9,10 +9,10 @@ const HELPER = {
         return formattedSearch;
     },
 
-    handleSearch: (e, setter, arrToFilter, formatSearch=HELPER.formatSearch) => {
+    handleSearch: (e, setter, arrToFilter) => {
         if(e.target.value.length === 0) return setter(null);
         const newArr = arrToFilter.filter(function (el) {
-            return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
+            return el.name.toLowerCase().includes(HELPER.formatSearch(e.target.value.toLowerCase()))
         })
 
         setter(newArr);
