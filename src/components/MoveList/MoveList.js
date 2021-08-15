@@ -2,61 +2,38 @@ import { useState, useEffect } from "react";
 import { Card, Form, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router";
 
-const Moves = ({ allMoves }) => {
+import P from '../POKEDEX'
+import HELPER from "../../HELPER";
+
+const Moves = () => {
 
     const history = useHistory();
-    // const [moveData, setMoveData] = useState(null);
+    const [allMoves, setAllMoves] = useState(null);
     const [searchRes, setSearchRes] = useState(allMoves);
 
-    // const getMoveData = async () => {
-    //     try {
-    //         const res = await fetch('https://pokeapi.co/api/v2/move/?limit=1000');
-    //         const data = await res.json();
-    //         setMoveData(data.results);
-    //         setSearchRes(data.results);
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //     }
+    const getAllMoves = async () => {
+        try {
+            const res = await P.getMovesList();
+            setAllMoves(res.results);
+        }
+        catch (err) {
+            console.log(err);
+        }
 
-    // }
-
-    const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    const formatSearch = (str) => {
-        let formattedSearch = str.replace(/ /g, '-');
-
-        return formattedSearch;
-    }
-
-    const handleChange = (e) => {
-        const newArr = allMoves.filter(function (el) {
-            return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
-        })
-
-        setSearchRes(newArr)
-        console.log(searchRes);
-    }
-
-    // useEffect(() => {
-    //     getMoveData()
-    // }, []);
-
-    if (!allMoves || !searchRes) return (
+    useEffect(() => {
+        getAllMoves();
+    }, []);
+    
+    if (!allMoves) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
 
-
-
-    allMoves.sort(function (a, b) {
-        if (a.name < b.name) { return -1; }
-        if (a.name > b.name) { return 1; }
-        return 0;
-    })
+        
+    HELPER.alphabeticalSort(allMoves);
 
     const formatMove = (str) => {
         if (str[0] === '1') {
@@ -68,7 +45,7 @@ const Moves = ({ allMoves }) => {
             return `${numArr} ${wordArr}`
         }
         let formattedMove = str.replace(/-/g, ' ');
-        return capitalize(formattedMove);
+        return HELPER.capitalize(formattedMove);
     }
 
 
@@ -76,22 +53,21 @@ const Moves = ({ allMoves }) => {
 
     return (
         <div>
-            <Form.Control onChange={handleChange} className='ability-search' type="text" placeholder="Search for a move" />
-            {searchRes && searchRes.length !== allMoves.length && (
+
+            <Form.Control onChange={(e) => {HELPER.handleSearch(e, setSearchRes, allMoves)}} className='ability-search' type="text" placeholder="Search for a move" />
+            {searchRes  && (
                 <div className='all-abilities'>
                     {searchRes.map((move) => {
                         return (
                             <Card onClick={() => { history.push(`/moves/${move.name}`) }} border='dark' className='single-move'>
-                                <Card.Title className='move-title'>{capitalize(formatMove(move.name))}</Card.Title>
+                                <Card.Title className='move-title'>{HELPER.capitalize(formatMove(move.name))}</Card.Title>
                             </Card>
                         )
                     })}
                 </div>
             )}
 
-            {searchRes.length === allMoves.length && (
-
-                <>
+    <>
                     <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '24rem' }}>
                         <Card.Text>All of the moves in the games (click for details):</Card.Text>
                     </Card>
@@ -99,13 +75,13 @@ const Moves = ({ allMoves }) => {
                         {allMoves.map((move) => {
                             return (
                                 <Card onClick={() => { history.push(`/moves/${move.name}`) }} border='dark' className='single-move'>
-                                    <Card.Title className='move-title'>{capitalize(formatMove(move.name))}</Card.Title>
+                                    <Card.Title className='move-title'>{HELPER.capitalize(formatMove(move.name))}</Card.Title>
                                 </Card>
                             )
                         })}
                     </div>
                 </>
-            )}
+            {/* )} */}
         </div>
     );
 };

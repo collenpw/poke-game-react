@@ -4,52 +4,50 @@ import { Card, Form, Spinner } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
-const Abilities = ({ allAbilities }) => {
+import P from '../POKEDEX';
+import HELPER from '../../HELPER'
+
+const Abilities = () => {
 
     const history = useHistory();
-    const [searchRes, setSearchRes] = useState(allAbilities);
+    const [allAbilities, setAllAbilities] = useState(null);
+    const [searchRes, setSearchRes] = useState(null)
 
-    const formatSearch = (str) => {
-        let formattedSearch = str.replace(/ /g, '-');
-        return formattedSearch;
+    const getAllAbilities = async () => {
+        try {
+            const res = await P.getAbilitiesList();     
+            setAllAbilities(res.results)
+            
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
-    const handleChange = (e) => {
-        const newArr = allAbilities.filter(function (el) {
-            return el.name.toLowerCase().includes(formatSearch(e.target.value.toLowerCase()))
-        })
-
-        setSearchRes(newArr)
-    }
-
-    const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
+    useEffect(() => {
+        getAllAbilities();
+    }, [])
 
     const formatAbility = (str) => {
         let formattedAbility = str.replace(/-/g, ' ');
 
-        return capitalize(formattedAbility);
+        return HELPER.capitalize(formattedAbility);
     }
 
 
-    if (!allAbilities || !searchRes) return (
+    if (!allAbilities) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
-
-    allAbilities.sort(function (a, b) {
-        if (a.name < b.name) { return -1; }
-        if (a.name > b.name) { return 1; }
-        return 0;
-    })
+  
+    HELPER.alphabeticalSort(allAbilities)
 
     return (
         <div>
-            <Form.Control onChange={handleChange} className='ability-search' type="text" placeholder="Search for an ability" />
-            {searchRes && searchRes.length !== allAbilities.length && (
+            <Form.Control onChange={(e) => {HELPER.handleSearch(e, setSearchRes, allAbilities)}} className='ability-search' type="text" placeholder="Search for an ability" />
+            {searchRes && (
+
                 <div className='all-abilities'>
                     {searchRes.map((ability) => {
                         return (
@@ -61,9 +59,10 @@ const Abilities = ({ allAbilities }) => {
                 </div>
 
             )}
-            {searchRes.length === allAbilities.length && (
 
-                <>
+                    {!searchRes && (
+
+                        <>
                     <Card bg='dark' className='one-line-desc ability-descriptor' style={{ width: '24rem' }}>
                         <Card.Text>All of the abilities in the games (click for details):</Card.Text>
                     </Card>
@@ -77,7 +76,7 @@ const Abilities = ({ allAbilities }) => {
                         })}
                     </div>
                 </>
-            )}
+                        )}
         </div>
     );
 };
