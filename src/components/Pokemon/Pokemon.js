@@ -27,10 +27,10 @@ const Pokemon = ({ match }) => {
     console.log(pokeData);
 
     useEffect(() => {
-
+        // setPokeData(null);
         getPokeData();
 
-    }, []);
+    }, [match]);
 
     if (!pokeData) return (
         <Spinner className='spinner' animation="border" role="status">
