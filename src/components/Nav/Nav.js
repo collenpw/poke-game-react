@@ -23,7 +23,7 @@ const Navigation = ({ currentPokeUser }) => {
 
     return (
 
-        <Navbar className='my-nav' fixed='top' sticky='top' bg="dark" variant="dark">
+        <Navbar className='my-nav'  sticky='top' bg="dark" variant="dark">
             <Container className='no-padding h-100'>
                 <Navbar.Brand onClick={() => { history.push('/') }} >
                     <img
