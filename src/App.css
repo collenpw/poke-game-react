@@ -1,15 +1,11 @@
 .app-div{
   background: tan;
-  /* background: fixed url(/src/imgs/attempt2.jpg); */
   height: 100vh;
 }
 
 html, body{
-  /* width: 100%; */
-  /* height: 100%; */
   margin: 0px;
-  padding: 0px;
-  /* overflow-x: hidden; */
+  padding: 15px;
 }
 
 .border-dark{
@@ -33,9 +29,8 @@ html, body{
 
 body {
   background: fixed url(/src/imgs/attempt2.jpg);
-  /* background: white !important; */
   user-select: none;
-  /* width: 100%; */
+  /* width: 10%; */
 }
 
 button {
@@ -47,10 +42,9 @@ button {
 .pokeList {
   display: flex;
   flex-wrap: wrap;
-  /* background: fixed url(/src/imgs/attempt2.jpg); */
-  /* background: tan; */
 
 }
+
 .poke-entry {
   height: 100%;
   width: 100%;
@@ -93,13 +87,9 @@ button {
 
 .first-tier-evolution, .second-tier-evolution, .third-tier-evolution{
   height: fit-content;
-  /* max-height: 20rem; */
-  /* justify-content: space-around; */
   margin: auto 1rem;
 }
 .second-tier-evolution{
-  /* display: flex; */
-  /* flex-wrap: wrap; */
   justify-content: space-around;
 }
 
@@ -188,7 +178,6 @@ button {
 
 .pokesearch {
   grid-row: 2;
-  /* max-width: 35%; */
   text-align: center;
 }
 
@@ -223,8 +212,6 @@ button {
   justify-content: space-evenly;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  /* margin-top: 2rem; */
-
 }
 
 .home-logo{
@@ -275,7 +262,6 @@ button {
   text-align: center;
   justify-content: space-around;
   color: white;
-  /* margin: 0 auto; */
 }
 
 .big-descriptor{
@@ -401,4 +387,3 @@ button {
  }
 
 } 
-
