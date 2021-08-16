@@ -4,6 +4,8 @@ import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
+import PokeCard from "../Poke-Card/PokeCard";
+
 const Ability = ({ match }) => {
 
     const [abilityData, setAbilityData] = useState(null);
@@ -54,8 +56,8 @@ const Ability = ({ match }) => {
     console.log(abilityData);
 
     return (
-        <div>
-            <Card className='white-text ability-detail' bg='dark' style={{ width: '36rem' }}>
+        <div style={{ marginBottom: '1rem' }}>
+            <Card className='poke-card white-text ability-detail' bg='dark' style={{ width: '36rem' }}>
                 <Card.Body>
                     <Card.Title className='ability-title'>{formatAbility(abilityData.name)}</Card.Title>
                     <Card.Text>
@@ -74,22 +76,18 @@ const Ability = ({ match }) => {
                 </Card.Body>
 
             </Card>
+            {abilityData.pokemon.length > 0 && (
 
-            <Card bg='dark' className='center-div, white-text, ability-descriptor' style={{ width: '24rem' }}>
-                <Card.Text>The following Pokemon can have this ability:</Card.Text>
-            </Card>
+                <Card bg='dark' className='one-line-desc' style={{ width: '24rem' }}>
+                    <Card.Text>The following Pokemon can have this ability:</Card.Text>
+                </Card>
+            )}
 
             <div className='fav-poke'>
                 {abilityData.pokemon.map((pokemon) => {
-                    if (parseInt(pokemon.pokemon.url.split('/')[6]) > 898) return;
                     return (
-                        <Card onClick={() => { handleClick(pokemon.pokemon.name) }} border='dark' style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.pokemon.url)}.png`} />
-                            <Card.Body>
-                                <Card.Title>{capitalize(pokemon.pokemon.name)}</Card.Title>
-                                <Card.Text>#{grabID(pokemon.pokemon.url)}</Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <PokeCard name={pokemon.pokemon.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(pokemon.pokemon.url)}.png`} id={grabID(pokemon.pokemon.url)} />
+
                     )
                 })}
             </div>

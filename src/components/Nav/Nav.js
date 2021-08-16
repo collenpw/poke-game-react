@@ -11,18 +11,20 @@ import { DataContext } from "../../App";
 
 import { useHistory } from "react-router";
 
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navigation = ({ currentPokeUser }) => {
 
     const data = useContext(DataContext);
     const history = useHistory();
+    const { user, isAuthenticated } = useAuth0();
 
     console.log(data);
 
     return (
 
-        <Navbar sticky='top' bg="dark" variant="dark">
-            <Container className='no-padding'>
+        <Navbar className='my-nav' fixed='top' sticky='top' bg="dark" variant="dark">
+            <Container className='no-padding h-100'>
                 <Navbar.Brand onClick={() => { history.push('/') }} >
                     <img
                         src={logo}
@@ -37,18 +39,18 @@ const Navigation = ({ currentPokeUser }) => {
                     <Nav.Link onClick={() => { history.push('/moves') }}>Moves</Nav.Link>
                     <Nav.Link onClick={() => { history.push('/abilities') }}>Abilities</Nav.Link>
                     <Nav.Link onClick={() => { history.push('/types') }}>Types</Nav.Link>
-                    {data.isAuthenticated && currentPokeUser && (
+                    {isAuthenticated && currentPokeUser && (
                         <>
                             <FavPokeButton />
                         </>
                     )}
                 </Nav >
                 <Nav>
-                    {!data.isAuthenticated && (<Login />)}
-                    {data.isAuthenticated && currentPokeUser && (
+                    {!isAuthenticated && (<Login />)}
+                    {isAuthenticated /*&& currentPokeUser*/ && (
                         <>
-                            <Navbar.Text>Logged in as {currentPokeUser.username}:</Navbar.Text>
-                            <Logout currentPokeUser={currentPokeUser} />
+                            <Navbar.Text>Logged in as {user.nickname}:</Navbar.Text>
+                            <Logout user={user} />
                         </>
                     )}
                 </Nav>

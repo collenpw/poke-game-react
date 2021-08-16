@@ -1,38 +1,24 @@
-import { useHistory } from "react-router-dom";
-
 import logo from '../../imgs/logo.png'
 
-import { Form, Card, Spinner } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 
-import { useState } from 'react'
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from 'react';
 
+import { DataContext } from "../../App";
+
+import getAllPokemon from '../../_functions/getAllPokemon'
 import TypeDropdown from "./TypeDropdown";
+import PokeCard from "../Poke-Card/PokeCard";
 
-const PokemonList = ({ setPokeName }) => {
+const PokemonList = () => {
 
-    const history = useHistory();
+    const data = useContext(DataContext);
 
     const [type, setType] = useState('type');
-    const [pokeData, setPokeData] = useState(null);
     const [searchRes, setSearchRes] = useState(null);
     const [typeData, setTypeData] = useState(null);
-    const [typeSearch, setTypeSearch] = useState(null)
-
-    const getPokeData = async () => {
-        try {
-            const res = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=898')
-            const data = await res.json()
-            setPokeData(data.results);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    const handleClick = async (name) => {
-        history.push(`/pokemon/${name}`)
-    }
+    const [typeSearch, setTypeSearch] = useState(null);
+    const [allPokemon, setAllPokemon] = useState(null);
 
     const handleChange = (e, arr) => {
         const newArr = arr.filter(function (el) {
@@ -40,17 +26,12 @@ const PokemonList = ({ setPokeName }) => {
         })
 
         const newArr2 = arr.filter(function (el) {
-            console.log(el.url);
             return el.url.split('/')[6].includes(e.target.value);
         })
-
-        // console.log(newArr2);
 
         if (newArr.length > 0) setSearchRes(newArr);
         if (newArr2.length > 0) setSearchRes(newArr2);
 
-        // setSearchRes(newArr);
-        // console.log(searchRes);
     }
 
     const typeFilterSearch = (e, arr) => {
@@ -69,33 +50,29 @@ const PokemonList = ({ setPokeName }) => {
 
     }
 
-    const capitalizeFirstLetter = (name) => {
-        return name.charAt(0).toUpperCase() + name.slice(1);
+    const grabID = (url) => {
+        return url.split('/')[6];
     }
 
     useEffect(() => {
-        getPokeData();
+        getAllPokemon(setAllPokemon);
     }, [])
 
-    if (!pokeData) return (
+    if (!allPokemon) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
 
-    console.log(pokeData);
-
-    console.log(typeData);
-
     return (
 
-        <>
+        <div className='poke-list'>
 
             <div className='search'>
                 <img className='home-logo' src={logo} alt="Okie-Dokie-Dex logo" />
                 {!typeData && (
                     <div className='search-and-filter'>
-                        <Form.Control onChange={(e) => { handleChange(e, pokeData) }} className='pokemon-search' type="text" placeholder="Search for a Pokemon" />
+                        <Form.Control onChange={(e) => { handleChange(e, allPokemon) }} className='pokemon-search' type="text" placeholder="Search for a Pokemon" />
                         <TypeDropdown className='type-drop' typeData={typeData} setTypeData={setTypeData} type={type} setType={setType} />
                     </div>
 
@@ -110,24 +87,16 @@ const PokemonList = ({ setPokeName }) => {
             </div>
 
             {/* displays search results from home */}
+
             {searchRes && !typeData && (
                 <div className='pokeList'>
-
                     {searchRes.map((pokemon) => {
-
                         return (
-
-                            <Card border='dark' onClick={(e) => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
-                                <Card.Body>
-                                    <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
-                                    <Card.Text className='poke-num'>
-                                        #{pokemon.url.split('/')[6]}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-
-
+                            <PokeCard
+                                name={pokemon.name}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
+                                id={grabID(pokemon.url)}
+                            />
                         )
                     })}
 
@@ -144,18 +113,11 @@ const PokemonList = ({ setPokeName }) => {
                         if (parseInt(pokemon.pokemon.url.split('/')[6]) > 898) return
 
                         return (
-
-                            <Card border='dark' onClick={(e) => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`} />
-                                <Card.Body>
-                                    <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.pokemon.name)}</Card.Title>
-                                    <Card.Text className='poke-num'>
-                                        #{pokemon.pokemon.url.split('/')[6]}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-
-
+                            <PokeCard
+                                name={pokemon.pokemon.name}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`}
+                                id={grabID(pokemon.pokemon.url)}
+                            />
                         )
                     })}
 
@@ -173,24 +135,18 @@ const PokemonList = ({ setPokeName }) => {
                         if (parseInt(pokemon.pokemon.url.split('/')[6]) > 898) return
 
                         return (
-                            <Card border='dark' onClick={() => { handleClick(pokemon.pokemon.name) }} style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`} />
-                                <Card.Body>
-                                    <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.pokemon.name)}</Card.Title>
-                                    <Card.Text className='poke-num'>
-                                        #{pokemon.pokemon.url.split('/')[6]}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-
-
+                            <PokeCard
+                                name={pokemon.pokemon.name}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`}
+                                id={grabID(pokemon.pokemon.url)}
+                            />
                         )
                     })}
 
 
                 </div>
 
-            )}
+            )} 
 
 
             {/* displays all pokemon */}
@@ -198,27 +154,18 @@ const PokemonList = ({ setPokeName }) => {
 
                 <div className='pokeList'>
 
-                    {pokeData.map((pokemon) => {
-
+                    {allPokemon.map((pokemon) => {
                         return (
-
-                            <Card border='dark' onClick={() => { handleClick(pokemon.name) }} style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`} />
-                                <Card.Body>
-                                    <Card.Title className='poke-name'>{capitalizeFirstLetter(pokemon.name)}</Card.Title>
-                                    <Card.Text className='poke-num'>
-                                        #{pokemon.url.split('/')[6]}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-
-
+                            <PokeCard
+                                name={pokemon.name}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
+                                id={grabID(pokemon.url)}
+                            />
                         )
                     })}
-
                 </div>
             )}
-        </>
+        </div>
     )
 
 }

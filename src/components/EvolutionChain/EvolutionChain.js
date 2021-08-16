@@ -1,21 +1,29 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-import { ListGroupItem } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Card } from 'react-bootstrap';
 
-const EvolutionChain = ({pokeData}) => {
+import { useHistory } from 'react-router';
+
+import arrow from '../../imgs/arrow-right.svg';
+
+import HELPER from '../../HELPER';
+
+const EvolutionChain = ({ pokeData }) => {
+
+    const history = useHistory();
 
     const [evolutionData, setEvolutionData] = useState(null)
     const [pokeObj, setPokeObj] = useState(null);
 
-    const getEvolutionData = async() => {
-        try{
-            const res = await fetch (pokeData.species.url);
+    const getEvolutionData = async () => {
+        try {
+            const res = await fetch(pokeData.species.url);
             const data = await res.json();
-            const secRes = await fetch (data.evolution_chain.url);
+            const secRes = await fetch(data.evolution_chain.url);
             const secData = await secRes.json();
             setEvolutionData(secData);
         }
-        catch(err){
+        catch (err) {
             console.log(err);
         }
     }
@@ -24,8 +32,8 @@ const EvolutionChain = ({pokeData}) => {
         getEvolutionData();
     }, []);
 
-    class Evolve{
-        constructor(from, to, gender=null, heldItem=null, item=null, knownMove=null, knownMoveType=null, location=null, minAffection=null, minBeauty=null, minHappiness=null, minLevel=null, needsOverworldRain=false, partySpecies=null, partyType=null, relativePhysicalStats=null, timeOfDay=null, tradeSpecies=null, trigger=null, turnUpsideDown=null ){
+    class Evolve {
+        constructor(from, to, gender = null, heldItem = null, item = null, knownMove = null, knownMoveType = null, location = null, minAffection = null, minBeauty = null, minHappiness = null, minLevel = null, needsOverworldRain = false, partySpecies = null, partyType = null, relativePhysicalStats = null, timeOfDay = null, tradeSpecies = null, trigger = null, turnUpsideDown = null) {
             this.from = from;
             this.to = to;
             this.gender = gender;
@@ -49,32 +57,74 @@ const EvolutionChain = ({pokeData}) => {
         }
     }
 
-    if(!evolutionData) return(
+    const weirdRedirect = async (name) => {
+        await history.push('/')
+        history.push(`/pokemon/${name}`)
+    }
+
+    if (!evolutionData) return (
         <h1>Loading</h1>
     )
 
-    if(evolutionData.chain.evolves_to.length>0){
+    if (evolutionData.chain.evolves_to.length > 0) {
         const d = (evolutionData.chain.evolves_to[0].evolution_details[0]);
         // console.log(d);
         const poke = new Evolve(evolutionData.chain.species.name, evolutionData.chain.evolves_to[0].species.name, d.gender, d.held_item, d.item, d.known_move, d.known_move_type, d.location, d.min_affection, d.min_beauty, d.min_happiness, d.min_level, d.needs_overworld_rain, d.party_species, d.party_type, d.relative_physical_stats, d.time_of_day, d.trade_species, d.trigger, d.turn_upside_down)
         // console.log(poke);
-        if(!pokeObj) {
+        if (!pokeObj) {
             setPokeObj(poke);
 
         }
-
-
-
-
     }
-    if(!pokeObj) return(
-        <h1>ah</h1>
-    )
-    console.log(pokeObj);
-    // console.log(`${evolutionData.chain.species.name} level ${evolutionData.chain.evolves_to[0].evolution_details[0].min_level} --> ${evolutionData.chain.evolves_to[0].species.name} level ${evolutionData.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level} --> ${evolutionData.chain.evolves_to[0].evolves_to[0].species.name} `);
 
     return (
-        <ListGroupItem>{`${pokeObj.from} ${pokeObj.minLevel} --> ${pokeObj.to}`}</ListGroupItem>
+        evolutionData.chain.evolves_to.length > 0 && (
+            <div className="evolution-chain">
+                <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+                    <ListGroup>
+                        <ListGroup.Item onClick={() => { weirdRedirect(evolutionData.chain.species.name) }} className='flex' style={{ maxHeight: '12rem' }}>
+                            <img className='too-big-img' style={{ maxHeight: '80% !important' }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolutionData.chain.species.url)}.png`} />
+                            {HELPER.capitalize(evolutionData.chain.species.name)}
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Card>
+                <img className='arrow' src={arrow} />
+
+                <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+                    <ListGroup>
+
+                        {evolutionData.chain.evolves_to.map((evolution) => {
+                            return (
+                                <ListGroupItem onClick={() => { weirdRedirect(evolution.species.name) }}>
+                                    <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolution.species.url)}.png`} />
+                                    {HELPER.capitalize(evolution.species.name)}
+                                </ListGroupItem>
+                            )
+                        })}
+                    </ListGroup>
+                </Card>
+                {
+                    evolutionData.chain.evolves_to[0].evolves_to.length > 0 && (
+                        <>
+                            <img className='arrow' src={arrow} />
+                            <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
+
+                                <ListGroup style={{ width: '12rem' }}>
+                                    {evolutionData.chain.evolves_to[0].evolves_to.map((evolution) => {
+                                        return (
+                                            <ListGroup.Item onClick={() => { weirdRedirect(evolution.species.name) }}>
+                                                <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolution.species.url)}.png`} />
+                                                {HELPER.capitalize(evolution.species.name)}
+                                            </ListGroup.Item>
+                                        )
+                                    })}
+                                </ListGroup>
+                            </Card>
+                        </>
+                    )
+                }
+            </div >
+        )
     );
 };
 

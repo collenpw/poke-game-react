@@ -1,26 +1,41 @@
-html{
-  background: lightgray;
-  padding: 0;
-  margin: 0;
-}
-
 .app-div{
-  background: fixed url(/src/imgs/attempt2.jpg);
+  background: tan;
+  /* background: fixed url(/src/imgs/attempt2.jpg); */
   height: 100vh;
 }
 
 html, body{
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  /* height: 100%; */
   margin: 0px;
   padding: 0px;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+}
+
+.border-dark{
+  border: 1px solid #212529!important;
+
+}
+
+.my-nav{
+  top: 0 !important;
+}
+
+.sticky-top{
+  top: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.shadow-box{
+  box-shadow: 20px 20px 50px grey !important;
 }
 
 body {
   background: fixed url(/src/imgs/attempt2.jpg);
+  /* background: white !important; */
   user-select: none;
-  width: 100%;
+  /* width: 100%; */
 }
 
 button {
@@ -32,7 +47,8 @@ button {
 .pokeList {
   display: flex;
   flex-wrap: wrap;
-  background: fixed url(/src/imgs/attempt2.jpg);
+  /* background: fixed url(/src/imgs/attempt2.jpg); */
+  /* background: tan; */
 
 }
 .poke-entry {
@@ -51,10 +67,47 @@ button {
   text-decoration: none;
 }
 
+.poke-card{
+  margin: 1rem auto 1rem auto;
+}
+
+.evolution-chain{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem;
+}
+
+.too-big-img{
+  max-height: 3rem !important;
+  display: inline;
+}
+
+.arrow{
+  width: 6rem;
+}
+
+.flex{
+  display: flex;
+  display: inline;
+}
+
+.first-tier-evolution, .second-tier-evolution, .third-tier-evolution{
+  height: fit-content;
+  /* max-height: 20rem; */
+  /* justify-content: space-around; */
+  margin: auto 1rem;
+}
+.second-tier-evolution{
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
+}
+
 .shiny-div{
   display: flex;
-  max-width: 40%;
+  max-width: 55% ;
   margin: 0 auto;
+  justify-content: space-between;
 }
 
 .shiny-card{
@@ -67,12 +120,28 @@ button {
 }
 
 .poke-list {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
-.card, .center-div {
-  margin: 2rem auto;
+.center-div {
+  margin: 1rem auto;
+}
+
+.one-line-desc{
+  margin: 1rem auto;
+  min-height: 3rem !important;
+  justify-content: space-around;
+  color: white;
+  text-align: center;
+}
+
+.center-div-small-top-margin{
+  margin: .25rem auto;
+}
+
+.fit-content{
+  height: fit-content;
+  max-width: fit-content;
 }
 
 .spinner {
@@ -141,10 +210,11 @@ button {
 }
 
 .type, .ability{
-  text-decoration: underline;
+  text-decoration: underline !important;
+  text-align: center !important;
 }
 
-.ability-title, .center-div, .move-title {
+.ability-title, .move-title {
   text-align: center;
 }
 
@@ -203,8 +273,9 @@ button {
 .ability-descriptor{
   height: 3rem;
   text-align: center;
-  padding: .7rem 0;
+  justify-content: space-around;
   color: white;
+  /* margin: 0 auto; */
 }
 
 .big-descriptor{
@@ -323,6 +394,10 @@ button {
 
  .move-detail, .ability-detail{
    max-width: 90%;
+ }
+
+ .arrow{
+   width: 3rem;
  }
 
 } 

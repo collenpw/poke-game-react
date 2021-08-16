@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import  { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import { Auth0Provider } from '@auth0/auth0-react';
 
@@ -24,7 +24,7 @@ ReactDOM.render(
   <Auth0Provider
     domain='collenpw.us.auth0.com'
     clientId='eUuBo0JOfHPS6d4K7eGoQOwIxwnbLcCT'
-    redirectUri='https://okie-dokie-dex.netlify.app/'
+    redirectUri='https://okie-dokie-dex.netlify.app'
     audience="https://collenpw.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata">
     <Router>
