@@ -6,7 +6,9 @@ import { useHistory } from 'react-router';
 
 import arrow from '../../imgs/arrow-right.svg';
 
-const EvolutionChain = ({ pokeData, capitalize }) => {
+import HELPER from '../../HELPER';
+
+const EvolutionChain = ({ pokeData }) => {
 
     const history = useHistory();
 
@@ -55,12 +57,6 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
         }
     }
 
-    const grabID = (url) => {
-        const urlArr = url.split('/');
-        // console.log(urlArr);
-        return (urlArr[6])
-    }
-
     const weirdRedirect = async (name) => {
         await history.push('/')
         history.push(`/pokemon/${name}`)
@@ -79,13 +75,7 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
             setPokeObj(poke);
 
         }
-
-
-
-
     }
-
-    console.log(pokeObj);
 
     return (
         evolutionData.chain.evolves_to.length > 0 && (
@@ -93,8 +83,8 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
                 <Card border='dark' className='first-tier-evolution' style={{ width: '12rem' }}>
                     <ListGroup>
                         <ListGroup.Item onClick={() => { weirdRedirect(evolutionData.chain.species.name) }} className='flex' style={{ maxHeight: '12rem' }}>
-                            <img className='too-big-img' style={{ maxHeight: '80% !important' }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolutionData.chain.species.url)}.png`} />
-                            {capitalize(evolutionData.chain.species.name)}
+                            <img className='too-big-img' style={{ maxHeight: '80% !important' }} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolutionData.chain.species.url)}.png`} />
+                            {HELPER.capitalize(evolutionData.chain.species.name)}
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
@@ -106,8 +96,8 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
                         {evolutionData.chain.evolves_to.map((evolution) => {
                             return (
                                 <ListGroupItem onClick={() => { weirdRedirect(evolution.species.name) }}>
-                                    <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolution.species.url)}.png`} />
-                                    {capitalize(evolution.species.name)}
+                                    <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolution.species.url)}.png`} />
+                                    {HELPER.capitalize(evolution.species.name)}
                                 </ListGroupItem>
                             )
                         })}
@@ -123,8 +113,8 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
                                     {evolutionData.chain.evolves_to[0].evolves_to.map((evolution) => {
                                         return (
                                             <ListGroup.Item onClick={() => { weirdRedirect(evolution.species.name) }}>
-                                                <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${grabID(evolution.species.url)}.png`} />
-                                                {capitalize(evolution.species.name)}
+                                                <img className='too-big-img' src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${HELPER.grabID(evolution.species.url)}.png`} />
+                                                {HELPER.capitalize(evolution.species.name)}
                                             </ListGroup.Item>
                                         )
                                     })}
@@ -135,7 +125,6 @@ const EvolutionChain = ({ pokeData, capitalize }) => {
                 }
             </div >
         )
-        // <ListGroupItem>{`${pokeObj.from} ${pokeObj.minLevel} --> ${pokeObj.to}`}</ListGroupItem>
     );
 };
 

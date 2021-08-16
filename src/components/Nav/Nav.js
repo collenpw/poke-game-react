@@ -47,10 +47,10 @@ const Navigation = ({ currentPokeUser }) => {
                 </Nav >
                 <Nav>
                     {!isAuthenticated && (<Login />)}
-                    {isAuthenticated && currentPokeUser && (
+                    {isAuthenticated /*&& currentPokeUser*/ && (
                         <>
-                            <Navbar.Text>Logged in as {currentPokeUser.username}:</Navbar.Text>
-                            <Logout currentPokeUser={currentPokeUser} />
+                            <Navbar.Text>Logged in as {user.nickname}:</Navbar.Text>
+                            <Logout user={user} />
                         </>
                     )}
                 </Nav>

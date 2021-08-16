@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 import { Card, ListGroup, Spinner } from 'react-bootstrap';
@@ -8,26 +8,23 @@ import Moves from './Moves';
 import EvolutionChain from '../EvolutionChain/EvolutionChain';
 import PokeCard from '../Poke-Card/PokeCard';
 
-import { DataContext } from '../../App';
+import HELPER from '../../HELPER';
+import P from '../POKEDEX';
 
 const Pokemon = ({ match }) => {
-    const data = useContext(DataContext);
     const history = useHistory();
-
     const [pokeData, setPokeData] = useState(null);
 
     const getPokeData = async () => {
-        const API_ENDPOINT = `https://pokeapi.co/api/v2/pokemon/${match.params.pokemon}`
         try {
-            const res = await fetch(API_ENDPOINT);
-            const data = await res.json();
-            setPokeData(data);
+            setPokeData(await P.getPokemonByName(match.params.pokemon));
+            // setPokeData(res);
         }
         catch (err) {
             console.log(err);
         }
-        // getFavPoke()
     }
+    console.log(pokeData);
 
     useEffect(() => {
 
@@ -35,23 +32,11 @@ const Pokemon = ({ match }) => {
 
     }, []);
 
-    const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
-    const formatAbility = (str) => {
-        let formattedAbility = str.replace(/-/g, ' ');
-        return capitalize(formattedAbility);
-    }
-
     if (!pokeData) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
-
-    console.log(pokeData);
-
 
     return (
         <div className='poke-div' >
@@ -61,7 +46,7 @@ const Pokemon = ({ match }) => {
                 <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
                 {pokeData.abilities.map((ability) => {
                     return (
-                        <ListGroup.Item className='type' onClick={() => { history.push(`/abilities/${ability.ability.name}`) }}>{formatAbility(ability.ability.name)}</ListGroup.Item>
+                        <ListGroup.Item className='type' onClick={() => { history.push(`/abilities/${ability.ability.name}`) }}>{HELPER.replaceDashWithSpace(ability.ability.name)}</ListGroup.Item>
                     )
                 })}
             </Card>
@@ -70,13 +55,13 @@ const Pokemon = ({ match }) => {
                 <ListGroup.Item className='bold'>Types:</ListGroup.Item>
                 {pokeData.types.map((type) => {
                     return (
-                        <ListGroup.Item className='type' onClick={() => { history.push(`/types/${type.type.name}`) }}><span className='type'>{capitalize(type.type.name)}</span></ListGroup.Item>
+                        <ListGroup.Item className='type' onClick={() => { history.push(`/types/${type.type.name}`) }}><span className='type'>{HELPER.capitalize(type.type.name)}</span></ListGroup.Item>
                     )
                 })}
             </Card>
 
 
-            <EvolutionChain capitalize={capitalize} pokeData={pokeData} />
+            <EvolutionChain pokeData={pokeData} />
             <div className="shiny-div">
                 <Card className='shiny-card' border='dark' style={{ width: '18rem' }} >
                     <Card.Title>
@@ -96,8 +81,8 @@ const Pokemon = ({ match }) => {
                     </Card.Body>
                 </Card>
             </div>
-            <Location pokeData={pokeData} cap={capitalize} />
-            <Moves pokeData={pokeData} capitalize={capitalize} />
+            <Location pokeData={pokeData} />
+            <Moves pokeData={pokeData} />
             {/* WORK IN PROGRESS */}
 
         </div>

@@ -146,7 +146,7 @@ const PokemonList = () => {
 
                 </div>
 
-            )} */
+            )} 
 
 
             {/* displays all pokemon */}

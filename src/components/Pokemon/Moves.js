@@ -1,9 +1,11 @@
 
-import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card, ListGroupItem } from "react-bootstrap";
 
 import { useHistory } from "react-router";
 
-const Moves = ({ pokeData, capitalize }) => {
+import HELPER from "../../HELPER";
+
+const Moves = ({ pokeData }) => {
 
     const history = useHistory();
 
@@ -37,24 +39,19 @@ const Moves = ({ pokeData, capitalize }) => {
         return a.version_group_details[a.version_group_details.length - 1].level_learned_at - b.version_group_details[b.version_group_details.length - 1].level_learned_at;
     });
 
-    const formatMove = (str) => {
-        let formattedMove = str.replace(/-/g, ' ');
-        return capitalize(formattedMove);
-    }
-
     return (
 
         <div>
             <Card bg='dark' className='center-div big-descriptor' style={{ width: '24rem' }}>
-                <Card.Text>{`${capitalize(pokeData.name)} can learn the following moves via their respective method:`}</Card.Text>
+                <Card.Text>{`${HELPER.capitalize(pokeData.name)} can learn the following moves via their respective method:`}</Card.Text>
             </Card>
             <div className='poke-moves'>
                 {levelUp.moves.length !== 0 && (
                     <Card border='dark' className='move-list-on-pokemon'>
-                        <ListGroupItem variant='secondary'>{capitalize(levelUp.method)}</ListGroupItem>
+                        <ListGroupItem variant='secondary'>{HELPER.capitalize(levelUp.method)}</ListGroupItem>
                         {levelUp.moves.map((move) => {
                             return (
-                                <ListGroupItem className='full-size-move' onClick={() => { history.push(`/moves/${move.move.name}`) }}>{`${formatMove(move.move.name)} (level ${move.version_group_details[move.version_group_details.length - 1].level_learned_at})`}</ListGroupItem>
+                                <ListGroupItem className='full-size-move' onClick={() => { history.push(`/moves/${move.move.name}`) }}>{`${HELPER.replaceDashWithSpace(move.move.name)} (level ${move.version_group_details[move.version_group_details.length - 1].level_learned_at})`}</ListGroupItem>
                             )
                         })}
                     </Card>
@@ -65,11 +62,11 @@ const Moves = ({ pokeData, capitalize }) => {
 
                     return (
                         <Card border='dark' className='move-list-on-pokemon'>
-                            <ListGroupItem variant='secondary'>{capitalize(method.method)}</ListGroupItem>
+                            <ListGroupItem variant='secondary'>{HELPER.capitalize(method.method)}</ListGroupItem>
                             {method.moves.map((move) => {
                                 return (
 
-                                    <ListGroupItem className='full-size-move' onClick={() => { history.push(`/moves/${move.move.name}`) }}>{`${formatMove(move.move.name)}`}</ListGroupItem>
+                                    <ListGroupItem className='full-size-move' onClick={() => { history.push(`/moves/${move.move.name}`) }}>{`${HELPER.replaceDashWithSpace(move.move.name)}`}</ListGroupItem>
 
                                 )
                             })}

@@ -7,11 +7,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { DataContext } from '../../App';
 
-
 import heart from '../../imgs/heart.svg'
 import filledHeart from '../../imgs/heart-fill.svg'
 
-
+import HELPER from "../../HELPER";
 
 const PokeCard = ({ name, img, id, needsFavorite = false }) => {
     const history = useHistory();
@@ -49,9 +48,7 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
         setFavorited(!favorited);
         const tempArr = [...favPoke];
         tempArr.push(new Pokemon(name, officialArtworkURL, id));
-        console.log(tempArr);
         setFavPoke(tempArr);
-        console.log(favPoke);
 
         const res = await fetch(`https://pokedex-api-collenpw.herokuapp.com/pokemon/${data.currentPokeUser._id}`, {
             method: 'PATCH',
@@ -77,15 +74,15 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
             }
         })
         data.userFavPoke = [...tempArr];
-        console.log(data.userFavPoke);
-        console.log(res);
         setFavPoke(tempArr);
         setFavorited(false);
     }
 
     useEffect(() => {
+        if(needsFavorite) {
+            getFavPoke();
 
-        getFavPoke();
+        }
     }, [])
 
     useEffect(() => {
@@ -97,12 +94,6 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
 
         })
     }, [favPoke])
-
-
-    const capitalize = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
 
     const checkForFav = () => {
         if (!data.userFavPoke) return;
@@ -120,7 +111,7 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
             {needsFavorite && data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
             <Card.Img onClick={() => { history.push(`/pokemon/${name}`) }} variant="top" src={img} />
             <Card.Body onClick={() => { history.push(`/pokemon/${name}`) }}>
-                <Card.Title>{capitalize(name)}</Card.Title>
+                <Card.Title>{HELPER.capitalize(name)}</Card.Title>
                 <Card.Text>#{id}</Card.Text>
             </Card.Body>
         </Card>

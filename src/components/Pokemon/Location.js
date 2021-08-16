@@ -1,8 +1,10 @@
-import { Card, ListGroupItem, ListGroup, Spinner } from 'react-bootstrap';
+import { Card, ListGroup, Spinner } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
 
-const Location = ({ pokeData, cap }) => {
+import HELPER from '../../HELPER';
+
+const Location = ({ pokeData }) => {
 
     class VersionLocation {
         constructor(name, locations = []) {
@@ -70,13 +72,6 @@ const Location = ({ pokeData, cap }) => {
         getVersionData()
     }, [locations])
 
-    const formatLocation = (str) => {
-        let formattedLoc = str.replace(/-/g, ' ');
-        formattedLoc = formattedLoc.replace(/area/g, '')
-
-        return cap(formattedLoc);
-    }
-
     if (!locations || !versions) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -119,7 +114,7 @@ const Location = ({ pokeData, cap }) => {
             <div>
                 {filterLocationsForHeadbutt()}
                 <Card bg='dark' className='center-div white-text big-descriptor' style={{ width: '24rem' }}>
-                    <Card.Text>{`${cap(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
+                    <Card.Text>{`${HELPER.capitalize(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
                 </Card>
                 <div className='locations'>
 
@@ -128,7 +123,7 @@ const Location = ({ pokeData, cap }) => {
                         return (
                             <>
                                 <Card style={{ width: '25rem' }} border='dark' className='location'>
-                                    <ListGroup.Item variant='dark'>{`Pokemon ${cap(version.name)}:`}</ListGroup.Item>
+                                    <ListGroup.Item variant='dark'>{`Pokemon ${HELPER.capitalize(version.name)}:`}</ListGroup.Item>
                                     {version.locations.map((detail) => {
 
                                         if (detail.method.includes('headbutt')) return
@@ -143,7 +138,7 @@ const Location = ({ pokeData, cap }) => {
                                             prep = 'around'
                                         }
                                         return (
-                                            <ListGroup.Item>{`${prefix}${cap(detail.method)} ${prep} ${formatLocation(detail.area)}`}</ListGroup.Item>
+                                            <ListGroup.Item>{`${prefix}${HELPER.capitalize(detail.method)} ${prep} ${HELPER.formatLocation(detail.area)}`}</ListGroup.Item>
                                         )
                                     })}
                                 </Card>

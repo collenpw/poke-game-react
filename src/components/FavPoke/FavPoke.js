@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 
 import PokeCard from '../Poke-Card/PokeCard';
 
-import { Card, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 const FavPoke = () => {
 
@@ -57,13 +57,13 @@ const FavPoke = () => {
     return (
         <div className='fav-poke'>
 
-            {data.userFavPoke && (
-                favPoke.map((pokemon) => {
+            
+                {favPoke.map((pokemon) => {
                     return (
                         <PokeCard name={pokemon.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`} id={pokemon.id} />
                     )
-                })
-            )}
+                })}
+            
         </div>
     );
 };
