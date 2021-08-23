@@ -2,23 +2,32 @@ import logo from '../../imgs/logo.png'
 
 import { Form, Spinner } from "react-bootstrap";
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 
-import { DataContext } from "../../App";
-
-import getAllPokemon from '../../_functions/getAllPokemon'
 import TypeDropdown from "./TypeDropdown";
 import PokeCard from "../Poke-Card/PokeCard";
 
-const PokemonList = () => {
+import P from '../POKEDEX';
+import HELPER from '../../HELPER';
 
-    const data = useContext(DataContext);
+const PokemonList = () => {
 
     const [type, setType] = useState('type');
     const [searchRes, setSearchRes] = useState(null);
     const [typeData, setTypeData] = useState(null);
     const [typeSearch, setTypeSearch] = useState(null);
     const [allPokemon, setAllPokemon] = useState(null);
+
+    const getAllPokemon = async () => {
+        try{
+            const res = await P.getPokemonSpeciesList();
+            console.log(res);
+            setAllPokemon(res.results);
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
 
     const handleChange = (e, arr) => {
         const newArr = arr.filter(function (el) {
@@ -48,10 +57,6 @@ const PokemonList = () => {
         if (newArr.length > 0) setTypeSearch(newArr);
         if (newArr2.length > 0) setTypeSearch(newArr2);
 
-    }
-
-    const grabID = (url) => {
-        return url.split('/')[6];
     }
 
     useEffect(() => {
@@ -95,7 +100,7 @@ const PokemonList = () => {
                             <PokeCard
                                 name={pokemon.name}
                                 img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
-                                id={grabID(pokemon.url)}
+                                id={HELPER.grabID(pokemon.url)}
                             />
                         )
                     })}
@@ -115,8 +120,8 @@ const PokemonList = () => {
                         return (
                             <PokeCard
                                 name={pokemon.pokemon.name}
-                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`}
-                                id={grabID(pokemon.pokemon.url)}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${HELPER.grabID(pokemon.url)}.png`}
+                                id={HELPER.grabID(pokemon.pokemon.url)}
                             />
                         )
                     })}
@@ -137,8 +142,8 @@ const PokemonList = () => {
                         return (
                             <PokeCard
                                 name={pokemon.pokemon.name}
-                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokemon.url.split('/')[6]}.png`}
-                                id={grabID(pokemon.pokemon.url)}
+                                img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${HELPER.grabID(pokemon.url)}.png`}
+                                id={HELPER.grabID(pokemon.pokemon.url)}
                             />
                         )
                     })}
@@ -159,7 +164,7 @@ const PokemonList = () => {
                             <PokeCard
                                 name={pokemon.name}
                                 img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
-                                id={grabID(pokemon.url)}
+                                id={HELPER.grabID(pokemon.url)}
                             />
                         )
                     })}

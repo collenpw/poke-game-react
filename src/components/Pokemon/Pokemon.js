@@ -27,7 +27,6 @@ const Pokemon = ({ match }) => {
     console.log(pokeData);
 
     useEffect(() => {
-        // setPokeData(null);
         getPokeData();
 
     }, [match]);

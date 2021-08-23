@@ -1,5 +1,6 @@
 
 const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
+    console.log('hi');
 
        class pokeUser {
 
@@ -28,6 +29,7 @@ const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
         return
     } else {
         try {
+            console.log('adding user');
             const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon', {
                 method: 'POST',
                 body: JSON.stringify(new pokeUser(user.email, user.nickname)),
@@ -35,6 +37,7 @@ const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
                     "Content-Type": "application/json"
                 }
             })
+            handleLogin(user, isAuthenticated, setCurrentPokeUser);
         }
 
         catch (err) {
