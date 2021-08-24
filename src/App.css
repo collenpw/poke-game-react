@@ -5,7 +5,7 @@
 
 html, body{
   margin: 0px;
-  padding: 15px;
+  /* padding: 15px; */
 }
 
 .border-dark{
@@ -310,7 +310,19 @@ button {
 .dropdown{
   margin: auto;
   margin-left: 0;
-} 
+}
+
+.dark-text{
+  color: black !important;
+}
+
+.small-nav{
+  max-width: max-content;
+  margin: 1rem auto;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  
+}
 
 /* /////////////// MOBILE RESPONSIVENESS ///////////////// */
  

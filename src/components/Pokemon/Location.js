@@ -4,73 +4,73 @@ import { useState, useEffect } from 'react';
 
 import HELPER from '../../HELPER';
 
-const Location = ({ pokeData }) => {
+const Location = ({ pokeData, locations, versions }) => {
 
-    class VersionLocation {
-        constructor(name, locations = []) {
-            this.name = name;
-            this.locations = locations;
-        }
+    // class VersionLocation {
+    //     constructor(name, locations = []) {
+    //         this.name = name;
+    //         this.locations = locations;
+    //     }
 
-        addLocation(loc) {
-            this.locations.push(loc)
-        }
+    //     addLocation(loc) {
+    //         this.locations.push(loc)
+    //     }
 
-    }
+    // }
 
-    class VersionMethodAndLocation {
-        constructor(area, name, method) {
-            this.area = area;
-            this.name = name;
-            this.method = method;
-        }
-    }
+    // class VersionMethodAndLocation {
+    //     constructor(area, name, method) {
+    //         this.area = area;
+    //         this.name = name;
+    //         this.method = method;
+    //     }
+    // }
 
-    const [locations, setLocations] = useState(null)
-    const [versions, setVersions] = useState(null)
+    // const [locations, setLocations] = useState(null)
+    // const [versions, setVersions] = useState(null)
 
-    const getLocationData = async () => {
-        try {
-            const res = await fetch(`${pokeData.location_area_encounters}`);
-            const data = await res.json();
-            const temp = data.map((loc) => {
-                return loc.version_details.map((detail) => {
-                    return new VersionMethodAndLocation(loc.location_area.name, detail.version.name, detail.encounter_details[0].method.name)
+    // const getLocationData = async () => {
+    //     try {
+    //         const res = await fetch(`${pokeData.location_area_encounters}`);
+    //         const data = await res.json();
+    //         const temp = data.map((loc) => {
+    //             return loc.version_details.map((detail) => {
+    //                 return new VersionMethodAndLocation(loc.location_area.name, detail.version.name, detail.encounter_details[0].method.name)
 
-                })
+    //             })
 
-            })
-            setLocations(temp);
-        }
-        catch (err) {
-            console.log(err);
-        }
+    //         })
+    //         setLocations(temp);
+    //     }
+    //     catch (err) {
+    //         console.log(err);
+    //     }
 
-    }
+    // }
 
-    const getVersionData = async () => {
-        try {
-            const res = await fetch('https://pokeapi.co/api/v2/version/?limit=40')
-            const data = await res.json()
-            const versionsTemp = data.results.map((version) => {
-                return (
-                    new VersionLocation(version.name)
-                )
-            })
-            setVersions(versionsTemp)
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
+    // const getVersionData = async () => {
+    //     try {
+    //         const res = await fetch('https://pokeapi.co/api/v2/version/?limit=40')
+    //         const data = await res.json()
+    //         const versionsTemp = data.results.map((version) => {
+    //             return (
+    //                 new VersionLocation(version.name)
+    //             )
+    //         })
+    //         setVersions(versionsTemp)
+    //     }
+    //     catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
-    useEffect(() => {
-        getLocationData()
-    }, [])
+    // useEffect(() => {
+    //     getLocationData()
+    // }, [])
 
-    useEffect(() => {
-        getVersionData()
-    }, [locations])
+    // useEffect(() => {
+    //     getVersionData()
+    // }, [locations])
 
     if (!locations || !versions) return (
         <Spinner className='spinner' animation="border" role="status">
@@ -125,22 +125,22 @@ const Location = ({ pokeData }) => {
                                 <Card style={{ width: '25rem' }} border='dark' className='location'>
                                     <ListGroup.Item variant='dark'>{`Pokemon ${HELPER.capitalize(version.name)}:`}</ListGroup.Item>
                                     {version.locations.map((detail) => {
-
+                                        
                                         if (detail.method.includes('headbutt')) return
-
+                                        
                                         let prefix = '';
                                         if (detail.method.includes('rod')) {
                                             prefix = 'Use the '
                                         }
-
+                                        
                                         let prep = 'at'
                                         if (detail.method === 'walk') {
                                             prep = 'around'
                                         }
                                         return (
                                             <ListGroup.Item>{`${prefix}${HELPER.capitalize(detail.method)} ${prep} ${HELPER.formatLocation(detail.area)}`}</ListGroup.Item>
-                                        )
-                                    })}
+                                            )
+                                        })}
                                 </Card>
                             </>
                         )
