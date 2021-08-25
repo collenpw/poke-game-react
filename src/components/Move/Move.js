@@ -31,8 +31,6 @@ const Move = ({ match }) => {
             let arr = str.split('-');
             let numArr = arr.slice(0, 3).join(',');
             let wordArr = arr.slice(3).join(' ');
-            console.log(wordArr);
-            console.log(numArr);
             return `${numArr} ${wordArr}`
         }
         let formattedMove = str.replace(/-/g, ' ');
@@ -40,8 +38,6 @@ const Move = ({ match }) => {
     }
 
     if (!moveData) return <h1>Loading...</h1>
-
-    console.log(moveData);
 
     return (
         <div style={{ marginBottom: '1rem' }}>

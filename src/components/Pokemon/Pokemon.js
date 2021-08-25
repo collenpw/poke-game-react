@@ -3,11 +3,12 @@ import { useHistory } from 'react-router';
 
 import { Card, ListGroup, Spinner } from 'react-bootstrap';
 
+import EvolutionChain from '../EvolutionChain/EvolutionChain';
+import Forms from './Forms';
 import Location from './Location';
 import Moves from './Moves';
-import EvolutionChain from '../EvolutionChain/EvolutionChain';
-import PokeNav from './PokeNav';
 import PokeCard from '../Poke-Card/PokeCard';
+import PokeNav from './PokeNav';
 
 import HELPER from '../../HELPER';
 import P from '../POKEDEX';
@@ -18,7 +19,8 @@ const Pokemon = ({ match }) => {
     const [pokeData, setPokeData] = useState(null);
     const [displayed, setDisplayed] = useState('home');
     const [locations, setLocations] = useState(null);
-    const [versions, setVersions] = useState(null)
+    const [versions, setVersions] = useState(null);
+    const [specData, setSpecData] = useState(null);
 
     const getPokeData = async () => {
         try {
@@ -28,40 +30,44 @@ const Pokemon = ({ match }) => {
             console.log(err);
         }
     }
-    console.log(pokeData);
+
+    const getSpecData = async () => {
+        try {
+            setSpecData(await P.getPokemonSpeciesByName(match.params.pokemon));
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 
     useEffect(() => {
         getLocations.getLocationData(pokeData, setLocations);
         getLocations.getVersionData(setVersions);
-        console.log(locations);
 
     }, [pokeData]);    
 
     useEffect(() => {
         getPokeData();
+        getSpecData();
 
     }, [match]);
 
-    if (!pokeData) return (
+    if (!pokeData || !specData) return (
         <Spinner className='spinner' animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
 
-
-    console.log(pokeData);
-    // console.log(locations);
-
     return (
         <>
 
-            <PokeNav setDisplayed={setDisplayed} versions={versions} locations={locations} moves={pokeData.moves} name={HELPER.capitalize(pokeData.name)}/>
+            <PokeNav setDisplayed={setDisplayed} versions={versions} forms={pokeData.forms} varieties={specData.varieties} locations={locations} moves={pokeData.moves} name={HELPER.capitalize(specData.name)}/>
 
             <div className='poke-div' >
                 
                 {displayed === 'home' && (
                 <>
-                    <PokeCard name={pokeData.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} id={pokeData.id} needsFavorite={true}></PokeCard>
+                    <PokeCard name={specData.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} id={pokeData.id} needsFavorite={true}></PokeCard>
 
                 <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ width: '18rem' }}>
                     <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
@@ -107,8 +113,12 @@ const Pokemon = ({ match }) => {
                 </>
                 )}
 
-                {displayed === 'Locations' && (
-                    <Location locations={locations} versions={versions} pokeData={pokeData} />
+                {displayed === 'Forms' && specData.varieties.length > 1 && (
+                    <Forms specData={specData} />
+                )}
+
+                {displayed === 'Forms' && (
+                    <Forms pokeData={pokeData} specData={specData} />
                 )}
 
                 {displayed === 'Moves' && (

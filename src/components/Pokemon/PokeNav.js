@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from "react-bootstrap";
 import { useState } from "react";
 
-const PokeNav = ({locations, moves, name, setDisplayed}) => {
+const PokeNav = ({locations, moves, name, setDisplayed, varieties, forms}) => {
 
     const [radioValue, setRadioValue] = useState('1');
 
@@ -17,9 +17,13 @@ const PokeNav = ({locations, moves, name, setDisplayed}) => {
         radios.push({name: 'Moves', value: `${radios.length + 1}`, ref: 'Moves'});
     }
 
-    console.log(radios);
-    console.log(locations);
-    console.log(moves);
+    if(varieties && varieties.length > 1) {
+        radios.push({name: 'Forms', value: `${radios.length + 1}`, ref: 'Forms'});
+    }
+
+    if(forms && forms.length > 1) {
+        radios.push({name: 'Forms', value: `${radios.length + 1}`, ref: 'Forms'});
+    }
 
     const handleClick = (e, name) => {
         setRadioValue(e.currentTarget.value)
@@ -28,8 +32,8 @@ const PokeNav = ({locations, moves, name, setDisplayed}) => {
 
 
     return (
-        <div>
-            <ButtonGroup className="mb-2">
+        <div className='pokenav'>
+            <ButtonGroup className="mb-2 ">
                     {radios.map((radio, idx) => (
                     <Button
                         active={radioValue === radio.value}

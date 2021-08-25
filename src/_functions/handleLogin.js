@@ -1,6 +1,7 @@
 
 const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
-    console.log('hi');
+
+    console.log('this is the handle login');
 
        class pokeUser {
 
@@ -10,7 +11,7 @@ const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
             this.favPoke = [];
         }
     }
-    if (!isAuthenticated) return;
+    // if (!isAuthenticated) return;
     // setCurrentPokeUser({
     //     email: user.email,
     //     username: user.name
@@ -19,8 +20,10 @@ const handleLogin = async (user, isAuthenticated, setCurrentPokeUser) => {
     const res = await fetch('https://pokedex-api-collenpw.herokuapp.com/pokemon');
     const data = await res.json();
     let count = 0;
+    console.log(data);
     data.map((pokeUser) => {
-        if (pokeUser.email === user.email) { 
+        if (pokeUser.email === user.email) {
+            console.log('hell'); 
             setCurrentPokeUser(pokeUser);
             count++;
         }

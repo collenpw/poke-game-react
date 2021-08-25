@@ -11,7 +11,6 @@ import HELPER from '../../HELPER';
 const EvolutionChain = ({ pokeData, match }) => {
 
     const history = useHistory();
-    console.log(match);
 
     const [evolutionData, setEvolutionData] = useState(null)
     const [pokeObj, setPokeObj] = useState(null);
@@ -59,20 +58,13 @@ const EvolutionChain = ({ pokeData, match }) => {
         }
     }
 
-    // const weirdRedirect = async (name) => {
-    //     await history.push('/')
-    //     history.push(`/pokemon/${name}`)
-    // }
-
     if (!evolutionData) return (
         <h1>Loading</h1>
     )
 
     if (evolutionData.chain.evolves_to.length > 0) {
         const d = (evolutionData.chain.evolves_to[0].evolution_details[0]);
-        // console.log(d);
         const poke = new Evolve(evolutionData.chain.species.name, evolutionData.chain.evolves_to[0].species.name, d.gender, d.held_item, d.item, d.known_move, d.known_move_type, d.location, d.min_affection, d.min_beauty, d.min_happiness, d.min_level, d.needs_overworld_rain, d.party_species, d.party_type, d.relative_physical_stats, d.time_of_day, d.trade_species, d.trigger, d.turn_upside_down)
-        // console.log(poke);
         if (!pokeObj) {
             setPokeObj(poke);
 

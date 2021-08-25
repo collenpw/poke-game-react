@@ -21,7 +21,6 @@ const PokemonList = () => {
     const getAllPokemon = async () => {
         try{
             const res = await P.getPokemonSpeciesList();
-            console.log(res);
             setAllPokemon(res.results);
         }
         catch(err){
