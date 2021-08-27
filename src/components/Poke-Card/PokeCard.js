@@ -12,7 +12,7 @@ import filledHeart from '../../imgs/heart-fill.svg'
 
 import HELPER from "../../HELPER";
 
-const PokeCard = ({ name, img, id, needsFavorite = false }) => {
+const PokeCard = ({ name, img, id, needsFavorite = false, classes }) => {
     const history = useHistory();
     const data = useContext(DataContext);
 
@@ -106,7 +106,7 @@ const PokeCard = ({ name, img, id, needsFavorite = false }) => {
     if (needsFavorite) { checkForFav() };
 
     return (
-        <Card className='center-div shadow-box' border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
+        <Card className={`center-div shadow-box ${classes}`} border='dark' style={{ topMargin: '1rem !important', width: '18rem' }}>
             {needsFavorite && data.isAuthenticated && !favorited && (<Card.Header><img onClick={handleFavorite} src={heart} alt="" /></Card.Header>)}
             {needsFavorite && data.isAuthenticated && favorited && (<Card.Header><img onClick={handleUnfavorite} src={filledHeart} alt="" /></Card.Header>)}
             <Card.Img onClick={() => { history.push(`/pokemon/${id}`) }} variant="top" src={img} />

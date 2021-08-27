@@ -43,12 +43,16 @@ const Pokemon = ({ match }) => {
     useEffect(() => {
         getLocations.getLocationData(pokeData, setLocations);
         getLocations.getVersionData(setVersions);
+        console.log(locations);
+        console.log(versions);
 
     }, [pokeData]);    
 
     useEffect(() => {
         getPokeData();
         getSpecData();
+        // getLocations.getLocationData(pokeData, setLocations);
+        // getLocations.getVersionData(setVersions);
 
     }, [match]);
 
@@ -57,6 +61,14 @@ const Pokemon = ({ match }) => {
             <span className="visually-hidden">Loading...</span>
         </Spinner>
     )
+
+    let flavor = 'flavor';
+
+    for(let i = 0; i < specData.flavor_text_entries.length; i++){
+        if(specData.flavor_text_entries[i].language.name === 'en'){
+            flavor = specData.flavor_text_entries[i].flavor_text;
+        }
+    }
 
     return (
         <>
@@ -67,7 +79,12 @@ const Pokemon = ({ match }) => {
                 
                 {displayed === 'home' && (
                 <>
-                    <PokeCard name={specData.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} id={pokeData.id} needsFavorite={true}></PokeCard>
+                    <PokeCard classes='no-bottom-margin' name={specData.name} img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeData.id}.png`} id={pokeData.id} needsFavorite={true}></PokeCard>
+
+                <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ textAlign:'center', width: '18rem' }}>
+                    <ListGroup.Item style={{fontStyle: 'italic'}}>{flavor}</ListGroup.Item>
+                </Card>
+
 
                 <Card border='dark' className='shadow-box center-div-small-top-margin abilities' style={{ width: '18rem' }}>
                     <ListGroup.Item className='bold'>Abilities:</ListGroup.Item>
@@ -123,6 +140,10 @@ const Pokemon = ({ match }) => {
 
                 {displayed === 'Moves' && (
                     <Moves pokeData={pokeData} />
+                )}
+
+                {displayed === 'Locations' && (
+                    <Location pokeData={pokeData} versions={versions} locations={locations} />
                 )}
 
                 {/* WORK IN PROGRESS */}
