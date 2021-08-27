@@ -1,76 +1,23 @@
-import { Card, ListGroup, Spinner } from 'react-bootstrap';
+import { Card, Button, ListGroup, Spinner, Modal } from 'react-bootstrap';
 
 import { useState, useEffect } from 'react';
+
+import LocationModal from './LocationModal';
 
 import HELPER from '../../HELPER';
 
 const Location = ({ pokeData, locations, versions }) => {
 
-    // class VersionLocation {
-    //     constructor(name, locations = []) {
-    //         this.name = name;
-    //         this.locations = locations;
-    //     }
+    const [show, setShow] = useState(false);
+    const [versionClicked, setVersionClicked] = useState(null);
 
-    //     addLocation(loc) {
-    //         this.locations.push(loc)
-    //     }
-
-    // }
-
-    // class VersionMethodAndLocation {
-    //     constructor(area, name, method) {
-    //         this.area = area;
-    //         this.name = name;
-    //         this.method = method;
-    //     }
-    // }
-
-    // const [locations, setLocations] = useState(null)
-    // const [versions, setVersions] = useState(null)
-
-    // const getLocationData = async () => {
-    //     try {
-    //         const res = await fetch(`${pokeData.location_area_encounters}`);
-    //         const data = await res.json();
-    //         const temp = data.map((loc) => {
-    //             return loc.version_details.map((detail) => {
-    //                 return new VersionMethodAndLocation(loc.location_area.name, detail.version.name, detail.encounter_details[0].method.name)
-
-    //             })
-
-    //         })
-    //         setLocations(temp);
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //     }
-
-    // }
-
-    // const getVersionData = async () => {
-    //     try {
-    //         const res = await fetch('https://pokeapi.co/api/v2/version/?limit=40')
-    //         const data = await res.json()
-    //         const versionsTemp = data.results.map((version) => {
-    //             return (
-    //                 new VersionLocation(version.name)
-    //             )
-    //         })
-    //         setVersions(versionsTemp)
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getLocationData()
-    // }, [])
-
-    // useEffect(() => {
-    //     getVersionData()
-    // }, [locations])
+    // // SHOW/ HIDE MODALS
+    // const handleClose = () => setShow(false);
+    const handleShow = (v) => {
+        setShow(true);
+        console.log(v);
+        setVersionClicked(v);
+    }
 
     if (!locations || !versions) return (
         <Spinner className='spinner' animation="border" role="status">
@@ -114,7 +61,7 @@ const Location = ({ pokeData, locations, versions }) => {
             <div className='poke-moves'>
                 {filterLocationsForHeadbutt()}
                 <Card bg='dark' className='center-div white-text big-descriptor' style={{ width: '24rem' }}>
-                    <Card.Text>{`${HELPER.capitalize(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
+                    <Card.Text>{`${HELPER.capitalize(pokeData.name)} can be found in these games (click for details):`}</Card.Text>
                 </Card>
                 <div className='poke-moves'>
 
@@ -123,25 +70,12 @@ const Location = ({ pokeData, locations, versions }) => {
                         return (
                             <>
                                 <Card style={{ width: '25rem' }} border='dark' className='move-list-on-pokemon'>
-                                    <ListGroup.Item variant='dark'>{`Pokemon ${HELPER.capitalize(version.name)}:`}</ListGroup.Item>
-                                    {version.locations.map((detail) => {
-                                        
-                                        if (detail.method.includes('headbutt')) return
-                                        
-                                        let prefix = '';
-                                        if (detail.method.includes('rod')) {
-                                            prefix = 'Use the '
-                                        }
-                                        
-                                        let prep = 'at'
-                                        if (detail.method === 'walk') {
-                                            prep = 'around'
-                                        }
-                                        return (
-                                            <ListGroup.Item className='full-size-move'>{`${prefix}${HELPER.capitalize(detail.method)} ${prep} ${HELPER.formatLocation(detail.area)}`}</ListGroup.Item>
-                                            )
-                                        })}
+                                    <ListGroup.Item onClick={() => {handleShow(version)}} variant='dark'>{`Pokemon ${HELPER.capitalize(version.name)}`}</ListGroup.Item> 
                                 </Card>
+                                {versionClicked && (
+                                    <LocationModal version={versionClicked} HELPER={HELPER} show={show} setShow={setShow} />
+
+                                )}
                             </>
                         )
                     })}
@@ -149,6 +83,7 @@ const Location = ({ pokeData, locations, versions }) => {
             </div>
         )
     )
+
 };
 
 export default Location;

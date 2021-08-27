@@ -93,6 +93,12 @@ button {
   display: inline;
 }
 
+.flex-locations{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .first-tier-evolution, .second-tier-evolution, .third-tier-evolution{
   height: fit-content;
   margin: auto 1rem;
