@@ -6,7 +6,8 @@ const PokeNav = ({locations, moves, name, setDisplayed, varieties, forms}) => {
     const [radioValue, setRadioValue] = useState('1');
 
     const radios = [
-        { name: name, value: '1', ref: 'home' },
+        { name: name, value: '1', ref: 'home'},
+        { name: 'Stats', value: '2', ref: 'Stats'}
     ];
 
     if(locations && locations.length > 0) {

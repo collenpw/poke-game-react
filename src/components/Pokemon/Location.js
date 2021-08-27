@@ -111,18 +111,18 @@ const Location = ({ pokeData, locations, versions }) => {
     filterLocationsForHeadbutt();
     return (
         locations.length > 0 && (
-            <div>
+            <div className='poke-moves'>
                 {filterLocationsForHeadbutt()}
                 <Card bg='dark' className='center-div white-text big-descriptor' style={{ width: '24rem' }}>
                     <Card.Text>{`${HELPER.capitalize(pokeData.name)} can be found in these games, at their respective location:`}</Card.Text>
                 </Card>
-                <div className='locations'>
+                <div className='poke-moves'>
 
                     {versions.map((version) => {
                         if (version.locations.length === 0) return;
                         return (
                             <>
-                                <Card style={{ width: '25rem' }} border='dark' className='location'>
+                                <Card style={{ width: '25rem' }} border='dark' className='move-list-on-pokemon'>
                                     <ListGroup.Item variant='dark'>{`Pokemon ${HELPER.capitalize(version.name)}:`}</ListGroup.Item>
                                     {version.locations.map((detail) => {
                                         
@@ -138,7 +138,7 @@ const Location = ({ pokeData, locations, versions }) => {
                                             prep = 'around'
                                         }
                                         return (
-                                            <ListGroup.Item>{`${prefix}${HELPER.capitalize(detail.method)} ${prep} ${HELPER.formatLocation(detail.area)}`}</ListGroup.Item>
+                                            <ListGroup.Item className='full-size-move'>{`${prefix}${HELPER.capitalize(detail.method)} ${prep} ${HELPER.formatLocation(detail.area)}`}</ListGroup.Item>
                                             )
                                         })}
                                 </Card>

@@ -9,6 +9,7 @@ import Location from './Location';
 import Moves from './Moves';
 import PokeCard from '../Poke-Card/PokeCard';
 import PokeNav from './PokeNav';
+import Stats from './Stats';
 
 import HELPER from '../../HELPER';
 import P from '../POKEDEX';
@@ -51,9 +52,6 @@ const Pokemon = ({ match }) => {
     useEffect(() => {
         getPokeData();
         getSpecData();
-        // getLocations.getLocationData(pokeData, setLocations);
-        // getLocations.getVersionData(setVersions);
-
     }, [match]);
 
     if (!pokeData || !specData) return (
@@ -144,6 +142,10 @@ const Pokemon = ({ match }) => {
 
                 {displayed === 'Locations' && (
                     <Location pokeData={pokeData} versions={versions} locations={locations} />
+                )}
+
+                {displayed === 'Stats' && (
+                    <Stats pokeData={pokeData} />
                 )}
 
                 {/* WORK IN PROGRESS */}
