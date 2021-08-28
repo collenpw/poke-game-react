@@ -53,8 +53,6 @@ const Ability = ({ match }) => {
         <h3>Loading...</h3>
     )
 
-    console.log(abilityData);
-
     return (
         <div style={{ marginBottom: '1rem' }}>
             <Card className='poke-card white-text ability-detail' bg='dark' style={{ width: '36rem' }}>

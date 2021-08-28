@@ -5,11 +5,8 @@ import { Route, Switch } from 'react-router-dom'
 import Pokemon from './components/Pokemon/Pokemon';
 import PokemonList from './components/PokemonList/PokemonList';
 import Type from './components/Type/Type';
-import TypeList from './components/TypeList/TypeList'
 import Ability from './components/Ability/Ability';
-import AbilityList from './components/AbilityList/AbilityList'
 import Move from './components/Move/Move';
-import MoveList from './components/MoveList/MoveList'
 import List from './components/List/List';
 
 import handleLogin from './_functions/handleLogin';

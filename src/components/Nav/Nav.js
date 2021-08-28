@@ -19,8 +19,6 @@ const Navigation = ({ currentPokeUser }) => {
     const history = useHistory();
     const { user, isAuthenticated } = useAuth0();
 
-    console.log(data);
-
     return (
 
         <Navbar className='my-nav' fixed='top' sticky='top' bg="dark" variant="dark">
@@ -39,7 +37,7 @@ const Navigation = ({ currentPokeUser }) => {
                     <Nav.Link onClick={() => { history.push('/moves') }}>Moves</Nav.Link>
                     <Nav.Link onClick={() => { history.push('/abilities') }}>Abilities</Nav.Link>
                     <Nav.Link onClick={() => { history.push('/types') }}>Types</Nav.Link>
-                    {isAuthenticated && currentPokeUser && (
+                    {isAuthenticated && (
                         <>
                             <FavPokeButton />
                         </>

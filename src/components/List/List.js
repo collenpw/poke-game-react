@@ -27,7 +27,6 @@ const List = ({ getter, formatter, search, attr, match}) => {
     const getAllToList = async () => {
         try{
             const res = await getter;
-            console.log(res);
             setAllToList(res.results)
         }
         catch(err){
@@ -40,7 +39,6 @@ const List = ({ getter, formatter, search, attr, match}) => {
         getAllToList();
     }, [formatter]);
 
-    console.log(allToList);
     if(!allToList){
         return(
             <h1>Loading</h1>
